@@ -11,46 +11,41 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Id",
+    title: "Mã sản phẩm",
     dataIndex: "id",
     sorter: (a, b) => a.title.length - b.title.length,
   },
   {
-    title: "Name",
+    title: "Tên",
     dataIndex: "name",
     sorter: (a, b) => a.brand.length - b.brand.length,
   },
   {
-    title: "Price",
+    title: "Giá",
     dataIndex: "price",
     sorter: (a, b) => a.category.length - b.category.length,
   },
   {
-    title: "Description",
+    title: "Mô tả",
     dataIndex: "description", 
   },
   {
-    title: "Quantity",
+    title: "Số lượng",
     dataIndex: "quantity",
     sorter: (a, b) => a.price - b.price,
   },
   {
-    title: "Category",
+    title: "Loại hàng hóa",
     dataIndex: "idCategory",
     sorter: (a, b) => a.price - b.price,
   },
   {
-    title: "Slug",
-    dataIndex: "slug",
-    sorter: (a, b) => a.price - b.price,
-  },
-  {
-    title: "Sold",
+    title: "Đã bán",
     dataIndex: "sold",
     sorter: (a, b) => a.price - b.price,
   },
   {
-    title: "Image Thumbnail",
+    title: "Ảnh sản phẩm",
     dataIndex: "url",
     sorter: (a, b) => a.price - b.price,
   },
@@ -79,7 +74,7 @@ const Productlist = () => {
       idCategory: productState[i].idCategory,
       slug: productState[i].slug,
       sold: productState[i].sold,
-      url: productState[i].imagesDetail[0].url,
+      url: <img src={productState[i].imagesDetail[0].url}/>,
       action: (
         <>
           <Link to="/" className=" fs-3 text-danger">
