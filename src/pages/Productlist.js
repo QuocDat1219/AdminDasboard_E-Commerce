@@ -11,27 +11,47 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Title",
-    dataIndex: "title",
+    title: "Id",
+    dataIndex: "id",
     sorter: (a, b) => a.title.length - b.title.length,
   },
   {
-    title: "Brand",
-    dataIndex: "brand",
+    title: "Name",
+    dataIndex: "name",
     sorter: (a, b) => a.brand.length - b.brand.length,
-  },
-  {
-    title: "Category",
-    dataIndex: "category",
-    sorter: (a, b) => a.category.length - b.category.length,
-  },
-  {
-    title: "Color",
-    dataIndex: "color",
   },
   {
     title: "Price",
     dataIndex: "price",
+    sorter: (a, b) => a.category.length - b.category.length,
+  },
+  {
+    title: "Description",
+    dataIndex: "description", 
+  },
+  {
+    title: "Quantity",
+    dataIndex: "quantity",
+    sorter: (a, b) => a.price - b.price,
+  },
+  {
+    title: "Category",
+    dataIndex: "idCategory",
+    sorter: (a, b) => a.price - b.price,
+  },
+  {
+    title: "Slug",
+    dataIndex: "slug",
+    sorter: (a, b) => a.price - b.price,
+  },
+  {
+    title: "Sold",
+    dataIndex: "sold",
+    sorter: (a, b) => a.price - b.price,
+  },
+  {
+    title: "Image Thumbnail",
+    dataIndex: "url",
     sorter: (a, b) => a.price - b.price,
   },
   {
@@ -46,15 +66,20 @@ const Productlist = () => {
     dispatch(getProducts());
   }, []);
   const productState = useSelector((state) => state.product.products);
+  console.log(productState);
   const data1 = [];
   for (let i = 0; i < productState.length; i++) {
     data1.push({
       key: i + 1,
-      title: productState[i].title,
-      brand: productState[i].brand,
-      category: productState[i].category,
-      color: productState[i].color,
-      price: `${productState[i].price}`,
+      id: productState[i]._id,
+      name: productState[i].name,
+      price: productState[i].price,
+      description: productState[i].description,
+      quantity: productState[i].quantity,
+      idCategory: productState[i].idCategory,
+      slug: productState[i].slug,
+      sold: productState[i].sold,
+      url: productState[i].imagesDetail[0].url,
       action: (
         <>
           <Link to="/" className=" fs-3 text-danger">
