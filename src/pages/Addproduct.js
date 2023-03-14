@@ -101,7 +101,7 @@ const Addproduct = () => {
   };
   return (
     <div>
-      <h3 className="mb-4 title">Add Product</h3>
+      <h3 className="mb-4 title">THÊM SẢN PHẨM</h3>
       <div>
         <form
           onSubmit={formik.handleSubmit}
@@ -109,7 +109,7 @@ const Addproduct = () => {
         >
           <CustomInput
             type="text"
-            label="Enter Product Title"
+            label="Nhập tiêu đề của sản phẩm"
             name="title"
             onChng={formik.handleChange("title")}
             onBlr={formik.handleBlur("title")}
@@ -118,7 +118,7 @@ const Addproduct = () => {
           <div className="error">
             {formik.touched.title && formik.errors.title}
           </div>
-          <div className="">
+          {/* <div className="">
             <ReactQuill
               theme="snow"
               name="description"
@@ -128,10 +128,10 @@ const Addproduct = () => {
           </div>
           <div className="error">
             {formik.touched.description && formik.errors.description}
-          </div>
+          </div> */}
           <CustomInput
             type="number"
-            label="Enter Product Price"
+            label="Nhập giá của sản phẩm"
             name="price"
             onChng={formik.handleChange("price")}
             onBlr={formik.handleBlur("price")}
@@ -140,7 +140,7 @@ const Addproduct = () => {
           <div className="error">
             {formik.touched.price && formik.errors.price}
           </div>
-          <select
+          {/* <select
             name="brand"
             onChange={formik.handleChange("brand")}
             onBlur={formik.handleBlur("brand")}
@@ -159,6 +159,17 @@ const Addproduct = () => {
           </select>
           <div className="error">
             {formik.touched.brand && formik.errors.brand}
+          </div> */}
+          <div className="">
+            <ReactQuill
+              theme="snow"
+              name="description"
+              onChange={formik.handleChange("description")}
+              value={formik.values.description}
+            />
+          </div>
+          <div className="error">
+            {formik.touched.description && formik.errors.description}
           </div>
           <select
             name="category"
@@ -168,19 +179,19 @@ const Addproduct = () => {
             className="form-control py-3 mb-3"
             id=""
           >
-            {/* <option value="">Select Category</option>
+            <option value="">Danh mục sản phẩm</option>
             {catState.map((i, j) => {
               return (
                 <option key={j} value={i.title}>
                   {i.title}
                 </option>
               );
-            })} */}
+            })} 
           </select>
           <div className="error">
             {formik.touched.category && formik.errors.category}
           </div>
-          <select
+          {/* <select
             name="tags"
             onChange={formik.handleChange("tags")}
             onBlur={formik.handleBlur("tags")}
@@ -197,13 +208,13 @@ const Addproduct = () => {
           </select>
           <div className="error">
             {formik.touched.tags && formik.errors.tags}
-          </div>
+          </div> */}
 
           <Select
             mode="multiple"
             allowClear
             className="w-100"
-            placeholder="Select colors"
+            placeholder="Thêm màu"
             defaultValue={color}
             onChange={(i) => handleColors(i)}
             options={coloropt}
@@ -213,7 +224,7 @@ const Addproduct = () => {
           </div>
           <CustomInput
             type="number"
-            label="Enter Product Quantity"
+            label="Nhập số lượng sản phẩm"
             name="quantity"
             onChng={formik.handleChange("quantity")}
             onBlr={formik.handleBlur("quantity")}
@@ -230,9 +241,7 @@ const Addproduct = () => {
                 <section>
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <p>
-                      Drag 'n' drop some files here, or click to select files
-                    </p>
+                    <p>Hiện hình ảnh</p>
                   </div>
                 </section>
               )}
@@ -257,7 +266,7 @@ const Addproduct = () => {
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
-            Add Product
+            Thêm sản phẩm
           </button>
         </form>
       </div>
