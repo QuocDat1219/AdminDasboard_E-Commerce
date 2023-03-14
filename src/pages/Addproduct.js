@@ -15,6 +15,10 @@ import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from "../features/upload/uploadSlice";
 import { createProducts, resetState } from "../features/product/productSlice";
 import useDrivePicker from "react-google-drive-picker";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
+
 
 let schema = yup.object().shape({
   title: yup.string().required("Title is Required"),
@@ -197,7 +201,7 @@ const Addproduct = () => {
           <div className="error">
             {formik.touched.description && formik.errors.description}
           </div>
-          <select
+          {/* <select
             name="category"
             onChange={formik.handleChange("category")}
             onBlur={formik.handleBlur("category")}
@@ -216,7 +220,7 @@ const Addproduct = () => {
           </select>
           <div className="error">
             {formik.touched.category && formik.errors.category}
-          </div>
+          </div> */}
           {/* <select
             name="tags"
             onChange={formik.handleChange("tags")}
@@ -236,7 +240,7 @@ const Addproduct = () => {
             {formik.touched.tags && formik.errors.tags}
           </div> */}
 
-          <Select
+          {/* <Select
             mode="multiple"
             allowClear
             className="w-100"
@@ -247,7 +251,7 @@ const Addproduct = () => {
           />
           <div className="error">
             {formik.touched.color && formik.errors.color}
-          </div>
+          </div> */}
           <CustomInput
             type="number"
             label="Nhập số lượng sản phẩm"
