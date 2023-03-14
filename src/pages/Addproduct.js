@@ -168,14 +168,14 @@ const Addproduct = () => {
             className="form-control py-3 mb-3"
             id=""
           >
-            <option value="">Select Category</option>
+            {/* <option value="">Select Category</option>
             {catState.map((i, j) => {
               return (
                 <option key={j} value={i.title}>
                   {i.title}
                 </option>
               );
-            })}
+            })} */}
           </select>
           <div className="error">
             {formik.touched.category && formik.errors.category}
