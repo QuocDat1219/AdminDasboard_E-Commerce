@@ -18,8 +18,6 @@ import useDrivePicker from "react-google-drive-picker";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-
-
 let schema = yup.object().shape({
   title: yup.string().required("Title is Required"),
   description: yup.string().required("Description is Required"),
@@ -46,7 +44,7 @@ const Addproduct = () => {
     dispatch(getColors());
   }, []);
 
-  const brandState = useSelector((state) => state.brand.brands);
+  // const brandState = useSelector((state) => state.brand.brands);
   const catState = useSelector((state) => state.pCategory.pCategories);
   const colorState = useSelector((state) => state.color.colors);
   const imgState = useSelector((state) => state.upload.images);
