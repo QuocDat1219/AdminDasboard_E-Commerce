@@ -43,7 +43,7 @@ const Addmenu = () => {
     }
     if (isSuccess && updatedBrand) {
       toast.success("Brand Updated Successfullly!");
-      navigate("/admin/list-brand");
+      navigate("/admin/list-menu");
     }
 
     if (isError) {

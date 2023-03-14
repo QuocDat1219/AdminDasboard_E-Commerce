@@ -105,11 +105,11 @@ const MainLayout = () => {
                   icon: <AiOutlineBgColors className="fs-4" />,
                   label: "Menu",
                 },
-                // {
-                //   key: "list-menu",
-                //   icon: <AiOutlineBgColors className="fs-4" />,
-                //   label: "List Menu",
-                // },
+                {
+                  key: "menu-list",
+                  icon: <AiOutlineBgColors className="fs-4" />,
+                  label: "List Menu",
+                },
               ],
             },
             {
