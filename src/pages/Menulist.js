@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteABrand,
-  getBrands,
+  getMenus,
   resetState,
 } from "../features/brand/brandSlice";
 import CustomModal from "../components/CustomModal";
@@ -27,7 +27,7 @@ const columns = [
   },
 ];
 
-const Brandlist = () => {
+const Menulist = () => {
   const [open, setOpen] = useState(false);
   const [brandId, setbrandId] = useState("");
   const showModal = (e) => {
@@ -38,17 +38,19 @@ const Brandlist = () => {
   const hideModal = () => {
     setOpen(false);
   };
+  
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(resetState());
-    dispatch(getBrands());
+    dispatch(getMenus());
   }, []);
-  const brandState = useSelector((state) => state.brand.brands);
+  const brandState = useSelector((state) => state.menu.brands);
+  console.log(brandState.Menu);
   const data1 = [];
   for (let i = 0; i < brandState.length; i++) {
     data1.push({
       key: i + 1,
-      name: brandState[i].title,
+      name: brandState[i].name,
       action: (
         <>
           <Link
@@ -72,12 +74,12 @@ const Brandlist = () => {
 
     setOpen(false);
     setTimeout(() => {
-      dispatch(getBrands());
+      dispatch(getMenus());
     }, 100);
   };
   return (
     <div>
-      <h3 className="mb-4 title">Brands</h3>
+      <h3 className="mb-4 title">Danh sách Menu</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
@@ -93,4 +95,4 @@ const Brandlist = () => {
   );
 };
 
-export default Brandlist;
+export default Menulist;

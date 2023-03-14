@@ -15,7 +15,7 @@ export const store = configureStore({
     auth: authReducer,
     customer: customerReducer,
     product: productReducer,
-    brand: brandReducer,
+    menu: brandReducer,
     pCategory: pCategoryReducer,
     bCategory: bCategoryReducer,
     blogs: blogReducer,

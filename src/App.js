@@ -25,6 +25,7 @@ import AddCoupon from "./pages/AddCoupon";
 import ViewEnq from "./pages/ViewEnq";
 import ViewOrder from "./pages/ViewOrder";
 import Addmenu from "./pages/Addmenu";
+import Menulist from "./pages/Menulist";
 function App() {
   return (
     <Router>
@@ -61,7 +62,7 @@ function App() {
           <Route path="product" element={<Addproduct />} />
 
           <Route path="menu" element={<Addmenu />} />
-
+          <Route path="menu-list" element={<Menulist />} />
         </Route>
       </Routes>
     </Router>

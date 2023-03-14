@@ -47,16 +47,23 @@ const MainLayout = () => {
             }
           }}
           items={[
-            // {
-            //   key: "",
-            //   icon: <AiOutlineDashboard className="fs-4" />,
-            //   label: "Dashboard",
-            // },
-            // {
-            //   key: "customers",
-            //   icon: <AiOutlineUser className="fs-4" />,
-            //   label: "Customers",
-            // },
+            {
+              key: "Catalogs",
+              icon: <FiList className="fs-4" />,
+              label: "Quản lý danh mục hàng hóa",
+              children: [
+                {
+                  key: "category",
+                  icon: <FiAlignCenter className="fs-4" />,
+                  label: "Thêm danh mục hàng hóa",
+                },
+                {
+                  key: "list-category",
+                  icon: <FiBox className="fs-4" />,
+                  label: "Danh sách",
+                },
+              ],
+            },
             {
               key: "Catalog",
               icon: <FiShoppingBag className="fs-4" />,
@@ -65,12 +72,12 @@ const MainLayout = () => {
                 {
                   key: "product",
                   icon: <FiAlignCenter className="fs-4" />,
-                  label: "Danh mục hàng hóa",
+                  label: "Thêm hàng hóa",
                 },
                 {
                   key: "list-product",
                   icon: <FiBox className="fs-4" />,
-                  label: "Quản lý hàng hóa",
+                  label: "Danh sách",
                 },
                 // {
                 //   key: "brand",
@@ -120,9 +127,21 @@ const MainLayout = () => {
               label: "Quản lý thông tin cửa hàng",
             },
             {
-              key: "list-brand",
+              key: "Catalogg",
               icon: <FiList className="fs-4" />,
               label: "Quản lý menu",
+              children: [
+                {
+                  key: "menu",
+                  icon: <FiAlignCenter className="fs-4" />,
+                  label: "Menu",
+                },
+                {
+                  key: "menu-list",
+                  icon: <FiBox className="fs-4" />,
+                  label: "Danh sách menu",
+                },
+              ],
             },
             {
               key: "brand",

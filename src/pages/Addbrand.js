@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import {
-  createBrand,
+  createMenu,
   getABrand,
   resetState,
   updateABrand,
@@ -62,7 +62,7 @@ const Addbrand = () => {
         dispatch(updateABrand(data));
         dispatch(resetState());
       } else {
-        dispatch(createBrand(values));
+        dispatch(createMenu(values));
         formik.resetForm();
         setTimeout(() => {
           dispatch(resetState());

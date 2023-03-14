@@ -1,16 +1,17 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import brandService from "./brandService";
 
-export const getBrands = createAsyncThunk(
-  "brand/get-brands",
+export const getMenus = createAsyncThunk(
+  "menu/get-brands",
   async (thunkAPI) => {
     try {
-      return await brandService.getBrands();
+      return await brandService.getMenus();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
+
 export const getABrand = createAsyncThunk(
   "brand/get-brand",
   async (id, thunkAPI) => {
@@ -21,11 +22,11 @@ export const getABrand = createAsyncThunk(
     }
   }
 );
-export const createBrand = createAsyncThunk(
+export const createMenu = createAsyncThunk(
   "brand/create-brand",
   async (brandData, thunkAPI) => {
     try {
-      return await brandService.createBrand(brandData);
+      return await brandService.createMenu(brandData);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -63,36 +64,36 @@ const initialState = {
   message: "",
 };
 export const brandSlice = createSlice({
-  name: "brands",
+  name: "menus",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getBrands.pending, (state) => {
+      .addCase(getMenus.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getBrands.fulfilled, (state, action) => {
+      .addCase(getMenus.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         state.brands = action.payload;
       })
-      .addCase(getBrands.rejected, (state, action) => {
+      .addCase(getMenus.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(createBrand.pending, (state) => {
+      .addCase(createMenu.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createBrand.fulfilled, (state, action) => {
+      .addCase(createMenu.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         state.createdBrand = action.payload;
       })
-      .addCase(createBrand.rejected, (state, action) => {
+      .addCase(createMenu.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteABrand,
-  getBrands,
+  getMenus,
   resetState,
 } from "../features/brand/brandSlice";
 import CustomModal from "../components/CustomModal";
@@ -41,7 +41,7 @@ const Brandlist = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(resetState());
-    dispatch(getBrands());
+    dispatch(getMenus());
   }, []);
   const brandState = useSelector((state) => state.brand.brands);
   const data1 = [];
@@ -72,7 +72,7 @@ const Brandlist = () => {
 
     setOpen(false);
     setTimeout(() => {
-      dispatch(getBrands());
+      dispatch(getMenus());
     }, 100);
   };
   return (
