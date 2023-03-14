@@ -14,6 +14,8 @@ import { Select } from "antd";
 import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from "../features/upload/uploadSlice";
 import { createProducts, resetState } from "../features/product/productSlice";
+import useDrivePicker from "react-google-drive-picker";
+
 let schema = yup.object().shape({
   title: yup.string().required("Title is Required"),
   description: yup.string().required("Description is Required"),
@@ -99,6 +101,30 @@ const Addproduct = () => {
     setColor(e);
     console.log(color);
   };
+
+  const [openPicker, authResponse] = useDrivePicker();
+  // const customViewsArray = [new google.picker.DocsView()]; // custom view
+  const handleOpenPicker = () => {
+    openPicker({
+      clientId:
+        "541961715366-jb2pgssjveh1ri3l6tigl8thsf7dpjob.apps.googleusercontent.com",
+      developerKey: "AIzaSyDaQ-oofs5WON4fI-rsgnXrC2gDUJVDxwA",
+      viewId: "DOCS",
+      // token: token, // pass oauth token in case you already have one
+      showUploadView: true,
+      showUploadFolders: true,
+      supportDrives: true,
+      multiselect: true,
+      // customViews: customViewsArray, // custom view
+      callbackFunction: (data) => {
+        if (data.action === "cancel") {
+          console.log("User clicked cancel/close button");
+        }
+        console.log(data);
+      },
+    });
+  };
+
   return (
     <div>
       <h3 className="mb-4 title">THÊM SẢN PHẨM</h3>
@@ -186,7 +212,7 @@ const Addproduct = () => {
                   {i.title}
                 </option>
               );
-            })} 
+            })}
           </select>
           <div className="error">
             {formik.touched.category && formik.errors.category}
@@ -233,7 +259,7 @@ const Addproduct = () => {
           <div className="error">
             {formik.touched.quantity && formik.errors.quantity}
           </div>
-          <div className="bg-white border-1 p-5 text-center">
+          {/* <div className="bg-white border-1 p-5 text-center">
             <Dropzone
               onDrop={(acceptedFiles) => dispatch(uploadImg(acceptedFiles))}
             >
@@ -261,6 +287,9 @@ const Addproduct = () => {
                 </div>
               );
             })}
+          </div> */}
+          <div>
+            <button onClick={() => handleOpenPicker()}>Open Picker</button>
           </div>
           <button
             className="btn btn-success border-0 rounded-3 my-5"
