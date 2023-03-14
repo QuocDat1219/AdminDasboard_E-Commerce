@@ -186,7 +186,7 @@ const Addproduct = () => {
                   {i.title}
                 </option>
               );
-            })}
+            })} 
           </select>
           <div className="error">
             {formik.touched.category && formik.errors.category}
