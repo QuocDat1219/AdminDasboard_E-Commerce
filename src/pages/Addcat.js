@@ -12,7 +12,7 @@ import {
   updateAProductCategory,
 } from "../features/pcategory/pcategorySlice";
 let schema = yup.object().shape({
-  title: yup.string().required("Tên danh mục trống"),
+  title: yup.string().required("Bạn chưa nhập tên danh mục"),
 });
 const Addcat = () => {
   const dispatch = useDispatch();
@@ -89,7 +89,7 @@ const Addcat = () => {
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
-            {getPCatId !== undefined ? "Sửa" : "Thêm"} Category
+            {getPCatId !== undefined ? "Sửa" : "Thêm"} Loại danh mục
           </button>
         </form>
       </div>
