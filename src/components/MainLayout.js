@@ -79,46 +79,6 @@ const MainLayout = () => {
                   icon: <FiBox className="fs-4" />,
                   label: "Danh sách",
                 },
-                // {
-                //   key: "brand",
-                //   icon: <SiBrandfolder className="fs-4" />,
-                //   label: "Brand",
-                // },
-                // {
-                //   key: "list-brand",
-                //   icon: <SiBrandfolder className="fs-4" />,
-                //   label: "Brand List ",
-                // },
-                // {
-                //   key: "category",
-                //   icon: <BiCategoryAlt className="fs-4" />,
-                //   label: "Category",
-                // },
-                // {
-                //   key: "list-category",
-                //   icon: <BiCategoryAlt className="fs-4" />,
-                //   label: "Category List",
-                // },
-                // {
-                //   key: "color",
-                //   icon: <AiOutlineBgColors className="fs-4" />,
-                //   label: "Color",
-                // },
-                // {
-                //   key: "list-color",
-                //   icon: <AiOutlineBgColors className="fs-4" />,
-                //   label: "Color List",
-                // },
-                // {
-                //   key: "menu",
-                //   icon: <AiOutlineBgColors className="fs-4" />,
-                //   label: "Menu",
-                // },
-                // {
-                //   key: "list-menu",
-                //   icon: <AiOutlineBgColors className="fs-4" />,
-                //   label: "List Menu",
-                // },
               ],
             },
             {
@@ -140,6 +100,23 @@ const MainLayout = () => {
                   key: "menu-list",
                   icon: <FiBox className="fs-4" />,
                   label: "Danh sách menu",
+                },
+              ],
+            },
+            {
+              key: "ConfigChat",
+              icon: <FiList className="fs-4" />,
+              label: "Cài đặt chat fb",
+              children: [
+                {
+                  key: "config",
+                  icon: <FiAlignCenter className="fs-4" />,
+                  label: "Cài đặt",
+                },
+                {
+                  key: "config-list",
+                  icon: <FiBox className="fs-4" />,
+                  label: "Xem cài đặt",
                 },
               ],
             },

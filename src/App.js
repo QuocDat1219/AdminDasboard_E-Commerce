@@ -26,6 +26,8 @@ import ViewEnq from "./pages/ViewEnq";
 import ViewOrder from "./pages/ViewOrder";
 import Addmenu from "./pages/Addmenu";
 import Menulist from "./pages/Menulist";
+import Addconfigchat from "./pages/Addconfigchat";
+import ConfigChatlist from "./pages/ConfigChatlist"
 function App() {
   return (
     <Router>
@@ -63,6 +65,8 @@ function App() {
 
           <Route path="menu" element={<Addmenu />} />
           <Route path="menu-list" element={<Menulist />} />
+          <Route path="config" element={<Addconfigchat />} />
+          <Route path="config-list" element={<ConfigChatlist />}/>
         </Route>
       </Routes>
     </Router>

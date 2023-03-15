@@ -5,7 +5,7 @@ import { config } from "../../utils/axiosconfig";
 const getProductCategories = async () => {
   const response = await axios.get(`${base_url}category/`);
 
-  return response.data;
+  return response.data.category;
 };
 const createCategory = async (category) => {
   const response = await axios.post(`${base_url}category/`, category, config);

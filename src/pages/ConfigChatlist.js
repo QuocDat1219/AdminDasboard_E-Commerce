@@ -2,19 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteAProductCategory,
-  getCategories,
+  deleteABrand,
+  getMenus,
   resetState,
-} from "../features/pcategory/pcategorySlice";
+} from "../features/brand/brandSlice";
 import CustomModal from "../components/CustomModal";
-
-
-
-
-
 
 const columns = [
   {
@@ -22,51 +17,51 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Tên danh mục",
+    title: "Page Id",
     dataIndex: "name",
     sorter: (a, b) => a.name.length - b.name.length,
   },
-
   {
     title: "Action",
     dataIndex: "action",
   },
 ];
 
-const Categorylist = () => {
+const Menulist = () => {
   const [open, setOpen] = useState(false);
-  const [pCatId, setpCatId] = useState("");
+  const [brandId, setbrandId] = useState("");
   const showModal = (e) => {
     setOpen(true);
-    setpCatId(e);
+    setbrandId(e);
   };
 
   const hideModal = () => {
     setOpen(false);
   };
+  
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(resetState());
-    dispatch(getCategories());
+    dispatch(getMenus());
   }, []);
-  const pCatStat = useSelector((state) => state.pCategory.pCategories);
-  
+  const brandState = useSelector((state) => state.menu.brands);
+  console.log(brandState.Menu);
   const data1 = [];
-  for (let i = 0; i < pCatStat.length; i++) {
+  for (let i = 0; i < brandState.length; i++) {
     data1.push({
       key: i + 1,
-      name: pCatStat[i].name,
+      name: brandState[i].namee,
       action: (
         <>
           <Link
-            to={`/admin/category/${pCatStat[i]._id}`}
+            to={`/admin/brand/${brandState[i]._id}`}
             className=" fs-3 text-danger"
           >
             <BiEdit />
           </Link>
           <button
             className="ms-3 fs-3 text-danger bg-transparent border-0"
-            onClick={() => showModal(pCatStat[i]._id)}
+            onClick={() => showModal(brandState[i]._id)}
           >
             <AiFillDelete />
           </button>
@@ -74,16 +69,17 @@ const Categorylist = () => {
       ),
     });
   }
-  const deleteCategory = (e) => {
-    dispatch(deleteAProductCategory(e));
+  const deleteBrand = (e) => {
+    dispatch(deleteABrand(e));
+
     setOpen(false);
     setTimeout(() => {
-      dispatch(getCategories());
+      dispatch(getMenus());
     }, 100);
   };
   return (
     <div>
-      <h3 className="mb-4 title">Product Categories</h3>
+      <h3 className="mb-4 title">Danh sách Config</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
@@ -91,12 +87,12 @@ const Categorylist = () => {
         hideModal={hideModal}
         open={open}
         performAction={() => {
-          deleteCategory(pCatId);
+          deleteBrand(brandId);
         }}
-        title="Are you sure you want to delete this Product Category?"
+        title="Are you sure you want to delete this brand?"
       />
     </div>
   );
 };
 
-export default Categorylist;
+export default Menulist;

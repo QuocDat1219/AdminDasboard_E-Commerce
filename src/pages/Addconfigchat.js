@@ -6,60 +6,63 @@ import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import {
-  createCategory,
-  getAProductCategory,
+  createMenu,
+  getABrand,
   resetState,
-  updateAProductCategory,
-} from "../features/pcategory/pcategorySlice";
+  updateABrand,
+} from "../features/brand/brandSlice";
+
 let schema = yup.object().shape({
-  title: yup.string().required("Tên danh mục trống"),
+  title: yup.string().required("Brand Name is Required"),
 });
-const Addcat = () => {
+const Addconfigchat = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const getPCatId = location.pathname.split("/")[3];
   const navigate = useNavigate();
-  const newCategory = useSelector((state) => state.pCategory);
+  const getBrandId = location.pathname.split("/")[3];
+  const newBrand = useSelector((state) => state.menu);
   const {
     isSuccess,
     isError,
     isLoading,
-    createdCategory,
-    categoryName,
-    updatedCategory,
-  } = newCategory;
+    createdBrand,
+    brandName,
+    updatedBrand,
+  } = newBrand;
   useEffect(() => {
-    if (getPCatId !== undefined) {
-      dispatch(getAProductCategory(getPCatId));
+    if (getBrandId !== undefined) {
+      dispatch(getABrand(getBrandId));
     } else {
       dispatch(resetState());
     }
-  }, [getPCatId]);
+  }, [getBrandId]);
+
   useEffect(() => {
-    if (isSuccess && createdCategory) {
-      toast.success("Thêm danh mục thành công!");
+    if (isSuccess && createdBrand) {
+      toast.success("Brand Added Successfullly!");
     }
-    if (isSuccess && updatedCategory) {
-      toast.success("Cập nhật danh mục thành công!");
-      navigate("/admin/list-category");
+    if (isSuccess && updatedBrand) {
+      toast.success("Brand Updated Successfullly!");
+      navigate("/admin/list-brand");
     }
+
     if (isError) {
-      toast.error("Đã xảy ra sự cố!");
+      toast.error("Something Went Wrong!");
     }
   }, [isSuccess, isError, isLoading]);
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      title: categoryName || "",
+      title: brandName || "",
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      if (getPCatId !== undefined) {
-        const data = { id: getPCatId, pCatData: values };
-        dispatch(updateAProductCategory(data));
+      if (getBrandId !== undefined) {
+        const data = { id: getBrandId, brandData: values };
+        dispatch(updateABrand(data));
         dispatch(resetState());
       } else {
-        dispatch(createCategory(values));
+        dispatch(createMenu(values));
         formik.resetForm();
         setTimeout(() => {
           dispatch(resetState());
@@ -67,29 +70,33 @@ const Addcat = () => {
       }
     },
   });
+
   return (
     <div>
-      <h3 className="mb-4  title">
-        {getPCatId !== undefined ? "Sửa" : "Thêm"} Danh mục
+      <h3 className="mb-4 title">
+        {/* {getBrandId !== undefined ? "Edit" : "Add"} Brand */} Quản lý ConfigChat
       </h3>
       <div>
         <form action="" onSubmit={formik.handleSubmit}>
           <CustomInput
             type="text"
-            label="Nhập danh mục sản phẩm"
+            name="page_id"
             onChng={formik.handleChange("title")}
             onBlr={formik.handleBlur("title")}
             val={formik.values.title}
-            id="brand"
+            label="Nhập Page ID"
+            id="page_id"
           />
           <div className="error">
-            {formik.touched.title && formik.errors.title}
+            {/* {formik.touched.title && formik.errors.title} */}
           </div>
+          
           <button
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
-            {getPCatId !== undefined ? "Sửa" : "Thêm"} Category
+            {/* {getBrandId !== undefined ? "Edit" : "Add"} Brand */}
+            Thêm Menu
           </button>
         </form>
       </div>
@@ -97,4 +104,4 @@ const Addcat = () => {
   );
 };
 
-export default Addcat;
+export default Addconfigchat;
