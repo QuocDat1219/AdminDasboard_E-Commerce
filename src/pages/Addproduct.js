@@ -19,17 +19,17 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 let schema = yup.object().shape({
-  title: yup.string().required("Title is Required"),
-  description: yup.string().required("Description is Required"),
-  price: yup.number().required("Price is Required"),
-  brand: yup.string().required("Brand is Required"),
-  category: yup.string().required("Category is Required"),
-  tags: yup.string().required("Tag is Required"),
-  color: yup
-    .array()
-    .min(1, "Pick at least one color")
-    .required("Color is Required"),
-  quantity: yup.number().required("Quantity is Required"),
+  title: yup.string().required("Bạn chưa nhập tiêu đề"),
+  // description: yup.string().required("Description is Required"),
+  price: yup.number().required("Bạn chưa nhập giá sản phẩm"),
+  // brand: yup.string().required("Brand is Required"),
+  // category: yup.string().required("Category is Required"),
+  // tags: yup.string().required("Tag is Required"),
+  // color: yup
+  //   .array()
+  //   .min(1, "Pick at least one color")
+  //   .required("Color is Required"),
+  quantity: yup.number().required("Bạn chưa nhập số lượng sản phẩm"),
 });
 
 const Addproduct = () => {
@@ -52,10 +52,10 @@ const Addproduct = () => {
   const { isSuccess, isError, isLoading, createdProduct } = newProduct;
   useEffect(() => {
     if (isSuccess && createdProduct) {
-      toast.success("Product Added Successfullly!");
+      toast.success("Đã thêm sản phẩm thành công !");
     }
     if (isError) {
-      toast.error("Something Went Wrong!");
+      toast.error("Đã xảy ra sự cố !");
     }
   }, [isSuccess, isError, isLoading]);
   const coloropt = [];
@@ -129,7 +129,7 @@ const Addproduct = () => {
 
   return (
     <div>
-      <h3 className="mb-4 title">THÊM SẢN PHẨM</h3>
+      <h3 className="mb-4 title">Thêm Sản Phẩm</h3>
       <div>
         <form
           onSubmit={formik.handleSubmit}
@@ -291,10 +291,15 @@ const Addproduct = () => {
             })}
           </div> */}
           <div>
-            <button onClick={() => handleOpenPicker()}>Open Picker</button>
+            <button
+              onClick={() => handleOpenPicker()}
+              className="btn btn-outline-primary border-1 rounded-3"
+            >
+              Open Picker
+            </button>
           </div>
           <button
-            className="btn btn-success border-0 rounded-3 my-5"
+            className="btn btn-primary border-0 rounded-3 my-5"
             type="submit"
           >
             Thêm sản phẩm

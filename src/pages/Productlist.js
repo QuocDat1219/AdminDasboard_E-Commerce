@@ -27,7 +27,7 @@ const columns = [
   },
   {
     title: "Mô tả",
-    dataIndex: "description", 
+    dataIndex: "description",
   },
   {
     title: "Số lượng",
@@ -74,7 +74,7 @@ const Productlist = () => {
       idCategory: productState[i].idCategory,
       slug: productState[i].slug,
       sold: productState[i].sold,
-      url: <img src={productState[i].imagesDetail[0].url}/>,
+      url: <img src={productState[i].imagesDetail[0].url} />,
       action: (
         <>
           <Link to="/" className=" fs-3 text-danger">
@@ -90,7 +90,7 @@ const Productlist = () => {
   console.log(data1);
   return (
     <div>
-      <h3 className="mb-4 title">Products</h3>
+      <h3 className="mb-4 title">Danh Mục Sản Phẩm</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>

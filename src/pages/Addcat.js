@@ -12,7 +12,7 @@ import {
   updateAProductCategory,
 } from "../features/pcategory/pcategorySlice";
 let schema = yup.object().shape({
-  title: yup.string().required("Category Name is Required"),
+  title: yup.string().required("Bạn chưa nhập tên danh mục"),
 });
 const Addcat = () => {
   const dispatch = useDispatch();
@@ -70,13 +70,13 @@ const Addcat = () => {
   return (
     <div>
       <h3 className="mb-4  title">
-        {getPCatId !== undefined ? "Edit" : "Add"} Category
+        {getPCatId !== undefined ? "Edit" : "Thêm"} Loại Sản Phẩm
       </h3>
       <div>
         <form action="" onSubmit={formik.handleSubmit}>
           <CustomInput
             type="text"
-            label="Enter Product Category"
+            label="Nhập danh mục sản phẩm"
             onChng={formik.handleChange("title")}
             onBlr={formik.handleBlur("title")}
             val={formik.values.title}
@@ -89,7 +89,7 @@ const Addcat = () => {
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
-            {getPCatId !== undefined ? "Edit" : "Add"} Category
+            {getPCatId !== undefined ? "Edit" : "Thêm"} Loại sản phẩm
           </button>
         </form>
       </div>
