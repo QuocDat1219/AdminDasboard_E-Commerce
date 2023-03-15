@@ -10,15 +10,20 @@ import {
   resetState,
 } from "../features/brand/brandSlice";
 import CustomModal from "../components/CustomModal";
-
+import DOMPurify from "dompurify";
 const columns = [
   {
     title: "SNo",
     dataIndex: "key",
   },
   {
-    title: "Name",
+    title: "Tên Menu",
     dataIndex: "name",
+    sorter: (a, b) => a.name.length - b.name.length,
+  },
+  {
+    title: "Nội dung",
+    dataIndex: "doc",
     sorter: (a, b) => a.name.length - b.name.length,
   },
   {
@@ -51,6 +56,7 @@ const Menulist = () => {
     data1.push({
       key: i + 1,
       name: brandState[i].name,
+      doc: DOMPurify.sanitize(brandState[i].doc, {ALLOWED_TAGS: []}),
       action: (
         <>
           <Link
