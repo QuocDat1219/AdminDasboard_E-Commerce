@@ -10,7 +10,7 @@ import {
   resetState,
 } from "../features/brand/brandSlice";
 import CustomModal from "../components/CustomModal";
-
+import CustomModalMenu from "../components/CustomModalMenu";
 const columns = [
   {
     title: "SNo",
@@ -29,6 +29,7 @@ const columns = [
 
 const Menulist = () => {
   const [open, setOpen] = useState(false);
+  const [open1, setOpen1] = useState(false);
   const [brandId, setbrandId] = useState("");
   const showModal = (e) => {
     setOpen(true);
@@ -38,7 +39,15 @@ const Menulist = () => {
   const hideModal = () => {
     setOpen(false);
   };
-  
+
+  const showModal1 = (e) => {
+    setOpen1(true);
+    setbrandId(e);
+  };
+  const hideModal1 = () => {
+    setOpen1(false);
+  };
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(resetState());
@@ -57,8 +66,14 @@ const Menulist = () => {
             to={`/admin/brand/${brandState[i]._id}`}
             className=" fs-3 text-danger"
           >
-            <BiEdit />
           </Link>
+          <button
+          className="ms-3 fs-3 text-danger bg-transparent border-0"
+          onClick={() => showModal1(brandState[i]._id)}
+          >
+
+          <BiEdit />
+          </button>
           <button
             className="ms-3 fs-3 text-danger bg-transparent border-0"
             onClick={() => showModal(brandState[i]._id)}
@@ -91,6 +106,7 @@ const Menulist = () => {
         }}
         title="Are you sure you want to delete this brand?"
       />
+      <CustomModalMenu hideModal={hideModal1} open={open1} />
     </div>
   );
 };
