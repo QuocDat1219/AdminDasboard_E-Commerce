@@ -1,8 +1,10 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import CustomInput from "../components/CustomInput";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import * as yup from "yup";
 import { useFormik } from "formik";
 import {
@@ -11,9 +13,10 @@ import {
   resetState,
   updateABrand,
 } from "../features/brand/brandSlice";
+import { EditorState } from "draft-js";
 
 let schema = yup.object().shape({
-  title: yup.string().required("Brand Name is Required"),
+  name: yup.string().required("Brand Name is Required"),
 });
 const Addmenu = () => {
   const dispatch = useDispatch();
@@ -21,14 +24,23 @@ const Addmenu = () => {
   const navigate = useNavigate();
   const getBrandId = location.pathname.split("/")[3];
   const newBrand = useSelector((state) => state.menu);
+
+
   const {
     isSuccess,
     isError,
     isLoading,
     createdBrand,
-    brandName,
+    menuName,
+    docs,
     updatedBrand,
   } = newBrand;
+
+  //Envent WYSIWYG
+  const [editorState, setEditorState] = useState("");
+  const handleEditorChange = (newEditorState) => {
+    setEditorState(newEditorState);
+  }
   useEffect(() => {
     if (getBrandId !== undefined) {
       dispatch(getABrand(getBrandId));
@@ -53,10 +65,12 @@ const Addmenu = () => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      title: brandName || "",
+      name: menuName || "",
+      doc: docs || "",
     },
     validationSchema: schema,
     onSubmit: (values) => {
+      console.log(values)
       if (getBrandId !== undefined) {
         const data = { id: getBrandId, brandData: values };
         dispatch(updateABrand(data));
@@ -71,30 +85,52 @@ const Addmenu = () => {
     },
   });
 
+
   return (
     <div>
-      <h3 className="mb-4 title">
+      <h3 className="mb-4 title" style={{ textAlign: "center" }}>
         {/* {getBrandId !== undefined ? "Edit" : "Add"} Brand */} Quản lý menu
       </h3>
       <div>
+        <h5>Tên Menu</h5>
         <form action="" onSubmit={formik.handleSubmit}>
           <CustomInput
             type="text"
-            name="title"
-            onChng={formik.handleChange("title")}
-            onBlr={formik.handleBlur("title")}
-            val={formik.values.title}
+            name="name"
+            onChng={formik.handleChange("name")}
+            onBlr={formik.handleBlur("name")}
+            val={formik.values.name}
             label="Nhập Menu"
             id="menu"
           />
           <div className="error">
             {/* {formik.touched.title && formik.errors.title} */}
           </div>
+
+          <div className="Mn_wysiwyg" style={{ marginTop: "30px" }}>
+            <h5>Nội dung</h5>
+
+            <Editor
+              onChange={(value) => formik.setFieldValue('doc', value)}
+              values={formik.values.doc}
+              label="Nhập Menu"
+              id="menu"
+            />
+             {/* <CustomInput
+            type="text"
+            name="doc"
+            onChng={formik.handleChange("doc")}
+            onBlr={formik.handleBlur("doc")}
+            val={formik.values.doc}
+            label="Nhập Menu"
+            id="menu"
+          /> */}
+          </div>
           <button
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
-            {/* {getBrandId !== undefined ? "Edit" : "Add"} Brand */}
+            {getBrandId !== undefined ? "Edit" : "Add"}
             Thêm Menu
           </button>
         </form>

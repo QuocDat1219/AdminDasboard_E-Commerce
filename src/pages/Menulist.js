@@ -4,6 +4,9 @@ import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { EditorState, convertToRaw, convertFromRaw, convertToHTML } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import DOMPurify from "dompurify";
 import {
   deleteABrand,
   getMenus,
@@ -17,8 +20,14 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Name",
+    title: "Tên Menu",
     dataIndex: "name",
+    sorter: (a, b) => a.name.length - b.name.length,
+  },
+  {
+    title: "Nội dung",
+    dataIndex: "doc",
+
     sorter: (a, b) => a.name.length - b.name.length,
   },
   {
@@ -44,13 +53,20 @@ const Menulist = () => {
     dispatch(resetState());
     dispatch(getMenus());
   }, []);
-  const brandState = useSelector((state) => state.menu.brands);
-  console.log(brandState.Menu);
+  const brandState = useSelector((state) => state.menu.menus);
+  console.log(brandState);
   const data1 = [];
   for (let i = 0; i < brandState.length; i++) {
+    const noidung = brandState[i].doc;
+    // const contentState = convertFromRaw(noidung);
+    // const editorState = EditorState.createWithContent(contentState);
+    // const html = convertToHTML(editorState.getCurrentContent());
+    console.log(noidung)
     data1.push({
       key: i + 1,
       name: brandState[i].name,
+      // doc: draftToHtml(convertToRaw(brandState[i].doc.getCurrentContent())),
+      doc: brandState[i].doc.blocks.text,
       action: (
         <>
           <Link
