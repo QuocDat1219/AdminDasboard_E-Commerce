@@ -1,6 +1,19 @@
 import React, { useState } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { FiShoppingBag, FiAlignCenter, FiHome, FiBox,FiList,FiLink, FiSend } from "react-icons/fi";
+import {
+  FiShoppingBag,
+  FiAlignCenter,
+  FiHome,
+  FiBox,
+  FiList,
+  FiLink,
+  FiLayers,
+  FiSend,
+  FiGrid,
+  FiTrello,
+  FiPlusSquare,
+  FiPackage,
+} from "react-icons/fi";
 
 import {
   AiOutlineDashboard,
@@ -54,13 +67,13 @@ const MainLayout = () => {
               children: [
                 {
                   key: "category",
-                  icon: <FiAlignCenter className="fs-4" />,
+                  icon: <FiPlusSquare className="fs-4" />,
                   label: "Thêm danh mục hàng hóa",
                 },
                 {
                   key: "list-category",
-                  icon: <FiBox className="fs-4" />,
-                  label: "Danh sách",
+                  icon: <FiLayers className="fs-4" />,
+                  label: "Tổng hợp danh mục",
                 },
               ],
             },
@@ -71,34 +84,29 @@ const MainLayout = () => {
               children: [
                 {
                   key: "product",
-                  icon: <FiAlignCenter className="fs-4" />,
+                  icon: <FiPlusSquare className="fs-4" />,
                   label: "Thêm hàng hóa",
                 },
                 {
                   key: "list-product",
-                  icon: <FiBox className="fs-4" />,
-                  label: "Danh sách",
+                  icon: <FiPackage className="fs-4" />,
+                  label: "Danh sách hàng hóa",
                 },
               ],
             },
             {
-              key: "orders",
-              icon: <FiHome className="fs-4" />,
-              label: "Quản lý thông tin cửa hàng",
-            },
-            {
               key: "Catalogg",
-              icon: <FiList className="fs-4" />,
+              icon: <FiTrello className="fs-4" />,
               label: "Quản lý menu",
               children: [
                 {
                   key: "menu",
-                  icon: <FiAlignCenter className="fs-4" />,
-                  label: "Menu",
+                  icon: <FiPlusSquare className="fs-4" />,
+                  label: "Thêm Menu",
                 },
                 {
                   key: "menu-list",
-                  icon: <FiBox className="fs-4" />,
+                  icon: <FiGrid className="fs-4" />,
                   label: "Danh sách menu",
                 },
               ],
@@ -121,12 +129,12 @@ const MainLayout = () => {
               ],
             },
             {
-              key: "brand",
+              key: "links",
               icon: <FiLink className="fs-4" />,
               label: "Quản lý liên kết",
             },
             {
-              key: "enquiries",
+              key: "chat",
               icon: <FiSend className="fs-4" />,
               label: "Quản lý configchat",
             },
