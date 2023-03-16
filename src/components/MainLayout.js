@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { FiShoppingBag, FiAlignCenter, FiHome, FiBox,FiList,FiLink, FiSend } from "react-icons/fi";
+import { FiShoppingBag, FiAlignCenter, FiHome, FiBox,FiList,FiLink, FiSend,FiSettings } from "react-icons/fi";
 
 import {
   AiOutlineDashboard,
@@ -104,31 +104,14 @@ const MainLayout = () => {
               ],
             },
             {
-              key: "ConfigChat",
-              icon: <FiList className="fs-4" />,
-              label: "Cài đặt chat fb",
-              children: [
-                {
-                  key: "config",
-                  icon: <FiAlignCenter className="fs-4" />,
-                  label: "Cài đặt",
-                },
-                {
-                  key: "config-list",
-                  icon: <FiBox className="fs-4" />,
-                  label: "Xem cài đặt",
-                },
-              ],
-            },
-            {
               key: "brand",
               icon: <FiLink className="fs-4" />,
               label: "Quản lý liên kết",
             },
             {
-              key: "enquiries",
-              icon: <FiSend className="fs-4" />,
-              label: "Quản lý configchat",
+              key: "setting",
+              icon: <FiSettings className="fs-4" />,
+              label: "Cài đặt",
             },
           ]}
         />
