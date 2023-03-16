@@ -28,6 +28,8 @@ import Addmenu from "./pages/Addmenu";
 import Menulist from "./pages/Menulist";
 import Setting from "./pages/Setting";
 import ConfigChatlist from "./pages/ConfigChatlist"
+import AddLink from "./pages/Addlink";
+import Linklist from "./pages/Linklist";
 function App() {
   return (
     <Router>
@@ -67,6 +69,8 @@ function App() {
           <Route path="menu-list" element={<Menulist />} />
           <Route path="setting" element={<Setting />} />
           <Route path="config-list" element={<ConfigChatlist />}/>
+          <Route path="add-link" element={<AddLink/>}/>
+          <Route path="link-list" element={<Linklist/>}/>
         </Route>
       </Routes>
     </Router>

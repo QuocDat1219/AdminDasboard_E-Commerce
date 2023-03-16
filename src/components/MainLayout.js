@@ -13,6 +13,7 @@ import {
   FiTrello,
   FiPlusSquare,
   FiPackage,
+  FiPaperclip
 } from "react-icons/fi";
 
 import {
@@ -129,9 +130,21 @@ const MainLayout = () => {
               ],
             },
             {
-              key: "links",
+              key: "linkssss",
               icon: <FiLink className="fs-4" />,
               label: "Quản lý liên kết",
+              children: [
+                {
+                  key: "add-link",
+                  icon: <FiPlusSquare className="fs-4" />,
+                  label: "Thêm Link",
+                },
+                {
+                  key: "link-list",
+                  icon: <FiPaperclip className="fs-4" />,
+                  label: "Danh sách Link",
+                },
+              ],
             },
             {
               key: "setting",
