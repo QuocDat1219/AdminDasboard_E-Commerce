@@ -13,7 +13,8 @@ import {
   FiTrello,
   FiPlusSquare,
   FiPackage,
-  FiPaperclip
+  FiPaperclip,
+  FiSettings
 } from "react-icons/fi";
 
 import {
