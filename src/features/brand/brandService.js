@@ -13,7 +13,7 @@ const getBrands = async () => {
 };
 
 const createMenu = async (menu) => {
-  const response = await axios.post(`${base_url}menu/`, menu, config);
+  const response = await axios.post(`${base_url}menu/`,menu, config);
   return response.data;
 };
 

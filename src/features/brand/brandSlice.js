@@ -57,7 +57,7 @@ export const deleteABrand = createAsyncThunk(
 export const resetState = createAction("Reset_all");
 
 const initialState = {
-  brands: [],
+  menus: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -76,7 +76,7 @@ export const brandSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.brands = action.payload;
+        state.menus = action.payload;
       })
       .addCase(getMenus.rejected, (state, action) => {
         state.isLoading = false;
