@@ -21,6 +21,7 @@ const Addconfigchat = () => {
   const navigate = useNavigate();
   const getBrandId = location.pathname.split("/")[3];
   const newBrand = useSelector((state) => state.menu);
+  
   const {
     isSuccess,
     isError,
@@ -38,11 +39,9 @@ const Addconfigchat = () => {
   }, [getBrandId]);
 
   useEffect(() => {
-    if (isSuccess && createdBrand) {
-      toast.success("Brand Added Successfullly!");
-    }
+  
     if (isSuccess && updatedBrand) {
-      toast.success("Brand Updated Successfullly!");
+      toast.success("Cập nhật thành công!");
       navigate("/admin/list-brand");
     }
 
@@ -57,46 +56,81 @@ const Addconfigchat = () => {
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      if (getBrandId !== undefined) {
+    
         const data = { id: getBrandId, brandData: values };
         dispatch(updateABrand(data));
         dispatch(resetState());
-      } else {
-        dispatch(createMenu(values));
-        formik.resetForm();
-        setTimeout(() => {
-          dispatch(resetState());
-        }, 300);
-      }
+     
     },
   });
 
   return (
     <div>
       <h3 className="mb-4 title">
-        {/* {getBrandId !== undefined ? "Edit" : "Add"} Brand */} Quản lý ConfigChat
+        {/* {getBrandId !== undefined ? "Edit" : "Add"} Brand */} Cài Đặt
       </h3>
       <div>
         <form action="" onSubmit={formik.handleSubmit}>
           <CustomInput
             type="text"
             name="page_id"
+            onChng={formik.handleChange("nameadmin")}
+            onBlr={formik.handleBlur("nameadmin")}
+            val={formik.values.nameadmin}
+            label="Tên người sở hữu"
+          />
+        
+          <CustomInput
+            type="text"
+            name="page_id"
             onChng={formik.handleChange("title")}
             onBlr={formik.handleBlur("title")}
             val={formik.values.title}
-            label="Nhập Page ID"
-            id="page_id"
+            label="Tên Website"
           />
-          <div className="error">
-            {/* {formik.touched.title && formik.errors.title} */}
-          </div>
+        
+          <CustomInput
+            type="text"
+            name="page_id"
+            onChng={formik.handleChange("title")}
+            onBlr={formik.handleBlur("title")}
+            val={formik.values.title}
+            label="Địa chỉ"
+          />
           
+          <CustomInput
+            type="text"
+            name="page_id"
+            onChng={formik.handleChange("title")}
+            onBlr={formik.handleBlur("title")}
+            val={formik.values.title}
+            label="Số điện thoại"
+          />
+        
+          <CustomInput
+            type="text"
+            name="page_id"
+            onChng={formik.handleChange("title")}
+            onBlr={formik.handleBlur("title")}
+            val={formik.values.title}
+            label="Mã số thuế"
+          />
+        
+          <CustomInput
+            type="text"
+            name="page_id"
+            onChng={formik.handleChange("title")}
+            onBlr={formik.handleBlur("title")}
+            val={formik.values.title}
+            label="Page ID"
+          />
+         
           <button
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
             {/* {getBrandId !== undefined ? "Edit" : "Add"} Brand */}
-            Thêm Menu
+            Cập nhật
           </button>
         </form>
       </div>

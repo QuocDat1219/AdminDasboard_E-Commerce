@@ -134,9 +134,9 @@ const MainLayout = () => {
               label: "Quản lý liên kết",
             },
             {
-              key: "chat",
-              icon: <FiSend className="fs-4" />,
-              label: "Quản lý configchat",
+              key: "setting",
+              icon: <FiSettings className="fs-4" />,
+              label: "Cài đặt",
             },
           ]}
         />
