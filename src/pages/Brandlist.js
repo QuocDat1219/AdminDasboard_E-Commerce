@@ -5,7 +5,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteABrand,
+  deleteAMenu,
   getMenus,
   resetState,
 } from "../features/brand/brandSlice";
@@ -68,7 +68,7 @@ const Brandlist = () => {
     });
   }
   const deleteBrand = (e) => {
-    dispatch(deleteABrand(e));
+    dispatch(deleteAMenu(e));
 
     setOpen(false);
     setTimeout(() => {
