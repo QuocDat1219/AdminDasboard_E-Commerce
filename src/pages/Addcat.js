@@ -86,7 +86,7 @@ const Addcat = () => {
             {formik.touched.title && formik.errors.title}
           </div>
           <button
-            className="btn btn-success border-0 rounded-3 my-5"
+           className="bg-blue-500 text-white h-[40px] w-[250px] rounded-3 my-5"
             type="submit"
           >
             {getPCatId !== undefined ? "Sửa" : "Thêm"} Loại danh mục
