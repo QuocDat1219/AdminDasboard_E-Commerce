@@ -58,6 +58,7 @@ const Categorylist = () => {
       name: pCatStat[i].name,
       action: (
         <>
+        <div className="flex">
           <Link
             to={`/admin/category/${pCatStat[i]._id}`}
             className=" fs-3 text-danger"
@@ -70,6 +71,7 @@ const Categorylist = () => {
           >
             <AiFillDelete />
           </button>
+          </div>
         </>
       ),
     });
