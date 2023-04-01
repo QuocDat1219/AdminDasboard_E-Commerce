@@ -32,8 +32,8 @@ const getBrand = async (id) => {
   return response.data;
 };
 
-const deleteBrand = async (id) => {
-  const response = await axios.delete(`${base_url}brand/${id}`, config);
+const deleteMenu = async (id) => {
+  const response = await axios.delete(`${base_url}menu/${id}`, config);
 
   return response.data;
 };
@@ -43,7 +43,7 @@ const brandService = {
   createMenu,
   getBrand,
   updateBrand,
-  deleteBrand,
+  deleteMenu,
   getBrands,
 };
 

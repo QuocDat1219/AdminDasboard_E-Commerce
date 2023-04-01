@@ -5,7 +5,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteABrand,
+  deleteAMenu,
   getMenus,
   resetState,
 } from "../features/brand/brandSlice";
@@ -70,7 +70,7 @@ const Menulist = () => {
     });
   }
   const deleteBrand = (e) => {
-    dispatch(deleteABrand(e));
+    dispatch(deleteAMenu  (e));
 
     setOpen(false);
     setTimeout(() => {
@@ -89,7 +89,7 @@ const Menulist = () => {
         performAction={() => {
           deleteBrand(brandId);
         }}
-        title="Are you sure you want to delete this brand?"
+        title="Bạn muốn xóa chat bot này?"
       />
     </div>
   );

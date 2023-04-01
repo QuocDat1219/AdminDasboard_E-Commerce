@@ -8,7 +8,7 @@ import { EditorState, convertToRaw, convertFromRaw, convertToHTML } from 'draft-
 import draftToHtml from 'draftjs-to-html';
 import DOMPurify from "dompurify";
 import {
-  deleteABrand,
+  deleteAMenu,
   getMenus,
   resetState,
 } from "../features/brand/brandSlice";
@@ -39,10 +39,10 @@ const columns = [
 const Menulist = () => {
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
-  const [brandId, setbrandId] = useState("");
+  const [menuId, setMenuId] = useState("");
   const showModal = (e) => {
     setOpen(true);
-    setbrandId(e);
+    setMenuId(e);
   };
 
   const hideModal = () => {
@@ -51,7 +51,7 @@ const Menulist = () => {
 
   const showModal1 = (e) => {
     setOpen1(true);
-    setbrandId(e);
+    setMenuId(e);
   };
   const hideModal1 = () => {
     setOpen1(false);
@@ -62,37 +62,36 @@ const Menulist = () => {
     dispatch(resetState());
     dispatch(getMenus());
   }, []);
-  const brandState = useSelector((state) => state.menu.menus);
-  console.log(brandState);
+  const menuState = useSelector((state) => state.menu.menus);
+  console.log(menuState);
   const data1 = [];
-  for (let i = 0; i < brandState.length; i++) {
-    const noidung = brandState[i].doc;
+  for (let i = 0; i < menuState.length; i++) {
+    const noidung = menuState[i].doc;
     // const contentState = convertFromRaw(noidung);
     // const editorState = EditorState.createWithContent(contentState);
     // const html = convertToHTML(editorState.getCurrentContent());
     console.log(noidung)
     data1.push({
       key: i + 1,
-      name: brandState[i].name,
+      name: menuState[i].name,
       // doc: draftToHtml(convertToRaw(brandState[i].doc.getCurrentContent())),
-      doc: brandState[i].doc.blocks.text,
+      // doc: menuState[i].doc.blocks.text,
       action: (
         <>
           <Link
-            to={`/admin/brand/${brandState[i]._id}`}
+            to={`/admin/menu/${menuState[i]._id}`}
             className=" fs-3 text-danger"
           >
           </Link>
           <button
-          className="ms-3 fs-3 text-danger bg-transparent border-0"
-          onClick={() => showModal1(brandState[i]._id)}
+            className="ms-3 fs-3 text-danger bg-transparent border-0"
+            onClick={() => showModal1(menuState[i]._id)}
           >
-
-          <BiEdit />
+            <BiEdit />
           </button>
           <button
             className="ms-3 fs-3 text-danger bg-transparent border-0"
-            onClick={() => showModal(brandState[i]._id)}
+            onClick={() => showModal(menuState[i]._id)}
           >
             <AiFillDelete />
           </button>
@@ -100,8 +99,8 @@ const Menulist = () => {
       ),
     });
   }
-  const deleteBrand = (e) => {
-    dispatch(deleteABrand(e));
+  const deleteMenu = (e) => {
+    dispatch(deleteAMenu(e));
 
     setOpen(false);
     setTimeout(() => {
@@ -118,9 +117,9 @@ const Menulist = () => {
         hideModal={hideModal}
         open={open}
         performAction={() => {
-          deleteBrand(brandId);
+          deleteMenu(menuId);
         }}
-        title="Are you sure you want to delete this brand?"
+        title="Bạn muốn xóa menu này?"
       />
       <CustomModalMenu hideModal={hideModal1} open={open1} />
     </div>

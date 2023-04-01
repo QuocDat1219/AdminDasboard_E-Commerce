@@ -194,7 +194,7 @@ const MainLayout = () => {
                 aria-expanded="false"
               >
                 <h5 className="mb-0">Navdeep</h5>
-                <p className="mb-0">navdeepdahiya753@gmail.com</p>
+                <p className="mb-2">navdeepdahiya753@gmail.com</p>
               </div>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li>
