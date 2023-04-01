@@ -38,19 +38,15 @@ const Login = () => {
     }
   }, [user, isError, isSuccess, isLoading]);
   return (
-    <div className="py-5" style={{ background: "#ffd333", minHeight: "100vh" }}>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <div className="mx-auto sm:w-2/3 lg:w-2/3 xl:w-1/2">
+    <div
+      className="flex justify-center items-center"
+      style={{ background: "#ffd333", minHeight: "100vh" }}
+    >
+      <div className="sm:w-2/3 lg:w-2/3 xl:w-[30%]">
         <div className="bg-white rounded-3 p-4 my-8 lg:my-12 mx-auto lg:mx-0 ">
-          <h3 className="text-center lg:text-left lg:text-center title text-4xl">
-            LOGIN
-          </h3>
+          <h3 className="text-center title text-4xl">Đăng nhập</h3>
           <p className="text-center mt-4 lg:mt-6">
-            Login to your account to continue.
+            Đăng nhập vào tài khoản của bạn để tiếp tục.
           </p>
           <div className="error text-center">
             {message.message == "Rejected" ? "You are not an Admin" : ""}
@@ -58,7 +54,7 @@ const Login = () => {
           <form action="" onSubmit={formik.handleSubmit}>
             <CustomInput
               type="text"
-              label="Email Address"
+              label="Email"
               id="email"
               name="email"
               onChng={formik.handleChange("email")}
@@ -90,7 +86,7 @@ const Login = () => {
               style={{ background: "#ffd333" }}
               type="submit"
             >
-              Login
+              Đăng nhập
             </button>
           </form>
         </div>
