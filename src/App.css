@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 :root {
   --color-212529: #212529;
   --color-ffd333: #ffd333;
