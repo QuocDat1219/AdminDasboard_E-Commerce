@@ -127,11 +127,11 @@ const Addmenu = () => {
           /> */}
           </div>
           <button
-            className="btn btn-success border-0 rounded-3 my-5"
+            className="bg-blue-500 text-white h-[40px] w-[120px] rounded-3 my-5"
             type="submit"
           >
-            {getBrandId !== undefined ? "Edit" : "Add"}
-            Thêm Menu
+            {getBrandId !== undefined ? "Edit" : "Add "}
+             Menu
           </button>
         </form>
       </div>
