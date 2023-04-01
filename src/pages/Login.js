@@ -46,8 +46,8 @@ const Login = () => {
       <br />
       <div className="mx-auto sm:w-2/3 lg:w-2/3 xl:w-1/2">
         <div className="bg-white rounded-3 p-4 my-8 lg:my-12 mx-auto lg:mx-0 ">
-          <h3 className="text-center lg:text-left lg:text-center title">
-            Login
+          <h3 className="text-center lg:text-left lg:text-center title text-4xl">
+            LOGIN
           </h3>
           <p className="text-center mt-4 lg:mt-6">
             Login to your account to continue.

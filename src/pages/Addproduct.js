@@ -299,7 +299,7 @@ const Addproduct = () => {
             </button>
           </div>
           <button
-            className="btn btn-primary border-0 rounded-3 my-5"
+            className="btn bg-[blue] text-white  border-0 rounded-3 my-5"
             type="submit"
           >
             Thêm sản phẩm
