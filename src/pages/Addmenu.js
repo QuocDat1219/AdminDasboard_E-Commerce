@@ -3,8 +3,8 @@ import CustomInput from "../components/CustomInput";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import {
@@ -25,7 +25,6 @@ const Addmenu = () => {
   const getBrandId = location.pathname.split("/")[3];
   const newBrand = useSelector((state) => state.menu);
 
-
   const {
     isSuccess,
     isError,
@@ -40,7 +39,7 @@ const Addmenu = () => {
   const [editorState, setEditorState] = useState("");
   const handleEditorChange = (newEditorState) => {
     setEditorState(newEditorState);
-  }
+  };
   useEffect(() => {
     if (getBrandId !== undefined) {
       dispatch(getABrand(getBrandId));
@@ -70,7 +69,7 @@ const Addmenu = () => {
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      console.log(values)
+      console.log(values);
       if (getBrandId !== undefined) {
         const data = { id: getBrandId, brandData: values };
         dispatch(updateABrand(data));
@@ -85,15 +84,17 @@ const Addmenu = () => {
     },
   });
 
-
   return (
-    <div>
-      <h3 className="mb-4 title" style={{ textAlign: "center" }}>
+    <div className="max-w-full lg:w-[100%]">
+      <h3 className="mb-4 text-xl font-bold">
         {/* {getBrandId !== undefined ? "Edit" : "Add"} Brand */} Quản lý menu
       </h3>
       <div>
-        <h5>Tên Menu</h5>
-        <form action="" onSubmit={formik.handleSubmit}>
+        <form
+          action=""
+          onSubmit={formik.handleSubmit}
+          className="d-flex gap-3 flex-column"
+        >
           <CustomInput
             type="text"
             name="name"
@@ -108,15 +109,13 @@ const Addmenu = () => {
           </div>
 
           <div className="Mn_wysiwyg" style={{ marginTop: "30px" }}>
-            <h5>Nội dung</h5>
-
             <Editor
-              onChange={(value) => formik.setFieldValue('doc', value)}
+              onChange={(value) => formik.setFieldValue("doc", value)}
               values={formik.values.doc}
               label="Nhập Menu"
               id="menu"
             />
-             {/* <CustomInput
+            {/* <CustomInput
             type="text"
             name="doc"
             onChng={formik.handleChange("doc")}
@@ -127,11 +126,10 @@ const Addmenu = () => {
           /> */}
           </div>
           <button
-            className="bg-blue-500 text-white h-[40px] w-[120px] rounded-3 my-5"
+            className="bg-blue-500 text-white lg:h-[40px] lg:w-[250px] rounded-3 my-5 w-[210px] h-[40px] "
             type="submit"
           >
-            {getBrandId !== undefined ? "Edit" : "Add "}
-             Menu
+            Thêm menu
           </button>
         </form>
       </div>

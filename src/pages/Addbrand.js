@@ -74,7 +74,7 @@ const Addbrand = () => {
   return (
     <div>
       <h3 className="mb-4 title">
-        {getBrandId !== undefined ? "Edit" : "Add"} Brand
+        {getBrandId !== undefined ? "Edit" : "Thêm"} Brand
       </h3>
       <div>
         <form action="" onSubmit={formik.handleSubmit}>
@@ -94,7 +94,7 @@ const Addbrand = () => {
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
-            {getBrandId !== undefined ? "Edit" : "Add"} Brand
+            {getBrandId !== undefined ? "Edit" : "Thêm"} Brand
           </button>
         </form>
       </div>

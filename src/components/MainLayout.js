@@ -14,7 +14,7 @@ import {
   FiPlusSquare,
   FiPackage,
   FiPaperclip,
-  FiSettings
+  FiSettings,
 } from "react-icons/fi";
 
 import {
@@ -44,12 +44,17 @@ const MainLayout = () => {
   const navigate = useNavigate();
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+      <Sider
+        // className="hidden md:block"
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+      >
         <div className="logo">
-          <h2 className="text-white fs-5 text-center py-3 mb-0">
+          {/* <h2 className="text-white fs-5 text-center py-3 mb-0">
             <span className="sm-logo">AD</span>
             <span className="lg-logo">ADMIN</span>
-          </h2>
+          </h2> */}
         </div>
         <Menu
           theme="dark"
@@ -171,19 +176,19 @@ const MainLayout = () => {
             }
           )}
           <div className="d-flex gap-4 align-items-center">
-            <div className="position-relative">
+            {/* <div className="position-relative">
               <IoIosNotifications className="fs-4" />
               <span className="badge bg-warning rounded-circle p-1 position-absolute">
                 3
               </span>
-            </div>
+            </div> */}
 
-            <div className="d-flex gap-3 align-items-center dropdown">
+            <div className="d-flex gap-3 align-items-center dropdown max-w-[100%]">
               <div>
                 <img
                   width={32}
                   height={32}
-                  src="https://stroyka-admin.html.themeforest.scompiler.ru/variants/ltr/images/customers/customer-4-64x64.jpg"
+                  src="https://www.iriset.in/tms/uploads/profile/profile.png"
                   alt=""
                 />
               </div>
@@ -193,8 +198,8 @@ const MainLayout = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <h5 className="mb-0">Navdeep</h5>
-                <p className="mb-2">navdeepdahiya753@gmail.com</p>
+                <h5 className="mb-0">Admin</h5>
+                {/* <p className="mb-2">navdeepdahiya753@gmail.com</p> */}
               </div>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li>
