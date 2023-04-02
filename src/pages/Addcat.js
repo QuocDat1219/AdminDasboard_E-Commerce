@@ -69,8 +69,8 @@ const Addcat = () => {
   });
   return (
     <div>
-      <h3 className="mb-4  title">
-        {getPCatId !== undefined ? "Sửa" : "Thêm"} Danh mục
+      <h3 className="mb-4  title text-xl font-bold">
+        {getPCatId !== undefined ? "Sửa" : "Thêm"} Danh Mục
       </h3>
       <div>
         <form action="" onSubmit={formik.handleSubmit}>
@@ -86,7 +86,7 @@ const Addcat = () => {
             {formik.touched.title && formik.errors.title}
           </div>
           <button
-           className="bg-blue-500 text-white h-[40px] w-[250px] rounded-3 my-5"
+            className="bg-blue-500 text-white lg:h-[40px] lg:w-[250px] rounded-3 my-5 w-[210px] h-[40px] "
             type="submit"
           >
             {getPCatId !== undefined ? "Sửa" : "Thêm"} Loại danh mục

@@ -128,8 +128,8 @@ const Addproduct = () => {
   };
 
   return (
-    <div>
-      <h3 className="mb-4 title">Thêm Sản Phẩm</h3>
+    <div className="max-w-full lg:w-[100%]">
+      <h3 className="mb-4 text-xl font-bold">Thêm Sản Phẩm</h3>
       <div>
         <form
           onSubmit={formik.handleSubmit}
@@ -299,7 +299,7 @@ const Addproduct = () => {
             </button>
           </div>
           <button
-            className="btn bg-[blue] text-white  border-0 rounded-3 my-5"
+            className="bg-blue-500 text-white lg:h-[40px] lg:w-[250px] rounded-3 my-5 w-[210px] h-[40px] "
             type="submit"
           >
             Thêm sản phẩm

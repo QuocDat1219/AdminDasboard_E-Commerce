@@ -11,11 +11,6 @@ import {
 } from "../features/pcategory/pcategorySlice";
 import CustomModal from "../components/CustomModal";
 
-
-
-
-
-
 const columns = [
   {
     title: "SNo",
@@ -28,7 +23,7 @@ const columns = [
   },
 
   {
-    title: "Action",
+    title: "Hoạt động",
     dataIndex: "action",
   },
 ];
@@ -50,7 +45,7 @@ const Categorylist = () => {
     dispatch(getCategories());
   }, []);
   const pCatStat = useSelector((state) => state.pCategory.pCategories);
-  
+
   const data1 = [];
   for (let i = 0; i < pCatStat.length; i++) {
     data1.push({
@@ -58,19 +53,19 @@ const Categorylist = () => {
       name: pCatStat[i].name,
       action: (
         <>
-        <div className="flex">
-          <Link
-            to={`/admin/category/${pCatStat[i]._id}`}
-            className=" fs-3 text-danger"
-          >
-            <BiEdit />
-          </Link>
-          <button
-            className="ms-3 fs-3 text-danger bg-transparent border-0"
-            onClick={() => showModal(pCatStat[i]._id)}
-          >
-            <AiFillDelete />
-          </button>
+          <div className="flex">
+            <Link
+              to={`/admin/category/${pCatStat[i]._id}`}
+              className=" fs-3 text-danger"
+            >
+              <BiEdit />
+            </Link>
+            <button
+              className="ms-3 fs-3 text-danger bg-transparent border-0"
+              onClick={() => showModal(pCatStat[i]._id)}
+            >
+              <AiFillDelete />
+            </button>
           </div>
         </>
       ),
@@ -84,19 +79,25 @@ const Categorylist = () => {
     }, 100);
   };
   return (
-    <div>
-      <h3 className="mb-4 title">Danh Mục Loại Sản Phẩm</h3>
-      <div>
-        <Table columns={columns} dataSource={data1} />
+    <div className="md:flex md:flex-col md:items-start">
+      <h3 className="mb-4 text-xl font-bold">Danh Mục Loại Sản Phẩm</h3>
+      <div className="overflow-x-auto w-full">
+        <Table
+          columns={columns}
+          dataSource={data1}
+          className="table-auto w-full border-collapse"
+        />
       </div>
-      <CustomModal
-        hideModal={hideModal}
-        open={open}
-        performAction={() => {
-          deleteCategory(pCatId);
-        }}
-        title="Are you sure you want to delete this Product Category?"
-      />
+      <div className="mt-4">
+        <CustomModal
+          hideModal={hideModal}
+          open={open}
+          performAction={() => {
+            deleteCategory(pCatId);
+          }}
+          title="Bạn có chắc chắn muốn xóa loại sản phẩm này không?"
+        />
+      </div>
     </div>
   );
 };

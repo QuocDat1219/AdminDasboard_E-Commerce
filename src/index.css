@@ -20,7 +20,7 @@ body {
   background: rgba(255, 255, 255, 0.3);
 }
 .ant-layout {
-  min-height: 100vh;
+  /* min-height: 100vh; */
 }
 .ant-layout-sider {
   flex: 0 0 250px !important;
