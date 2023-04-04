@@ -15,8 +15,8 @@ const createCategory = async (category) => {
 
 const getProductCategory = async (id) => {
   const response = await axios.get(`${base_url}category/${id}`, config);
-
-  return response.data;
+  console.log(response.data.category);
+  return response.data.category;
 };
 
 const deleteProductCategory = async (id) => {

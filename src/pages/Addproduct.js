@@ -17,7 +17,9 @@ import { createProducts, resetState } from "../features/product/productSlice";
 import useDrivePicker from "react-google-drive-picker";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-
+import { PlusOutlined } from "@ant-design/icons";
+import { Modal, Upload } from "antd";
+import ImgCrop from "antd-img-crop";
 let schema = yup.object().shape({
   title: yup.string().required("Bạn chưa nhập tiêu đề"),
   // description: yup.string().required("Description is Required"),
@@ -103,16 +105,35 @@ const Addproduct = () => {
     setColor(e);
     console.log(color);
   };
-
+  const [fileList, setFileList] = useState([
+    {
+      uid: "-1",
+      name: "image.png",
+      status: "done",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+  ]);
+  const onChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
   const [openPicker, authResponse] = useDrivePicker();
+  const [dataImages, setDataImages] = useState([]);
+
+  console.log(dataImages);
+  const dtImg = [];
   // const customViewsArray = [new google.picker.DocsView()]; // custom view
   const handleOpenPicker = () => {
+    setDataImages(dataImages);
     openPicker({
       clientId:
         "541961715366-jb2pgssjveh1ri3l6tigl8thsf7dpjob.apps.googleusercontent.com",
       developerKey: "AIzaSyDaQ-oofs5WON4fI-rsgnXrC2gDUJVDxwA",
       viewId: "DOCS",
-      // token: token, // pass oauth token in case you already have one
+      token:
+        "ya29.a0Ael9sCOmVDsU7XUPoO70X3ZbJi8it9gGdD2H8Ib-J-b01-WGfjoZsOwTBNA2jeotsQMqkUhuF4Cfy2dmcVdTAk1TaizgNX2-tv1JNr_HQezIkHmn0wtagW4sggLbR_dXkYvhTHYhDS6onLEjma5tnjvWhV4maCgYKARgSARESFQF4udJhWobNwvAAUdnmqbjkHq9rQg0163",
       showUploadView: true,
       showUploadFolders: true,
       supportDrives: true,
@@ -122,7 +143,15 @@ const Addproduct = () => {
         if (data.action === "cancel") {
           console.log("User clicked cancel/close button");
         }
-        console.log(data);
+        setDataImages(data.docs);
+        // dtImg.push(data.docs);
+        // if (data.docs != null) {
+        localStorage.setItem(
+          "imfgDrive",
+          JSON.stringify(...dataImages, data.docs)
+        );
+        // }
+        console.log(dataImages);
       },
     });
   };
@@ -199,6 +228,27 @@ const Addproduct = () => {
           <div className="error">
             {formik.touched.description && formik.errors.description}
           </div>
+          {dataImages?.map((imgs) => {
+            return (
+              <div>
+                <img
+                  className="w-20 h-20"
+                  src={
+                    imgs?.url
+                      ? `https://drive.google.com/uc?export=view&id=${imgs.id}`
+                      : "https://drive.google.com/uc?export=view&id=1QryarMMgDktAanxrwQs9GxDUAGMQpdaZ"
+                  }
+                  alt=""
+                />
+              </div>
+            );
+          })}
+
+          {/* https://drive.google.com/file/d/1Js6qMSwgfTOnQpNhIOs-0tvfCqadsvg4/view?usp=share_link */}
+          {/* <img
+            src="https://drive.google.com/uc?export=view&id=1Js6qMSwgfTOnQpNhIOs-0tvfCqadsvg4"
+            className="w-10 h-10"
+          /> */}
           {/* <select
             name="category"
             onChange={formik.handleChange("category")}
@@ -237,7 +287,6 @@ const Addproduct = () => {
           <div className="error">
             {formik.touched.tags && formik.errors.tags}
           </div> */}
-
           {/* <Select
             mode="multiple"
             allowClear
