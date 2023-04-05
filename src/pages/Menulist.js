@@ -4,8 +4,13 @@ import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { EditorState, convertToRaw, convertFromRaw, convertToHTML } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
+import {
+  EditorState,
+  convertToRaw,
+  convertFromRaw,
+  convertToHTML,
+} from "draft-js";
+import draftToHtml from "draftjs-to-html";
 import DOMPurify from "dompurify";
 import {
   deleteAMenu,
@@ -70,7 +75,7 @@ const Menulist = () => {
     // const contentState = convertFromRaw(noidung);
     // const editorState = EditorState.createWithContent(contentState);
     // const html = convertToHTML(editorState.getCurrentContent());
-    console.log(noidung)
+    console.log(noidung);
     data1.push({
       key: i + 1,
       name: menuState[i].name,
@@ -81,8 +86,7 @@ const Menulist = () => {
           <Link
             to={`/admin/menu/${menuState[i]._id}`}
             className=" fs-3 text-danger"
-          >
-          </Link>
+          ></Link>
           <button
             className="ms-3 fs-3 text-danger bg-transparent border-0"
             onClick={() => showModal1(menuState[i]._id)}
@@ -109,7 +113,7 @@ const Menulist = () => {
   };
   return (
     <div>
-      <h3 className="mb-4 title">Danh sách Menu</h3>
+      <h3 className="mb-4 text-xl font-bold">Danh Sách Menu</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>

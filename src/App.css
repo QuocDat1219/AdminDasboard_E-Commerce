@@ -40,11 +40,13 @@
 }
 .quill {
   background-color: white;
+  width: 98%;
 }
 
 .form-control {
   box-shadow: none;
   border-color: var(--color-c3d4da);
+  width: 98%;
 }
 .title {
   font: 28px;

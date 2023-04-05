@@ -86,7 +86,7 @@ const Sidebar = () => {
           },
         },
         closed: {
-          width: "4rem",
+          width: "6rem",
           transition: {
             damping: 40,
           },
@@ -245,7 +245,7 @@ const Sidebar = () => {
               {
                 key: "setting",
                 icon: <FiSettings className="fs-4" />,
-                label: "Cài đặt",
+                // label: "Cài đặt",
               },
             ]}
           />

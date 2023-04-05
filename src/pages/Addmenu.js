@@ -87,7 +87,7 @@ const Addmenu = () => {
   return (
     <div className="max-w-full lg:w-[100%]">
       <h3 className="mb-4 text-xl font-bold">
-        {/* {getBrandId !== undefined ? "Edit" : "Add"} Brand */} Quản lý menu
+        {/* {getBrandId !== undefined ? "Edit" : "Add"} Brand */} Quản Lý Menu
       </h3>
       <div>
         <form

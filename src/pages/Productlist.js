@@ -90,7 +90,7 @@ const Productlist = () => {
   console.log(data1);
   return (
     <div>
-      <h3 className="mb-4 title">Danh Mục Sản Phẩm</h3>
+      <h3 className="mb-4 text-xl font-bold">Danh Mục Sản Phẩm</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
