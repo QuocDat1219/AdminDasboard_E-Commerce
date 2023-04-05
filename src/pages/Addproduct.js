@@ -112,7 +112,8 @@ const Addproduct = () => {
         "541961715366-jb2pgssjveh1ri3l6tigl8thsf7dpjob.apps.googleusercontent.com",
       developerKey: "AIzaSyDaQ-oofs5WON4fI-rsgnXrC2gDUJVDxwA",
       viewId: "DOCS",
-      // token: token, // pass oauth token in case you already have one
+      token:
+        "ya29.a0Ael9sCN3h0PA5kJWzl9otZXepIqpOAC4pUQTpOq3HtvzRBvQ2Evd6upO9kZMoOZEJeg2HRPlyoNYaIFZHAvuHZW3SDYfm-VCICbQ-vC4tuj4bh_xaWlTgD0Nemxz45Ajdh6KbL4GWklaijG9xLC345hLxGMmVTMaCgYKASwSARESFQF4udJh9fO543fdqIYGW3jdmtjlfQ0166",
       showUploadView: true,
       showUploadFolders: true,
       supportDrives: true,
