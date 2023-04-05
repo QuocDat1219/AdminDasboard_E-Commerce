@@ -27,9 +27,10 @@ import ViewOrder from "./pages/ViewOrder";
 import Addmenu from "./pages/Addmenu";
 import Menulist from "./pages/Menulist";
 import Setting from "./pages/Setting";
-import ConfigChatlist from "./pages/ConfigChatlist"
+import ConfigChatlist from "./pages/ConfigChatlist";
 import AddLink from "./pages/Addlink";
 import Linklist from "./pages/Linklist";
+import Nav from "../src/components/Nav";
 function App() {
   return (
     <Router>
@@ -37,7 +38,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/reset-password" element={<Resetpassword />} />
         <Route path="/forgot-password" element={<Forgotpassword />} />
-        <Route path="/admin" element={<MainLayout />}>
+        <Route path="/admin" element={<Nav />}>
           <Route index element={<Dashboard />} />
           <Route path="enquiries" element={<Enquiries />} />
           <Route path="enquiries/:id" element={<ViewEnq />} />
@@ -68,9 +69,9 @@ function App() {
           <Route path="menu" element={<Addmenu />} />
           <Route path="menu-list" element={<Menulist />} />
           <Route path="setting" element={<Setting />} />
-          <Route path="config-list" element={<ConfigChatlist />}/>
-          <Route path="add-link" element={<AddLink/>}/>
-          <Route path="link-list" element={<Linklist/>}/>
+          <Route path="config-list" element={<ConfigChatlist />} />
+          <Route path="add-link" element={<AddLink />} />
+          <Route path="link-list" element={<Linklist />} />
         </Route>
       </Routes>
     </Router>
