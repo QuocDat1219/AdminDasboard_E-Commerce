@@ -45,16 +45,11 @@ const MainLayout = () => {
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
       <Sider
-        // className="hidden md:block"
         trigger={null}
         collapsible
         collapsed={collapsed}
       >
         <div className="logo">
-          {/* <h2 className="text-white fs-5 text-center py-3 mb-0">
-            <span className="sm-logo">AD</span>
-            <span className="lg-logo">ADMIN</span>
-          </h2> */}
         </div>
         <Menu
           theme="dark"
