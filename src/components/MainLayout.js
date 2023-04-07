@@ -29,6 +29,8 @@ import {
   FiPaperclip,
   FiSettings,
 } from "react-icons/fi";
+import { FaRegNewspaper } from "react-icons/fa";
+import { BsFillMenuButtonWideFill } from "react-icons/bs";
 import {
   NavLink,
   useLocation,
@@ -193,7 +195,7 @@ const Sidebar = () => {
               },
               {
                 key: "Catalogg",
-                icon: <FiTrello className="fs-4" />,
+                icon: <BsFillMenuButtonWideFill className="fs-4" />,
                 label: "Quản lý menu",
                 children: [
                   {
@@ -205,6 +207,23 @@ const Sidebar = () => {
                     key: "menu-list",
                     icon: <FiGrid className="fs-4" />,
                     label: "Danh sách menu",
+                  },
+                ],
+              },
+              {
+                key: "Newss",
+                icon: <FaRegNewspaper className="fs-4" />,
+                label: "Quản lý tin tức",
+                children: [
+                  {
+                    key: "news",
+                    icon: <FiPlusSquare className="fs-4" />,
+                    label: "Thêm tin tức",
+                  },
+                  {
+                    key: "list-news",
+                    icon: <FiGrid className="fs-4" />,
+                    label: "Danh sách tin tức",
                   },
                 ],
               },

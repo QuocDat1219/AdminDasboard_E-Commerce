@@ -4,7 +4,7 @@ import { config } from "../../utils/axiosconfig";
 
 const getBlogCategories = async () => {
   const response = await axios.get(`${base_url}blogcategory/`);
-
+  console.log(response);
   return response.data;
 };
 const createBlogCategory = async (bcat) => {
@@ -35,7 +35,6 @@ const deleteBlogCategory = async (id) => {
 const bCategoryService = {
   getBlogCategories,
   createBlogCategory,
-  deleteBlogCategory,
   getBlogCategory,
   deleteBlogCategory,
   updateBlogCategory,
