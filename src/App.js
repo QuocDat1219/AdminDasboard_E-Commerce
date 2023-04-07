@@ -31,6 +31,8 @@ import ConfigChatlist from "./pages/ConfigChatlist";
 import AddLink from "./pages/Addlink";
 import Linklist from "./pages/Linklist";
 import Nav from "../src/components/Nav";
+import News from "../src/pages/Addnews";
+import NewsList from "../src/pages/Newslist";
 function App() {
   return (
     <Router>
@@ -65,7 +67,8 @@ function App() {
           <Route path="menu/:id" element={<Addbrand />} />
           <Route path="list-product" element={<Productlist />} />
           <Route path="product" element={<Addproduct />} />
-
+          <Route path="news" element={<News />} />
+          <Route path="list-news" element={<NewsList />} />
           <Route path="menu" element={<Addmenu />} />
           <Route path="menu-list" element={<Menulist />} />
           <Route path="setting" element={<Setting />} />

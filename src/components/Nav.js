@@ -10,7 +10,7 @@ function RootLayout({ children }) {
   } = theme.useToken();
   const navigate = useNavigate();
   return (
-    <div className="flex gap-5">
+    <div className="flex lg:gap-5 ">
       <MainLayout />
       <main className="max-w-5xl flex-1 py-20">
         <Outlet />
