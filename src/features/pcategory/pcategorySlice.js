@@ -11,6 +11,7 @@ export const getCategories = createAsyncThunk(
     }
   }
 );
+
 export const createCategory = createAsyncThunk(
   "productCategory/create-category",
   async (categoryData, thunkAPI) => {
@@ -21,6 +22,7 @@ export const createCategory = createAsyncThunk(
     }
   }
 );
+
 export const updateAProductCategory = createAsyncThunk(
   "productCategory/update-category",
   async (category, thunkAPI) => {

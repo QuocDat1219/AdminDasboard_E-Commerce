@@ -6,14 +6,14 @@ import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import {
-  createMenu,
+  createBrand,
   getABrand,
   resetState,
   updateABrand,
 } from "../features/brand/brandSlice";
 
 let schema = yup.object().shape({
-  title: yup.string().required("Brand Name is Required"),
+  title: yup.string().required("Chưa nhập nhãn hàng"),
 });
 const Addbrand = () => {
   const dispatch = useDispatch();
@@ -39,15 +39,15 @@ const Addbrand = () => {
 
   useEffect(() => {
     if (isSuccess && createdBrand) {
-      toast.success("Brand Added Successfullly!");
+      toast.success("Thêm nhãn hàng thành công!");
     }
     if (isSuccess && updatedBrand) {
-      toast.success("Brand Updated Successfullly!");
+      toast.success("Sửa nhãn hàng thành công!");
       navigate("/admin/list-brand");
     }
 
     if (isError) {
-      toast.error("Something Went Wrong!");
+      toast.error("Đã xảy ra lỗi!");
     }
   }, [isSuccess, isError, isLoading]);
   const formik = useFormik({
@@ -62,7 +62,7 @@ const Addbrand = () => {
         dispatch(updateABrand(data));
         dispatch(resetState());
       } else {
-        dispatch(createMenu(values));
+        dispatch(createBrand(values));
         formik.resetForm();
         setTimeout(() => {
           dispatch(resetState());
@@ -73,8 +73,8 @@ const Addbrand = () => {
 
   return (
     <div>
-      <h3 className="mb-4 title">
-        {getBrandId !== undefined ? "Edit" : "Thêm"} Brand
+      <h3 className="mb-4 title text-xl font-bold">
+        {getBrandId !== undefined ? "Sửa" : "Thêm"} Brand
       </h3>
       <div>
         <form action="" onSubmit={formik.handleSubmit}>
@@ -84,17 +84,17 @@ const Addbrand = () => {
             onChng={formik.handleChange("title")}
             onBlr={formik.handleBlur("title")}
             val={formik.values.title}
-            label="Enter Brand"
+            label="Nhập tên nhãn hàng"
             id="brand"
           />
           <div className="error">
             {formik.touched.title && formik.errors.title}
           </div>
           <button
-            className="btn btn-success border-0 rounded-3 my-5"
+           className="bg-blue-500 text-white lg:h-[40px] lg:w-[250px] rounded-3 my-5 w-[210px] h-[40px] "
             type="submit"
           >
-            {getBrandId !== undefined ? "Edit" : "Thêm"} Brand
+            {getBrandId !== undefined ? "Sửa" : "Thêm"} Brand
           </button>
         </form>
       </div>

@@ -5,8 +5,8 @@ import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteAMenu,
-  getMenus,
+  deleteABrand,
+  getBrands,
   resetState,
 } from "../features/brand/brandSlice";
 import CustomModal from "../components/CustomModal";
@@ -41,9 +41,10 @@ const Brandlist = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(resetState());
-    dispatch(getMenus());
+    dispatch(getBrands());
   }, []);
   const brandState = useSelector((state) => state.brand.brands);
+
   const data1 = [];
   for (let i = 0; i < brandState.length; i++) {
     data1.push({
@@ -51,44 +52,51 @@ const Brandlist = () => {
       name: brandState[i].title,
       action: (
         <>
-          <Link
-            to={`/admin/brand/${brandState[i]._id}`}
-            className=" fs-3 text-danger"
-          >
-            <BiEdit />
-          </Link>
-          <button
-            className="ms-3 fs-3 text-danger bg-transparent border-0"
-            onClick={() => showModal(brandState[i]._id)}
-          >
-            <AiFillDelete />
-          </button>
+          <div className="flex">
+            <Link
+              to={`/admin/brand/${brandState[i]._id}`}
+              className=" fs-3 text-danger"
+            >
+              <BiEdit />
+            </Link>
+            <button
+              className="ms-3 fs-3 text-danger bg-transparent border-0"
+              onClick={() => showModal(brandState[i]._id)}
+            >
+              <AiFillDelete />
+            </button>
+          </div>
         </>
       ),
     });
   }
   const deleteBrand = (e) => {
-    dispatch(deleteAMenu(e));
-
+    dispatch(deleteABrand(e));
     setOpen(false);
     setTimeout(() => {
-      dispatch(getMenus());
+      dispatch(getBrands());
     }, 100);
   };
   return (
-    <div>
-      <h3 className="mb-4 title">Brands</h3>
-      <div>
-        <Table columns={columns} dataSource={data1} />
+    <div className="md:flex md:flex-col md:items-start">
+      <h3 className="mb-4 text-xl font-bold">Brands</h3>
+      <div className="overflow-x-auto w-full">
+        <Table
+          columns={columns}
+          dataSource={data1}
+          className="table-auto w-full border-collapse"
+        />
       </div>
-      <CustomModal
-        hideModal={hideModal}
-        open={open}
-        performAction={() => {
-          deleteBrand(brandId);
-        }}
-        title="Are you sure you want to delete this brand?"
-      />
+      <div className="mt-4">
+        <CustomModal
+          hideModal={hideModal}
+          open={open}
+          performAction={() => {
+            deleteBrand(brandId);
+          }}
+          title="Bạn có muốn xóa nhãn hàng này không?"
+        />
+      </div>
     </div>
   );
 };

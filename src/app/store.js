@@ -16,7 +16,7 @@ export const store = configureStore({
     auth: authReducer,
     customer: customerReducer,
     product: productReducer,
-    menu: brandReducer,
+    brand: brandReducer,
     pCategory: pCategoryReducer,
     bCategory: bCategoryReducer,
     blogs: blogReducer,
@@ -25,5 +25,6 @@ export const store = configureStore({
     upload: uploadReducer,
     coupon: couponReducer,
     link: linkSliceReducer,
+  
   },
 });

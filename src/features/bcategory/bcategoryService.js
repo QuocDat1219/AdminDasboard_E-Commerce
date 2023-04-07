@@ -9,7 +9,7 @@ const getBlogCategories = async () => {
 };
 const createBlogCategory = async (bcat) => {
   const response = await axios.post(`${base_url}blogcategory/`, bcat, config);
-
+  console.log(response);
   return response.data;
 };
 const updateBlogCategory = async (blogCat) => {

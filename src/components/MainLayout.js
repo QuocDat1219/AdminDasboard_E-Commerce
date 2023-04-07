@@ -226,19 +226,19 @@ const Sidebar = () => {
                 ],
               },
               {
-                key: "linkssss",
+                key: "brands",
                 icon: <FiLink className="fs-4" />,
-                label: "Quản lý liên kết",
+                label: "Quản lý nhãn hàng",
                 children: [
                   {
-                    key: "add-link",
+                    key: "brand",
                     icon: <FiPlusSquare className="fs-4" />,
-                    label: "Thêm Link",
+                    label: "Thêm nhãn hàng",
                   },
                   {
-                    key: "link-list",
+                    key: "list-brand",
                     icon: <FiPaperclip className="fs-4" />,
-                    label: "Danh sách Link",
+                    label: "Danh sách nhãn hàng",
                   },
                 ],
               },

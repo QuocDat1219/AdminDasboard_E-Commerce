@@ -12,7 +12,8 @@ import {
   updateAProductCategory,
 } from "../features/pcategory/pcategorySlice";
 let schema = yup.object().shape({
-  title: yup.string().required("Bạn chưa nhập tên danh mục"),
+  name: yup.string().required("Bạn chưa nhập tên danh mục"),
+  idCategoriesContainer: yup.string().required("Bạn chưa nhập danh mục lớn"),
 });
 const Addcat = () => {
   const dispatch = useDispatch();
@@ -25,8 +26,9 @@ const Addcat = () => {
     isError,
     isLoading,
     createdCategory,
-    categoryName,
+    name,
     updatedCategory,
+    idCategoriesContainer,
   } = newCategory;
   useEffect(() => {
     if (getPCatId !== undefined) {
@@ -50,7 +52,8 @@ const Addcat = () => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      title: categoryName || "",
+      name: name || "",
+      idCategoriesContainer: idCategoriesContainer || "",
     },
     validationSchema: schema,
     onSubmit: (values) => {
@@ -77,13 +80,25 @@ const Addcat = () => {
           <CustomInput
             type="text"
             label="Nhập danh mục sản phẩm"
-            onChng={formik.handleChange("title")}
-            onBlr={formik.handleBlur("title")}
-            val={formik.values.title}
-            id="brand"
+            onChng={formik.handleChange("name")}
+            onBlr={formik.handleBlur("name")}
+            val={formik.values.name}
+            id="name"
           />
           <div className="error">
-            {formik.touched.title && formik.errors.title}
+            {formik.touched.name && formik.errors.name}
+          </div>
+          <CustomInput
+            type="text"
+            label="Nhập danh mục sản phẩm"
+            onChng={formik.handleChange("idCategoriesContainer")}
+            onBlr={formik.handleBlur("idCategoriesContainer")}
+            val={formik.values.idCategoriesContainer}
+            id="idCategoriesContainer"
+          />
+          <div className="error">
+            {formik.touched.idCategoriesContainer &&
+              formik.errors.idCategoriesContainer}
           </div>
           <button
             className="bg-blue-500 text-white lg:h-[40px] lg:w-[250px] rounded-3 my-5 w-[210px] h-[40px] "

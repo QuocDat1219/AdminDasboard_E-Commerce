@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { getMenus } from "../features/brand/brandSlice";
 import { getCategories } from "../features/pcategory/pcategorySlice";
 import { getColors } from "../features/color/colorSlice";
 import { Select } from "antd";
@@ -39,7 +38,7 @@ const Addproduct = () => {
   const [images, setImages] = useState([]);
   console.log(color);
   useEffect(() => {
-    dispatch(getMenus());
+    // dispatch(getMenus());
     dispatch(getCategories());
     dispatch(getColors());
   }, []);

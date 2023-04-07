@@ -13,8 +13,8 @@ import {
 import draftToHtml from "draftjs-to-html";
 import DOMPurify from "dompurify";
 import {
-  deleteAMenu,
-  getMenus,
+  deleteABrand,
+  getBrands,
   resetState,
 } from "../features/brand/brandSlice";
 import CustomModal from "../components/CustomModal";
@@ -65,7 +65,7 @@ const Menulist = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(resetState());
-    dispatch(getMenus());
+    dispatch(getBrands());
   }, []);
   const menuState = useSelector((state) => state.menu.menus);
   console.log(menuState);
@@ -104,11 +104,11 @@ const Menulist = () => {
     });
   }
   const deleteMenu = (e) => {
-    dispatch(deleteAMenu(e));
+    dispatch(deleteABrand(e));
 
     setOpen(false);
     setTimeout(() => {
-      dispatch(getMenus());
+      dispatch(getBrands());
     }, 100);
   };
   return (

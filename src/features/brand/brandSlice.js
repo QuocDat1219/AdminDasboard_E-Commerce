@@ -1,11 +1,22 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
-import brandService from "./brandService";
+import BrandService from "./brandService";
 
-export const getMenus = createAsyncThunk(
-  "menu/get-brands",
+export const getBrands = createAsyncThunk(
+  "Brand/get-brands",
   async (thunkAPI) => {
     try {
-      return await brandService.getMenus();
+      return await BrandService.getBrands();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const createBrand = createAsyncThunk(
+  "Brand/create-brand",
+  async (brandData, thunkAPI) => {
+    try {
+      return await BrandService.createBrand(brandData);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -13,41 +24,31 @@ export const getMenus = createAsyncThunk(
 );
 
 export const getABrand = createAsyncThunk(
-  "brand/get-brand",
+  "Brand/get-brand",
   async (id, thunkAPI) => {
     try {
-      return await brandService.getBrand(id);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-export const createMenu = createAsyncThunk(
-  "brand/create-brand",
-  async (brandData, thunkAPI) => {
-    try {
-      return await brandService.createMenu(brandData);
+      return await BrandService.getABrand(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 export const updateABrand = createAsyncThunk(
-  "brand/update-brand",
+  "Brand/update-brand",
   async (brand, thunkAPI) => {
     try {
-      return await brandService.updateBrand(brand);
+      return await BrandService.updateBrand(brand);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-export const deleteAMenu = createAsyncThunk(
-  "menu/delete-menu",
+export const deleteABrand = createAsyncThunk(
+  "Brand/delete-brand",
   async (id, thunkAPI) => {
     try {
-      return await brandService.deleteMenu(id);
+      return await BrandService.deleteBrand(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -57,43 +58,43 @@ export const deleteAMenu = createAsyncThunk(
 export const resetState = createAction("Reset_all");
 
 const initialState = {
-  menus: [],
+  brands: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
   message: "",
 };
 export const brandSlice = createSlice({
-  name: "menus",
+  name: "brands",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getMenus.pending, (state) => {
+      .addCase(getBrands.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getMenus.fulfilled, (state, action) => {
+      .addCase(getBrands.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.menus = action.payload;
+        state.brands = action.payload;
       })
-      .addCase(getMenus.rejected, (state, action) => {
+      .addCase(getBrands.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(createMenu.pending, (state) => {
+      .addCase(createBrand.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createMenu.fulfilled, (state, action) => {
+      .addCase(createBrand.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         state.createdBrand = action.payload;
       })
-      .addCase(createMenu.rejected, (state, action) => {
+      .addCase(createBrand.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
@@ -129,16 +130,16 @@ export const brandSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(deleteAMenu.pending, (state) => {
+      .addCase(deleteABrand.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteAMenu.fulfilled, (state, action) => {
+      .addCase(deleteABrand.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         state.deletedBrand = action.payload;
       })
-      .addCase(deleteAMenu.rejected, (state, action) => {
+      .addCase(deleteABrand.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
