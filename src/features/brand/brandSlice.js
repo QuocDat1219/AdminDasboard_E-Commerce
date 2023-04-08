@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import brandService from "./brandService";
 
+
 export const getMenus = createAsyncThunk(
   "menu/get-brands",
   async (thunkAPI) => {
     try {
-      return await brandService.getMenus();
+      return await brandService.getBrands();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

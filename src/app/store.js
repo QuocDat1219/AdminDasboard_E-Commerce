@@ -11,14 +11,14 @@ import enquiryReducer from "../features/enquiry/enquirySlice";
 import uploadReducer from "../features/upload/uploadSlice";
 import couponReducer from "../features/coupon/couponSlice";
 import linkSliceReducer from "../features/link/linkSlice";
-import categoryReducer from "../features/categorycontainer/categorycontainerSlice"
+import categoryReducer from "../features/categorycontainer/categorycontainerSlice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    categorycontainer:categoryReducer,
+    categorycontainer: categoryReducer,
     customer: customerReducer,
     product: productReducer,
-    menu: brandReducer,
+    brands: brandReducer,
     pCategory: pCategoryReducer,
     bCategory: bCategoryReducer,
     blogs: blogReducer,

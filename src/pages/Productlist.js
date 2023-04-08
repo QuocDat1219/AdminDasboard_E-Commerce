@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Input, Table } from "antd";
+import { Input, Modal, Table } from "antd";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts, deleteAProduct } from "../features/product/productSlice";
+import {
+  getProducts,
+  updateProduct,
+  deleteAProduct,
+  resetState,
+} from "../features/product/productSlice";
+import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 // import { getAProductCategory } from "../features/pcategory/pcategorySlice";
 import { getCategories } from "../features/pcategory/pcategorySlice";
 import { getCategoryContainer } from "../features/categorycontainer/categorycontainerSlice";
+import { getMenus } from "../features/brand/brandSlice";
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
+import { delImg, uploadImg } from "../features/upload/uploadSlice";
 import {
   Button,
   Checkbox,
@@ -23,8 +32,31 @@ import {
   Switch,
   Upload,
 } from "antd";
-const { Option } = Select;
+import Dropzone from "react-dropzone";
+import CustomInput from "../components/CustomInput";
+import ReactQuill from "react-quill";
+import * as yup from "yup";
 
+let schema = yup.object().shape({
+  name: yup.string().required("Name is Required"),
+  description: yup.string().required("Description is Required"),
+  price: yup.number().required("Price is Required"),
+  idBrand: yup.string().required("Brand is Required"),
+  idCategory: yup.string().required("Category is Required"),
+  idContainerCategory: yup.string().required("ContainerCategory is Required"),
+  // color: yup
+  //   .array()
+  //   .min(1, "Pick at least one color")
+  //   .required("Color is Required"),
+  // quantity: yup.number().required("Quantity is Required"),
+});
+const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
 const formItemLayout = {
   labelCol: {
     span: 6,
@@ -84,8 +116,13 @@ const columns = [
     sorter: (a, b) => a.price - b.price,
   },
   {
-    title: "ContainerCategory",
-    dataIndex: "ContainerCategory",
+    title: "Danh mục",
+    dataIndex: "idContainerCategory",
+    sorter: (a, b) => a.price - b.price,
+  },
+  {
+    title: "Nhãn hàng",
+    dataIndex: "brand",
     sorter: (a, b) => a.price - b.price,
   },
   {
@@ -94,26 +131,61 @@ const columns = [
     sorter: (a, b) => a.price - b.price,
   },
   {
-    title: "Action",
+    title: "Hành động",
     dataIndex: "action",
   },
 ];
 const Productlist = () => {
-  const productState = useSelector((state) => state.product.products);
+  const productStates = useSelector((state) => state.product.products);
   const pCategory = useSelector((state) => state.pCategory.pCategories);
+  const brands = useSelector((state) => state.brands.menus);
+
   const categorycontainer = useSelector(
     (state) => state.categorycontainer.categorycontainer
   );
+
+  const catState = useSelector((state) => state.pCategory.pCategories);
+  const colorState = useSelector((state) => state.color.colors);
+  const imgState = useSelector((state) => state.upload.images);
+  const newProduct = useSelector((state) => state.product);
+  const brandState = useSelector((state) => state.brands.menus);
+
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getProducts());
+    if (productStates?.length === 0) {
+      dispatch(getProducts());
+    }
     dispatch(getCategories());
     dispatch(getCategoryContainer());
-  }, []);
-  console.log(productState, pCategory);
+    dispatch(getMenus());
+  }, [dispatch, productStates?.length, pCategory?.length, brands?.length]);
   const data1 = [];
   const [popdtProduct, setProduct] = useState([]);
   const [popdtCategory, setdtCategory] = useState([]);
+  const [popCateContainer, setCateContainer] = useState([]);
+  const [popBrand, setBrand] = useState([]);
+  const formik = useFormik({
+    initialValues: {
+      name: popdtProduct ? popdtProduct?.name : "",
+      price: "",
+      description: "",
+      idCategory: "",
+      idContainerCategory: "",
+      idBrand: "",
+      imagesDetail: "",
+    },
+    validationSchema: schema,
+    onSubmit: (values) => {
+      dispatch(updateProduct(values));
+      formik.resetForm();
+      setTimeout(() => {
+        dispatch(resetState());
+      }, 3000);
+    },
+  });
+  console.log(productStates.length);
+  // console.log(productStates, pCategory);
+
   const popProduct = (data) => {
     setProduct(data);
   };
@@ -121,14 +193,59 @@ const Productlist = () => {
     setdtCategory(data);
   };
 
-  const handleDelete = async (id) => {
-    await dispatch(deleteAProduct(id));
-    await dispatch(getProducts());
-    await dispatch(getCategories());
+  useEffect(() => {});
+
+  const handleUpdate = async (data) => {
+    await console.log(data);
+    dispatch(updateProduct(data));
   };
-  productState?.map((productState, i) => {
+  const handleDelete = (id) => {
+    dispatch(deleteAProduct(id));
+    //  dispatch(getProducts());
+    //  dispatch(getCategories());
+  };
+  // console.log(brands);
+  // console.log(categorycontainer);
+  const [showModalDelete, setshowModalDelete] = useState(false);
+  const [showModalEdit, setshowModalEdit] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
+  const [fileList, setFileList] = useState([]);
+  const handleCancel = () => setPreviewOpen(false);
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+    setPreviewTitle(
+      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
+    );
+  };
+
+  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
+      </div>
+    </div>
+  );
+  productStates?.map((productState, i) => {
     pCategory?.map((pCate) => {
-      if (productState?.idCategory === pCate?._id) {
+      if (productState?.idCategory == pCate?._id) {
+        const cateContainer = categorycontainer.filter((ct) => {
+          return ct._id == productState.idContainerCategory;
+        });
+        const brand = brands.filter((brand) => {
+          return brand._id == productState.idBrand;
+        });
         data1.push({
           key: i + 1,
           id: productState._id ? productState._id : "undefined",
@@ -141,6 +258,11 @@ const Productlist = () => {
           idCategory: pCate.name ? pCate.name : "undefined",
           slug: productState.slug ? productState.slug : "undefined",
           sold: productState?.sold != null ? productState.sold : "undefined",
+          brand: brand[0]?.title != null ? brand[0].title : "undefined",
+          idContainerCategory: cateContainer[0]?.name
+            ? cateContainer[0].name
+            : "undefined",
+
           url: (
             <img
               className="w-20 object-cover"
@@ -153,7 +275,6 @@ const Productlist = () => {
                 onClick={() => {
                   setshowModalEdit(true);
                   popProduct(productState);
-                  // deleteProduct(12);
                 }}
                 className=" fs-3 text-danger cursor-pointer"
               >
@@ -175,9 +296,8 @@ const Productlist = () => {
       }
     });
   });
+
   console.log(data1);
-  const [showModalDelete, setshowModalDelete] = useState(false);
-  const [showModalEdit, setshowModalEdit] = useState(false);
 
   return (
     <div>
@@ -226,7 +346,7 @@ const Productlist = () => {
                         Xác nhận
                       </button>
                       <button
-                        className="w-full mt-2 p-2.5 flex-1 text-gray-800 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
+                        className="w-full mt-2 p-2.5 flex-1 text-gray-800 bg-success rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
                         onClick={() => setshowModalDelete(false)}
                       >
                         Hủy
@@ -246,102 +366,195 @@ const Productlist = () => {
               className="fixed inset-0 w-full h-full bg-black opacity-40"
               onClick={() => setshowModalEdit(false)}
             ></div>
-            <div className="flex items-center min-h-screen px-4 py-8">
+            <div className="flex items-center min-h-screen px-1 py-2">
               <div className="relative w-full max-w-lg p-4 mx-auto bg-white rounded-md shadow-lg">
                 <div className="mt-3 sm:flex justify-center flex-col ">
                   <div className="mt-2  sm:ml-4 sm:text-left">
-                    <Form
-                      name="validate_other"
-                      {...formItemLayout}
-                      onFinish={onFinish}
-                      initialValues={{
-                        "input-number": 3,
-                        "checkbox-group": ["A", "B"],
-                        rate: 3.5,
-                      }}
-                      style={{
-                        maxWidth: 600,
-                      }}
+                    <form
+                      onSubmit={formik.handleSubmit}
+                      className="d-flex gap-3 flex-column"
                     >
-                      <Form.Item label="Mã sản phẩm">
-                        <span className="ant-form-text">
-                          {popdtProduct?._id}
-                        </span>
-                      </Form.Item>
-                      <Form.Item
-                        name="select"
-                        label="Loại hàng hóa"
-                        hasFeedback
-                        rules={[
-                          {
-                            required: true,
-                            message: "Chọn loại hàng hóa",
-                          },
-                        ]}
-                      >
-                        {" "}
-                        {console.log("popdtCategory" + popdtCategory)}
-                        <Select
-                          defaultValue={
-                            popdtCategory.name == null
-                              ? "null"
-                              : popdtCategory.name
-                          }
-                          placeholder="Chọn danh mục hàng hóa"
-                        >
-                          {pCategory.map((cate) => (
-                            <>
-                              <Option value={cate.name}>{cate.name}</Option>
-                            </>
-                          ))}
-                        </Select>
-                      </Form.Item>
-                      <Form.Item label="Tên sản phẩm">
-                        <Input defaultValue={popdtProduct?.name} />
-                      </Form.Item>
-                      <Form.Item label="Giá">
-                        <InputNumber value={popdtProduct?.price} />
-                      </Form.Item>
-                      <Form.Item label="Mô tả">
-                        <Input value={popdtProduct?.description} />
-                      </Form.Item>
-                      <Form.Item label="Số lượng">
-                        <Input value={popdtProduct?.quantity} />
-                      </Form.Item>
-                      <Form.Item label="Số lượng đã bán">
-                        <InputNumber value={popdtProduct?.sold} />
-                      </Form.Item>
-
-                      <Form.Item
-                        name="switch"
-                        label="Trạng thái"
-                        valuePropName="checked"
-                      >
-                        <Switch />
-                      </Form.Item>
-                      <Form.Item>
-                        <Button className="bg-slate-400" onClick={normFile}>
-                          Add Image
-                        </Button>
-                      </Form.Item>
-                      <div className="items-center gap-2 mt-3 sm:flex">
-                        <button
-                          className="w-full mt-2 p-2.5 flex-1 text-white bg-red-600 rounded-md outline-none ring-offset-2 ring-red-600 focus:ring-2"
-                          onClick={() => {
-                            setshowModalEdit(false);
-                          }}
-                        >
-                          Xác nhận
-                        </button>
-                        <button
-                          type="submit"
-                          className="w-full mt-2 p-2.5 flex-1 text-gray-800 rounded-md outline-none border ring-offset-2 ring-indigo-600 focus:ring-2"
-                          onClick={() => setshowModalEdit(false)}
-                        >
-                          Hủy
-                        </button>
+                      <CustomInput
+                        type="text"
+                        label="Enter Product Name"
+                        name="name"
+                        onChng={formik.handleChange("name")}
+                        onBlr={formik.handleBlur("name")}
+                        val={formik.values.name}
+                      />
+                      <div className="error">
+                        {formik.touched.name && formik.errors.name}
                       </div>
-                    </Form>
+                      <div className="">
+                        <ReactQuill
+                          theme="snow"
+                          name="description"
+                          onChange={formik.handleChange("description")}
+                          value={formik.values.description}
+                        />
+                      </div>
+                      <div className="error">
+                        {formik.touched.description &&
+                          formik.errors.description}
+                      </div>
+                      <CustomInput
+                        type="number"
+                        label="Enter Product Price"
+                        name="price"
+                        onChng={formik.handleChange("price")}
+                        onBlr={formik.handleBlur("price")}
+                        val={formik.values.price}
+                      />
+                      <div className="error">
+                        {formik.touched.price && formik.errors.price}
+                      </div>
+                      <select
+                        name="idBrand"
+                        onChange={formik.handleChange("idBrand")}
+                        onBlur={formik.handleBlur("idBrand")}
+                        value={formik.values.idBrand}
+                        className="form-control py-3 mb-3"
+                        id=""
+                      >
+                        <option value="">Select Brand</option>
+                        {brandState.map((i, j) => {
+                          return (
+                            <option key={j} value={i._id}>
+                              {i.title}
+                            </option>
+                          );
+                        })}
+                      </select>
+                      <div className="error">
+                        {formik.touched.idBrand && formik.errors.idBrand}
+                      </div>
+                      <select
+                        name="idCategory"
+                        onChange={formik.handleChange("idCategory")}
+                        onBlur={formik.handleBlur("idCategory")}
+                        value={formik.values.idCategory}
+                        className="form-control py-3 mb-3"
+                        id=""
+                      >
+                        <option value="">Select Category</option>
+                        {catState.map((i, j) => {
+                          return (
+                            <option key={j} value={i._id}>
+                              {i.name}
+                            </option>
+                          );
+                        })}
+                      </select>
+                      <div className="error">
+                        {formik.touched.idCategory && formik.errors.idCategory}
+                      </div>
+
+                      <select
+                        name="idContainerCategory"
+                        onChange={formik.handleChange("idContainerCategory")}
+                        onBlur={formik.handleBlur("idContainerCategory")}
+                        value={formik.values.categorycontainer}
+                        className="form-control py-3 mb-3"
+                        id=""
+                      >
+                        <option value="">Select categorycontainer</option>
+                        {categorycontainer.map((i, j) => {
+                          return (
+                            <option key={j} value={i._id}>
+                              {i.name}
+                            </option>
+                          );
+                        })}
+                      </select>
+                      <div className="error">
+                        {formik.touched.idContainerCategory &&
+                          formik.errors.idContainerCategory}
+                      </div>
+                      <CustomInput
+                        type="number"
+                        label="Enter Product Quantity"
+                        name="quantity"
+                        onChng={formik.handleChange("quantity")}
+                        onBlr={formik.handleBlur("quantity")}
+                        val={formik.values.quantity}
+                      />
+                      <div className="error">
+                        {formik.touched.quantity && formik.errors.quantity}
+                      </div>
+                      <Upload
+                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                        listType="picture-card"
+                        fileList={fileList}
+                        onPreview={handlePreview}
+                        onChange={handleChange}
+                      >
+                        {fileList.length >= 8 ? null : uploadButton}
+                      </Upload>
+                      <Modal
+                        open={previewOpen}
+                        title={previewTitle}
+                        footer={null}
+                        onCancel={handleCancel}
+                      >
+                        <img
+                          alt="example"
+                          style={{
+                            width: "100%",
+                          }}
+                          src={previewImage}
+                        />
+                      </Modal>
+                      <div className="bg-white border-1 p-5 text-center">
+                        <Dropzone
+                          onDrop={(acceptedFiles) =>
+                            dispatch(uploadImg(acceptedFiles))
+                          }
+                        >
+                          {({ getRootProps, getInputProps }) => (
+                            <section>
+                              <div {...getRootProps()}>
+                                <input {...getInputProps()} />
+                                <p>
+                                  Drag 'n' drop some files here, or click to
+                                  select files
+                                </p>
+                              </div>
+                            </section>
+                          )}
+                        </Dropzone>
+                      </div>
+                      <div className="showimages d-flex flex-wrap gap-3">
+                        {imgState?.map((i, j) => {
+                          return (
+                            <div className=" position-relative" key={j}>
+                              <button
+                                type="button"
+                                onClick={() => dispatch(delImg(i.public_id))}
+                                className="btn-close position-absolute"
+                                style={{ top: "10px", right: "10px" }}
+                              ></button>
+                              <img
+                                src={i.url}
+                                alt=""
+                                width={200}
+                                height={200}
+                              />
+                            </div>
+                          );
+                        })}
+                      </div>
+                      <input type="file" id="fileInput" multiple />
+                      <button
+                        type="submit"
+                        className="btn btn-success bg-success border-0 rounded-3 my-5"
+                        onClick={() => {
+                          console.log(formik.values);
+                        }}
+                      >
+                        Add Product
+                      </button>
+                    </form>
+                
                   </div>
                 </div>
               </div>

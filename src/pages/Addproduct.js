@@ -14,59 +14,63 @@ import { Select } from "antd";
 import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from "../features/upload/uploadSlice";
 import { createProducts, resetState } from "../features/product/productSlice";
-import useDrivePicker from "react-google-drive-picker";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { getCategoryContainer } from "../features/categorycontainer/categorycontainerSlice";
 import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Upload } from "antd";
-import ImgCrop from "antd-img-crop";
+import MultiUpload from "./../components/MultiUpload";
 let schema = yup.object().shape({
-  title: yup.string().required("Bạn chưa nhập tiêu đề"),
-  // description: yup.string().required("Description is Required"),
-  price: yup.number().required("Bạn chưa nhập giá sản phẩm"),
-  // brand: yup.string().required("Brand is Required"),
-  // category: yup.string().required("Category is Required"),
-  // tags: yup.string().required("Tag is Required"),
+  name: yup.string().required("Name is Required"),
+  description: yup.string().required("Description is Required"),
+  price: yup.number().required("Price is Required"),
+  idBrand: yup.string().required("Brand is Required"),
+  idCategory: yup.string().required("Category is Required"),
+  idContainerCategory: yup.string().required("ContainerCategory is Required"),
+
   // color: yup
   //   .array()
   //   .min(1, "Pick at least one color")
   //   .required("Color is Required"),
-  quantity: yup.number().required("Bạn chưa nhập số lượng sản phẩm"),
+  // quantity: yup.number().required("Quantity is Required"),
 });
-
+const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
 const Addproduct = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [color, setColor] = useState([]);
   const [images, setImages] = useState([]);
-  console.log(color);
+  const brandState = useSelector((state) => state.brands.menus);
   useEffect(() => {
-    dispatch(getMenus());
+    if (brandState?.length <= 0) {
+      dispatch(getMenus());
+    }
     dispatch(getCategories());
-    dispatch(getColors());
-  }, []);
+    dispatch(getCategoryContainer());
+  }, [brandState?.length]);
 
-  // const brandState = useSelector((state) => state.brand.brands);
   const catState = useSelector((state) => state.pCategory.pCategories);
   const colorState = useSelector((state) => state.color.colors);
   const imgState = useSelector((state) => state.upload.images);
   const newProduct = useSelector((state) => state.product);
+  const categorycontainer = useSelector(
+    (state) => state.categorycontainer.categorycontainer
+  );
   const { isSuccess, isError, isLoading, createdProduct } = newProduct;
   useEffect(() => {
     if (isSuccess && createdProduct) {
-      toast.success("Đã thêm sản phẩm thành công !");
+      toast.success("Product Added Successfullly!");
     }
     if (isError) {
-      toast.error("Đã xảy ra sự cố !");
+      toast.error("Something Went Wrong!");
     }
   }, [isSuccess, isError, isLoading]);
   const coloropt = [];
-  colorState.forEach((i) => {
-    coloropt.push({
-      label: i.title,
-      value: i._id,
-    });
-  });
+  colorState.forEach((i) => {});
   const img = [];
   imgState.forEach((i) => {
     img.push({
@@ -76,20 +80,18 @@ const Addproduct = () => {
   });
 
   useEffect(() => {
-    formik.values.color = color ? color : " ";
     formik.values.images = img;
+    formik.values.imagesDetail = fileList;
   }, [color, img]);
   const formik = useFormik({
     initialValues: {
-      title: "",
-      description: "",
+      name: "",
       price: "",
-      brand: "",
-      category: "",
-      tags: "",
-      color: "",
-      quantity: "",
-      images: "",
+      description: "",
+      idCategory: "",
+      idContainerCategory: "",
+      idBrand: "",
+      imagesDetail: "",
     },
     validationSchema: schema,
     onSubmit: (values) => {
@@ -101,64 +103,57 @@ const Addproduct = () => {
       }, 3000);
     },
   });
-  const handleColors = (e) => {
-    setColor(e);
-    console.log(color);
-  };
-  const [fileList, setFileList] = useState([
-    {
-      uid: "-1",
-      name: "image.png",
-      status: "done",
-      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-  ]);
-  const onChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-  };
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [openPicker, authResponse] = useDrivePicker();
-  const [dataImages, setDataImages] = useState([]);
-
-  console.log(dataImages);
-  const dtImg = [];
-  // const customViewsArray = [new google.picker.DocsView()]; // custom view
-  const handleOpenPicker = () => {
-    setDataImages(dataImages);
-    openPicker({
-      clientId:
-        "541961715366-jb2pgssjveh1ri3l6tigl8thsf7dpjob.apps.googleusercontent.com",
-      developerKey: "AIzaSyDaQ-oofs5WON4fI-rsgnXrC2gDUJVDxwA",
-      viewId: "DOCS",
-      token:
-        "ya29.a0Ael9sCOmVDsU7XUPoO70X3ZbJi8it9gGdD2H8Ib-J-b01-WGfjoZsOwTBNA2jeotsQMqkUhuF4Cfy2dmcVdTAk1TaizgNX2-tv1JNr_HQezIkHmn0wtagW4sggLbR_dXkYvhTHYhDS6onLEjma5tnjvWhV4maCgYKARgSARESFQF4udJhWobNwvAAUdnmqbjkHq9rQg0163",
-      showUploadView: true,
-      showUploadFolders: true,
-      supportDrives: true,
-      multiselect: true,
-      // customViews: customViewsArray, // custom view
-      callbackFunction: (data) => {
-        if (data.action === "cancel") {
-          console.log("User clicked cancel/close button");
-        }
-        setDataImages(data.docs);
-        // dtImg.push(data.docs);
-        // if (data.docs != null) {
-        localStorage.setItem(
-          "imfgDrive",
-          JSON.stringify(...dataImages, data.docs)
-        );
-        // }
-        console.log(dataImages);
-      },
-    });
+  const [fileList, setFileList] = useState([]);
+  const handleCancel = () => setPreviewOpen(false);
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+    setPreviewTitle(
+      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
+    );
   };
+  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
+      </div>
+    </div>
+  );
+  const handleFormSubmit = async (e) => {
+    // prevent the page from reloading
+    e.preventDefault();
 
+    // construct form data
+    const formData = new FormData(e.currentTarget);
+    const files = e.currentTarget.files;
+    for (let i = 0; i < files.length; i++) {
+      formData.append("files", files[i]);
+    }
+    return console.log(formData);
+    // make a POST request with Axios
+    // const res = await axios.post("/api/upload", formData, {
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //   },
+    // });
+
+    // console.log(res);
+  };
   return (
     <div>
-      <h3 className="mb-4 title">Thêm Sản Phẩm</h3>
+      <h3 className="mb-4 title">Add Product</h3>
       <div>
         <form
           onSubmit={formik.handleSubmit}
@@ -166,57 +161,15 @@ const Addproduct = () => {
         >
           <CustomInput
             type="text"
-            label="Nhập tiêu đề của sản phẩm"
-            name="title"
-            onChng={formik.handleChange("title")}
-            onBlr={formik.handleBlur("title")}
-            val={formik.values.title}
+            label="Enter Product Name"
+            name="name"
+            onChng={formik.handleChange("name")}
+            onBlr={formik.handleBlur("name")}
+            val={formik.values.name}
           />
           <div className="error">
-            {formik.touched.title && formik.errors.title}
+            {formik.touched.name && formik.errors.name}
           </div>
-          {/* <div className="">
-            <ReactQuill
-              theme="snow"
-              name="description"
-              onChange={formik.handleChange("description")}
-              value={formik.values.description}
-            />
-          </div>
-          <div className="error">
-            {formik.touched.description && formik.errors.description}
-          </div> */}
-          <CustomInput
-            type="number"
-            label="Nhập giá của sản phẩm"
-            name="price"
-            onChng={formik.handleChange("price")}
-            onBlr={formik.handleBlur("price")}
-            val={formik.values.price}
-          />
-          <div className="error">
-            {formik.touched.price && formik.errors.price}
-          </div>
-          {/* <select
-            name="brand"
-            onChange={formik.handleChange("brand")}
-            onBlur={formik.handleBlur("brand")}
-            value={formik.values.brand}
-            className="form-control py-3 mb-3"
-            id=""
-          >
-            <option value="">Select Brand</option>
-            {brandState.map((i, j) => {
-              return (
-                <option key={j} value={i.title}>
-                  {i.title}
-                </option>
-              );
-            })}
-          </select>
-          <div className="error">
-            {formik.touched.brand && formik.errors.brand}
-          </div> */}
           <div className="">
             <ReactQuill
               theme="snow"
@@ -228,80 +181,83 @@ const Addproduct = () => {
           <div className="error">
             {formik.touched.description && formik.errors.description}
           </div>
-          {dataImages?.map((imgs) => {
-            return (
-              <div>
-                <img
-                  className="w-20 h-20"
-                  src={
-                    imgs?.url
-                      ? `https://drive.google.com/uc?export=view&id=${imgs.id}`
-                      : "https://drive.google.com/uc?export=view&id=1QryarMMgDktAanxrwQs9GxDUAGMQpdaZ"
-                  }
-                  alt=""
-                />
-              </div>
-            );
-          })}
-
-          {/* https://drive.google.com/file/d/1Js6qMSwgfTOnQpNhIOs-0tvfCqadsvg4/view?usp=share_link */}
-          {/* <img
-            src="https://drive.google.com/uc?export=view&id=1Js6qMSwgfTOnQpNhIOs-0tvfCqadsvg4"
-            className="w-10 h-10"
-          /> */}
-          {/* <select
-            name="category"
-            onChange={formik.handleChange("category")}
-            onBlur={formik.handleBlur("category")}
-            value={formik.values.category}
+          <CustomInput
+            type="number"
+            label="Enter Product Price"
+            name="price"
+            onChng={formik.handleChange("price")}
+            onBlr={formik.handleBlur("price")}
+            val={formik.values.price}
+          />
+          <div className="error">
+            {formik.touched.price && formik.errors.price}
+          </div>
+          <select
+            name="idBrand"
+            onChange={formik.handleChange("idBrand")}
+            onBlur={formik.handleBlur("idBrand")}
+            value={formik.values.idBrand}
             className="form-control py-3 mb-3"
             id=""
           >
-            <option value="">Danh mục sản phẩm</option>
-            {catState.map((i, j) => {
+            <option value="">Select Brand</option>
+            {brandState.map((i, j) => {
               return (
-                <option key={j} value={i.title}>
+                <option key={j} value={i._id}>
                   {i.title}
                 </option>
               );
             })}
           </select>
           <div className="error">
-            {formik.touched.category && formik.errors.category}
-          </div> */}
-          {/* <select
-            name="tags"
-            onChange={formik.handleChange("tags")}
-            onBlur={formik.handleBlur("tags")}
-            value={formik.values.tags}
+            {formik.touched.idBrand && formik.errors.idBrand}
+          </div>
+          <select
+            name="idCategory"
+            onChange={formik.handleChange("idCategory")}
+            onBlur={formik.handleBlur("idCategory")}
+            value={formik.values.idCategory}
             className="form-control py-3 mb-3"
             id=""
           >
-            <option value="" disabled>
-              Select Category
-            </option>
-            <option value="featured">Featured</option>
-            <option value="popular">Popular</option>
-            <option value="special">Special</option>
+            <option value="">Select Category</option>
+            {catState.map((i, j) => {
+              return (
+                <option key={j} value={i._id}>
+                  {i.name}
+                </option>
+              );
+            })}
           </select>
           <div className="error">
-            {formik.touched.tags && formik.errors.tags}
-          </div> */}
-          {/* <Select
-            mode="multiple"
-            allowClear
-            className="w-100"
-            placeholder="Thêm màu"
-            defaultValue={color}
-            onChange={(i) => handleColors(i)}
-            options={coloropt}
-          />
+            {formik.touched.idCategory && formik.errors.idCategory}
+          </div>
+
+          <select
+            name="idContainerCategory"
+            onChange={formik.handleChange("idContainerCategory")}
+            onBlur={formik.handleBlur("idContainerCategory")}
+            value={formik.values.categorycontainer}
+            className="form-control py-3 mb-3"
+            id=""
+          >
+            <option value="">Select categorycontainer</option>
+            {categorycontainer.map((i, j) => {
+              return (
+                <option key={j} value={i._id}>
+                  {i.name}
+                </option>
+              );
+            })}
+          </select>
           <div className="error">
-            {formik.touched.color && formik.errors.color}
-          </div> */}
+            {formik.touched.idContainerCategory &&
+              formik.errors.idContainerCategory}
+          </div>
+
           <CustomInput
             type="number"
-            label="Nhập số lượng sản phẩm"
+            label="Enter Product Quantity"
             name="quantity"
             onChng={formik.handleChange("quantity")}
             onBlr={formik.handleBlur("quantity")}
@@ -310,15 +266,16 @@ const Addproduct = () => {
           <div className="error">
             {formik.touched.quantity && formik.errors.quantity}
           </div>
-          {/* <div className="bg-white border-1 p-5 text-center">
-            <Dropzone
-              onDrop={(acceptedFiles) => dispatch(uploadImg(acceptedFiles))}
-            >
+
+          <div className="bg-white border-1 p-5 text-center">
+            <Dropzone onDrop={(acceptedFiles) => console.log(acceptedFiles)}>
               {({ getRootProps, getInputProps }) => (
                 <section>
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <p>Hiện hình ảnh</p>
+                    <p>
+                      Drag 'n' drop some files here, or click to select files
+                    </p>
                   </div>
                 </section>
               )}
@@ -338,22 +295,47 @@ const Addproduct = () => {
                 </div>
               );
             })}
-          </div> */}
-          <div>
-            <button
-              onClick={() => handleOpenPicker()}
-              className="btn btn-outline-primary border-1 rounded-3"
-            >
-              Open Picker
-            </button>
           </div>
-          <button
-            className="btn bg-[blue] text-white  border-0 rounded-3 my-5"
-            type="submit"
+          <Upload
+            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            listType="picture-card"
+            fileList={fileList}
+            onPreview={handlePreview}
+            onChange={handleChange}
           >
-            Thêm sản phẩm
+            {fileList.length >= 8 ? null : uploadButton}
+          </Upload>
+          <Modal
+            open={previewOpen}
+            title={previewTitle}
+            footer={null}
+            onCancel={handleCancel}
+          >
+            <img
+              alt="example"
+              style={{
+                width: "100%",
+              }}
+              src={previewImage}
+            />
+          </Modal>
+          <button
+            type="submit"
+            className="btn btn-success border-0 rounded-3 my-5"
+            onClick={() => {
+              console.log(formik.values);
+            }}
+          >
+            Add Product
           </button>
         </form>
+        <MultiUpload />
+        {/* <form onSubmit={handleFormSubmit} encType="multipart/form-data">
+          <input type="file" name="file" multiple />
+          <button type="submit" className="bg-yellow-400">
+            Submit
+          </button>
+        </form> */}
       </div>
     </div>
   );
