@@ -12,7 +12,7 @@ function RootLayout({ children }) {
   return (
     <div className="flex lg:gap-5 ">
       <MainLayout />
-      <main className="max-w-5xl flex-1 py-20">
+      <main className=" flex my-20 mr-10 px-1">
         <Outlet />
       </main>
     </div>
