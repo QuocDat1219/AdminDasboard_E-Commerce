@@ -12,8 +12,9 @@ import { Link, json } from "react-router-dom";
 import Modal from "antd/es/modal/Modal";
 import CustomModal from "../components/CustomModal";
 import draftToHtml from "draftjs-to-html";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 const Listnews = () => {
+  const [editorContent, setEditorContent] = useState(EditorState.createEmpty());
   const columns = [
     {
       title: "SNo",
@@ -66,7 +67,7 @@ const Listnews = () => {
   ];
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
-  const [description, setDescription] = useState({});
+  // const [description, setDescription] = useState({});
 
   const [pNewID, setpNewID] = useState("");
   const [open, setOpen] = useState(false);
@@ -83,7 +84,9 @@ const Listnews = () => {
   const showModal = (desc) => {
     console.log(desc);
     const des = JSON.parse(desc);
-    setDescription(desc);
+    setEditorContent(EditorState.createWithContent(convertFromRaw(JSON.parse(desc))));
+    // setEditorContent()
+    // setDescription(desc);
     setVisible(true);
   };
 
@@ -157,13 +160,13 @@ const Listnews = () => {
           footer={null}
         >
          
-          {/* <div
+           <div
             dangerouslySetInnerHTML={{
-              __html: draftToHtml(convertToRaw(JSON.parse(description).getCurrentContent())),
+              __html: draftToHtml(convertToRaw(editorContent.getCurrentContent())),
             }}
           ></div>
-         */}
-         {description}
+         
+         {/* {editorContent} */}
         </Modal>
       </div>
     </>

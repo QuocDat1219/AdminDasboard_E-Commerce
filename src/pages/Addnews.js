@@ -47,7 +47,7 @@ const Addnews = () => {
     formData.append("category", category);
     formData.append("image", imageThumbnail);
     formData.append("video", videos);
-    formData.append("description", JSON.stringify(editorContent));
+    formData.append("description", JSON.stringify(convertToRaw(editorContent.getCurrentContent())));
 
     axios
       .post("https://ecom-oto.vercel.app/api/blog/", formData, {
