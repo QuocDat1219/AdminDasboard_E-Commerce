@@ -29,16 +29,27 @@ import draftToHtml from "draftjs-to-html";
 import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 const Addnews = () => {
   const [titles, setTitles] = useState("");
   const [category, setCategory] = useState("");
   const [imageThumbnail, setImageThumbnail] = useState("");
   const [videos, setVideos] = useState("");
-  const [editorContent, setEditorContent] = useState(EditorState.createEmpty());
+  const [setDescription, setStateDescription] = useState();
 
-  const handleEditorChange = (editorState) => {
-    setEditorContent(editorState);
-  };
+  console.log(setDescription);
+  // const handleEditorChange = (editorState) => {
+  //   setEditorContent(editorState);
+  // };
+
+  // useEffect(() => {
+  //   const des = JSON.stringify(editorContent);
+  //   console.log(des);
+  //   const det = JSON.parse(des);
+  //   console.log(det);
+  // }, [editorContent]);
 
   const submitform = (e) => {
     e.preventDefault();
@@ -47,7 +58,7 @@ const Addnews = () => {
     formData.append("category", category);
     formData.append("image", imageThumbnail);
     formData.append("video", videos);
-    formData.append("description", JSON.stringify(editorContent));
+    formData.append("description", setDescription);
 
     axios
       .post("https://ecom-oto.vercel.app/api/blog/", formData, {
@@ -131,11 +142,18 @@ const Addnews = () => {
               backgroundColor: "white",
             }}
           >
-            <Editor
+            {/* <Editor
               label="Nhập Tin Tức"
               className="text-sm"
               editorState={editorContent}
               onEditorStateChange={handleEditorChange}
+            /> */}
+            <CKEditor
+              editor={ClassicEditor}
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                setStateDescription(data);
+              }}
             />
           </div>
           <button
@@ -145,7 +163,7 @@ const Addnews = () => {
             Thêm Tin Tức
           </button>
         </form>
-        <div>
+        {/* <div>
           <h2>Preview:</h2>
           <div
             dangerouslySetInnerHTML={{
@@ -154,7 +172,7 @@ const Addnews = () => {
               ),
             }}
           ></div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
