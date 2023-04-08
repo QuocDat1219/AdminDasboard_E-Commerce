@@ -56,7 +56,13 @@ const Addnews = () => {
         },
       })
       .then((Response) => {
-        console.log(Response);
+        alert("Thêm thành công")
+      }).catch((error) => {
+        if (error.response.status === 500) {
+          alert("Tiêu đề đã tồn tại hoặc chưa chọn danh mục tin tức")
+        } else {
+          console.error(error);
+        }
       });
   };
 
@@ -84,12 +90,17 @@ const Addnews = () => {
             className="bg-gray-50 border border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
             placeholder="Nhập tiêu đề tin tức"
             onChange={(e) => setTitles(e.target.value)}
+            required
           />
           <select
             name="brand"
             className="form-control py-2 mb-3 "
             onChange={(e) => setCategory(e.target.value)}
+            required
           >
+            <option >
+              Chọn danh mục tin tức
+            </option>
             {blogcategoryState.map((i, j) => {
               return (
                 <option key={j} value={i._id}>
@@ -98,7 +109,7 @@ const Addnews = () => {
               );
             })}
           </select>
-
+        
           <div>
             <label
               className="block mb-2 font-medium text-black "

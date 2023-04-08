@@ -13,6 +13,7 @@ import Modal from "antd/es/modal/Modal";
 import CustomModal from "../components/CustomModal";
 import draftToHtml from "draftjs-to-html";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
+import imgerror from "../image/imgerror.png"
 const Listnews = () => {
   const [editorContent, setEditorContent] = useState(EditorState.createEmpty());
   const columns = [
@@ -38,7 +39,8 @@ const Listnews = () => {
     {
       title: "Ảnh tin tức",
       dataIndex: "imageThumbnail",
-      render: (url) => <img src={url} alt="" width={100} height={100} />,
+      render: (url) =>  url == undefined ? <img src={imgerror} alt="" width={100} height={100} />: <img src={url.secure_url} alt="" width={100} height={100} /> ,
+
     },
     {
       title: "Video tin tức",
@@ -85,8 +87,6 @@ const Listnews = () => {
     console.log(desc);
     const des = JSON.parse(desc);
     setEditorContent(EditorState.createWithContent(convertFromRaw(JSON.parse(desc))));
-    // setEditorContent()
-    // setDescription(desc);
     setVisible(true);
   };
 
@@ -130,9 +130,12 @@ const Listnews = () => {
   const deleteCategory = (e) => {
     dispatch(deleteBlog(e));
     setOpen(false);
+    alert("Xóa thành công");
+
     setTimeout(() => {
-      dispatch(getBlogNews());
-    }, 100);
+      window.location.reload();
+    }, 2000)
+
   };
 
   console.log(data);
@@ -159,14 +162,14 @@ const Listnews = () => {
           title="Description"
           footer={null}
         >
-         
-           <div
+
+          <div
             dangerouslySetInnerHTML={{
               __html: draftToHtml(convertToRaw(editorContent.getCurrentContent())),
             }}
           ></div>
-         
-         {/* {editorContent} */}
+
+          {/* {editorContent} */}
         </Modal>
       </div>
     </>
