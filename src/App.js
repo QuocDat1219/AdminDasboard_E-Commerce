@@ -33,6 +33,10 @@ import Linklist from "./pages/Linklist";
 import Nav from "../src/components/Nav";
 import News from "../src/pages/Addnews";
 import NewsList from "../src/pages/Newslist";
+import AddHome from "./pages/Setting/AddHome";
+import AddFooter from "./pages/Setting/AddFooter";
+import AddContact from "./pages/Setting/AddContact";
+import AddAbout from "./pages/Setting/AddAbout";
 function App() {
   return (
     <Router>
@@ -75,6 +79,10 @@ function App() {
           <Route path="config-list" element={<ConfigChatlist />} />
           <Route path="add-link" element={<AddLink />} />
           <Route path="link-list" element={<Linklist />} />
+          <Route path="add-home" element={<AddHome />} />
+          <Route path="add-footer" element={<AddFooter />} />
+          <Route path="add-contact" element={<AddContact />} />
+          <Route path="add-about" element={<AddAbout />} />
         </Route>
       </Routes>
     </Router>

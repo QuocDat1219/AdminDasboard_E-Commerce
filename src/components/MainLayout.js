@@ -264,7 +264,29 @@ const Sidebar = () => {
               {
                 key: "setting",
                 icon: <FiSettings className="fs-4" />,
-                // label: "Cài đặt",
+                label: "Cài đặt",
+                children: [
+                  {
+                    key: "add-home",
+                    icon: <FiSettings className="fs-4" />,
+                    label: "Chỉnh sửa trang chủ",
+                  },
+                  {
+                    key: "add-footer",
+                    icon: <FiSettings className="fs-4" />,
+                    label: "Chỉnh sửa chân trang ",
+                  },
+                  {
+                    key: "add-contact",
+                    icon: <FiSettings className="fs-4" />,
+                    label: "Chỉnh sửa dịch vụ",
+                  },
+                  {
+                    key: "add-about",
+                    icon: <FiSettings className="fs-4" />,
+                    label: "Chỉnh sửa About",
+                  },
+                ],
               },
             ]}
           />
