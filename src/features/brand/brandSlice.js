@@ -27,7 +27,7 @@ export const getABrand = createAsyncThunk(
   "Brand/get-brand",
   async (id, thunkAPI) => {
     try {
-      return await BrandService.getABrand(id);
+      return await BrandService.getBrand(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -37,7 +37,7 @@ export const updateABrand = createAsyncThunk(
   "Brand/update-brand",
   async (brand, thunkAPI) => {
     try {
-      return await BrandService.updateBrand(brand);
+      return await BrandService.updateABrand(brand);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

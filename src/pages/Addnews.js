@@ -76,6 +76,7 @@ const Addnews = () => {
   }, []);
 
   const blogcategoryState = useSelector((state) => state.bCategory.bCategories);
+  
   return (
     <div className="max-w-full lg:w-[100%]">
       <h3 className="mb-4 text-xl font-bold">

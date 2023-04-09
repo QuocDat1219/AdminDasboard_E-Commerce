@@ -74,8 +74,8 @@ const Brandlist = () => {
     dispatch(deleteABrand(e));
     setOpen(false);
     setTimeout(() => {
-      dispatch(getBrands());
-    }, 100);
+      window.location.reload();
+    }, 2000);
   };
   return (
     <div className="md:flex md:flex-col md:items-start">

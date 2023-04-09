@@ -53,8 +53,9 @@ const Blogcatlist = () => {
       name: bCatState[i].title,
       action: (
         <>
+        <div className="flex">
           <Link
-            to={`/admin/blog-category/${bCatState[i]._id}`}
+            to={`/admin/blogcategory/${bCatState[i]._id}`}
             className=" fs-3 text-danger"
           >
             <BiEdit />
@@ -65,6 +66,7 @@ const Blogcatlist = () => {
           >
             <AiFillDelete />
           </button>
+          </div>
         </>
       ),
     });
@@ -73,12 +75,12 @@ const Blogcatlist = () => {
     dispatch(deleteABlogCat(e));
     setOpen(false);
     setTimeout(() => {
-      dispatch(getCategories());
-    }, 100);
+      window.location.reload();
+    }, 2000);
   };
   return (
     <div>
-      <h3 className="mb-4 title">Blog Categories</h3>
+      <h3 className="mb-4 title text-xl font-bold">Danh mục tin tức</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
@@ -88,7 +90,7 @@ const Blogcatlist = () => {
         performAction={() => {
           deleteBlogCategory(blogCatId);
         }}
-        title="Are you sure you want to delete this blog category?"
+        title="Bạn có chắc muốn xóa danh mục tin này không?"
       />
     </div>
   );

@@ -17,9 +17,12 @@ import {
   FiShoppingBag,
   FiAlignCenter,
   FiHome,
+  FiPocket,
   FiBox,
   FiList,
+  FiBookmark,
   FiLink,
+  FiMenu,
   FiLayers,
   FiSend,
   FiGrid,
@@ -212,7 +215,7 @@ const Sidebar = () => {
               },
               {
                 key: "brands",
-                icon: <FiLink className="fs-4" />,
+                icon: <FiPocket className="fs-4" />,
                 label: "Quản lý nhãn hàng",
                 children: [
                   {
@@ -222,7 +225,7 @@ const Sidebar = () => {
                   },
                   {
                     key: "list-brand",
-                    icon: <FiPaperclip className="fs-4" />,
+                    icon: <FiMenu className="fs-4" />,
                     label: "Danh sách nhãn hàng",
                   },
                 ],
@@ -251,6 +254,23 @@ const Sidebar = () => {
                     key: "add-about",
                     icon: <FiSettings className="fs-4" />,
                     label: "Chỉnh sửa About",
+                  },
+                ],
+              },
+              {
+                key: "blogcategory",
+                icon: <FiBookmark className="fs-4" />,
+                label: "Danh mục tin tức",
+                children: [
+                  {
+                    key: "blog-category",
+                    icon: <FiPlusSquare className="fs-4" />,
+                    label: "Thêm danh mục tin tức",
+                  },
+                  {
+                    key: "blog-category-list",
+                    icon: <FiMenu className="fs-4" />,
+                    label: "Danh sách danh mục tin",
                   },
                 ],
               },

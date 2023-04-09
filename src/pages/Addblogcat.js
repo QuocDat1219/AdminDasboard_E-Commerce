@@ -5,15 +5,18 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useFormik } from "formik";
+
 import {
   createNewblogCat,
   getABlogCat,
   resetState,
   updateABlogCat,
 } from "../features/bcategory/bcategorySlice";
+
 let schema = yup.object().shape({
   title: yup.string().required("Category Name is Required"),
 });
+
 const Addblogcat = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,6 +31,7 @@ const Addblogcat = () => {
     blogCatName,
     updatedBlogCategory,
   } = newBlogCategory;
+
   useEffect(() => {
     if (getBlogCatId !== undefined) {
       dispatch(getABlogCat(getBlogCatId));
@@ -35,18 +39,20 @@ const Addblogcat = () => {
       dispatch(resetState());
     }
   }, [getBlogCatId]);
+
   useEffect(() => {
     if (isSuccess && createBlogCategory) {
-      toast.success("Blog Category Added Successfullly!");
+      alert("Thêm danh mục tin tức thành công");
     }
     if (isSuccess && updatedBlogCategory) {
-      toast.success("Blog Category Updated Successfullly!");
+      alert("Cập nhật danh mục tin tức thành công");
       navigate("/admin/blog-category-list");
     }
     if (isError) {
-      toast.error("Something Went Wrong!");
+      alert("Đã xảy ra lỗi!");
     }
   }, [isSuccess, isError, isLoading]);
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -67,10 +73,11 @@ const Addblogcat = () => {
       }
     },
   });
+
   return (
     <div>
-      <h3 className="mb-4  title">
-        {getBlogCatId !== undefined ? "Edit" : "Add"} Blog Category
+      <h3 className="mb-4 title text-xl font-bold">
+        {getBlogCatId !== undefined ? "Sửa" : "Thêm"} Danh mục tin tức
       </h3>
       <div>
         <form action="" onSubmit={formik.handleSubmit}>
@@ -80,17 +87,17 @@ const Addblogcat = () => {
             onChng={formik.handleChange("title")}
             onBlr={formik.handleBlur("title")}
             val={formik.values.title}
-            label="Enter Blog Category"
+            label="Tên danh mục tin"
             id="blogcat"
           />
           <div className="error">
             {formik.touched.title && formik.errors.title}
           </div>
           <button
-            className="btn btn-success border-0 rounded-3 my-5"
+            className="bg-blue-500 text-white lg:h-[40px] lg:w-[250px] rounded-3 my-5 w-[210px] h-[40px] "
             type="submit"
           >
-            {getBlogCatId !== undefined ? "Edit" : "Add"} Blog Category
+            {getBlogCatId !== undefined ? "Sửa" : "Thêm"} Danh mục tin tức
           </button>
         </form>
       </div>
