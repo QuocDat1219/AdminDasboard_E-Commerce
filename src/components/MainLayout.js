@@ -194,23 +194,6 @@ const Sidebar = () => {
                 ],
               },
               {
-                key: "Catalogg",
-                icon: <BsFillMenuButtonWideFill className="fs-4" />,
-                label: "Quản lý menu",
-                children: [
-                  {
-                    key: "menu",
-                    icon: <FiPlusSquare className="fs-4" />,
-                    label: "Thêm Menu",
-                  },
-                  {
-                    key: "menu-list",
-                    icon: <FiGrid className="fs-4" />,
-                    label: "Danh sách menu",
-                  },
-                ],
-              },
-              {
                 key: "Newss",
                 icon: <FaRegNewspaper className="fs-4" />,
                 label: "Quản lý tin tức",
@@ -224,23 +207,6 @@ const Sidebar = () => {
                     key: "list-news",
                     icon: <FiGrid className="fs-4" />,
                     label: "Danh sách tin tức",
-                  },
-                ],
-              },
-              {
-                key: "ConfigChat",
-                icon: <FiList className="fs-4" />,
-                label: "Cài đặt chat fb",
-                children: [
-                  {
-                    key: "config",
-                    icon: <FiAlignCenter className="fs-4" />,
-                    label: "Cài đặt",
-                  },
-                  {
-                    key: "config-list",
-                    icon: <FiBox className="fs-4" />,
-                    label: "Xem cài đặt",
                   },
                 ],
               },

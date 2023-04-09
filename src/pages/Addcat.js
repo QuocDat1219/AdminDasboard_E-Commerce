@@ -71,35 +71,40 @@ const Addcat = () => {
     },
   });
   return (
-    <div>
+    <div className="max-w-full lg:w-[100%]">
       <h3 className="mb-4  title text-xl font-bold">
         {getPCatId !== undefined ? "Sửa" : "Thêm"} Danh Mục
       </h3>
       <div>
-        <form action="" onSubmit={formik.handleSubmit}>
-          <CustomInput
+        <form
+          encType="multipart/form-data"
+          onSubmit={formik.handleSubmit}
+          className="d-flex gap-3 flex-column"
+        >
+          <input
             type="text"
-            label="Nhập danh mục sản phẩm"
             onChng={formik.handleChange("name")}
             onBlr={formik.handleBlur("name")}
             val={formik.values.name}
             id="name"
+            placeholder="Nhập danh mục sản phẩm"
+            className="bg-gray-50 border border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
           />
-          <div className="error">
+          {/* <div className="error">
             {formik.touched.name && formik.errors.name}
-          </div>
-          <CustomInput
+          </div> */}
+          {/* <CustomInput
             type="text"
             label="Nhập danh mục sản phẩm"
             onChng={formik.handleChange("idCategoriesContainer")}
             onBlr={formik.handleBlur("idCategoriesContainer")}
             val={formik.values.idCategoriesContainer}
             id="idCategoriesContainer"
-          />
-          <div className="error">
+          /> */}
+          {/* <div className="error">
             {formik.touched.idCategoriesContainer &&
               formik.errors.idCategoriesContainer}
-          </div>
+          </div> */}
           <button
             className="bg-blue-500 text-white lg:h-[40px] lg:w-[250px] rounded-3 my-5 w-[210px] h-[40px] "
             type="submit"

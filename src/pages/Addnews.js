@@ -59,10 +59,11 @@ const Addnews = () => {
         },
       })
       .then((Response) => {
-        alert("Thêm thành công")
-      }).catch((error) => {
+        alert("Thêm thành công");
+      })
+      .catch((error) => {
         if (error.response.status === 500) {
-          alert("Tiêu đề đã tồn tại hoặc chưa chọn danh mục tin tức")
+          alert("Tiêu đề đã tồn tại hoặc chưa chọn danh mục tin tức");
         } else {
           console.error(error);
         }
@@ -90,7 +91,7 @@ const Addnews = () => {
           <input
             type="text"
             id="default-input"
-            className="bg-gray-50 border border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+            className="bg-gray-50 border border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
             placeholder="Nhập tiêu đề tin tức"
             onChange={(e) => setTitles(e.target.value)}
             required
@@ -101,9 +102,7 @@ const Addnews = () => {
             onChange={(e) => setCategory(e.target.value)}
             required
           >
-            <option >
-              Chọn danh mục tin tức
-            </option>
+            <option>Chọn danh mục tin tức</option>
             {blogcategoryState.map((i, j) => {
               return (
                 <option key={j} value={i._id}>
@@ -112,7 +111,7 @@ const Addnews = () => {
               );
             })}
           </select>
-        
+
           <div>
             <label
               className="block mb-2 font-medium text-black "
@@ -131,7 +130,7 @@ const Addnews = () => {
             <input
               type="text"
               id="youtube-id"
-              className="bg-gray-50 border  border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+              className="bg-gray-50 border  border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
               name="youtube-id"
               placeholder="Nhập id video"
               onChange={(e) => setVideos(e.target.value)}
@@ -159,7 +158,7 @@ const Addnews = () => {
             Thêm Tin Tức
           </button>
         </form>
-        <div>
+        {/* <div>
           <h2>Preview:</h2>
           <div
             dangerouslySetInnerHTML={{
@@ -168,7 +167,7 @@ const Addnews = () => {
               ),
             }}
           ></div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
