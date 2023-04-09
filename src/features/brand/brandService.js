@@ -14,12 +14,15 @@ const createBrand = async (brand) => {
 const updateABrand = async (brand) => {
   const response = await axios.put(
     `${base_url}brand/${brand.id}`,
-    { title: brand.brandData.title },
+    { 
+      title: brand.brandData.title,
+      idCategoriesContainer: brand.brandData.idCategoriesContainer,
+    },
     config
   );
-
   return response.data;
 };
+
 const getBrand = async (id) => {
   const response = await axios.get(`${base_url}brand/${id}`, config);
 

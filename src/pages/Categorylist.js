@@ -41,28 +41,28 @@ const Categorylist = () => {
   };
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(resetState());
     dispatch(getCategories());
   }, []);
-  const pCatStat = useSelector((state) => state.pCategory.pCategories);
+  const pCatStat = useSelector((state) => state.pCategory);
+  const { isSuccess, isError, deletedCategory, pCategories } = pCatStat;
 
   const data1 = [];
-  for (let i = 0; i < pCatStat.length; i++) {
+  for (let i = 0; i < pCategories.length; i++) {
     data1.push({
       key: i + 1,
-      name: pCatStat[i].name,
+      name: pCategories[i].name,
       action: (
         <>
           <div className="flex">
             <Link
-              to={`/admin/category/${pCatStat[i]._id}`}
+              to={`/admin/category/${pCategories[i]._id}`}
               className=" fs-3 text-danger"
             >
               <BiEdit />
             </Link>
             <button
               className="ms-3 fs-3 text-danger bg-transparent border-0"
-              onClick={() => showModal(pCatStat[i]._id)}
+              onClick={() => showModal(pCategories[i]._id)}
             >
               <AiFillDelete />
             </button>
@@ -74,10 +74,13 @@ const Categorylist = () => {
   const deleteCategory = (e) => {
     dispatch(deleteAProductCategory(e));
     setOpen(false);
+
     setTimeout(() => {
-      dispatch(getCategories());
-    }, 100);
+      window.location.reload();
+    }, 2000);
+    
   };
+
   return (
     <div className="md:flex md:flex-col md:items-start">
       <h3 className="mb-4 text-xl font-bold">Danh Mục Loại Sản Phẩm</h3>
