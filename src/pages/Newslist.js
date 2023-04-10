@@ -8,19 +8,28 @@ import "react-toastify/dist/ReactToastify.css";
 import { Form, Input, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import CustomModal from "../components/CustomModal";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
 import {
   getBlogNews,
   deleteBlog,
   resetState,
 } from "../features/blogNews/blogSlice";
+
 import Modal from "antd/es/modal/Modal";
 import draftToHtml from "draftjs-to-html";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
 import imgerror from "../image/imgerror.png";
+import axios from "axios";
+import {
+  getCategories,
+  createNewblogCat,
+  getABlogCat,
+  updateABlogCat,
+  deleteABlogCat,
+} from "../features/bcategory/bcategorySlice";
 const Listnews = () => {
-  const [editorContent, setEditorContent] = useState(EditorState.createEmpty());
-  const [editingBlog, setEditingBlog] = useState(null);
-
   const columns = [
     {
       title: "SNo",
@@ -76,42 +85,106 @@ const Listnews = () => {
       dataIndex: "action",
     },
   ];
-  const dispatch = useDispatch();
-  const [visible, setVisible] = useState(false);
-  // const [description, setDescription] = useState({});
 
+  const [visible, setVisible] = useState(false);
   const [pNewID, setpNewID] = useState("");
   const [open, setOpen] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [openEditDes, setOpenEditDes] = useState(false);
+
+  const [editingBlog, setEditingBlog] = useState([]);
+  const [editingVideos, setEditingVideos] = useState("");
+  const [editImg, setEditingImg] = useState("");
+  const [editingCategory, setEditingCategory] = useState("");
+  const [editorContent, setEditorContent] = useState(EditorState.createEmpty());
+  const [edtTitle, setEdtTitle] = useState("");
+  const [edtID, setEdtid] = useState("");
+  const [editorContentEdit, setEditorContentEdit] = useState(
+    EditorState.createEmpty()
+  );
+  const handleEditorChange = (editorState) => {
+    setEditorContentEdit(editorState);
+  };
 
   const showModelNews = (e) => {
     setOpen(true);
     setpNewID(e);
   };
   const showModalEdit = (blog) => {
+    setOpenEdit(true);
+    setEdtid(blog._id);
     setEditingBlog(blog);
-    setOpen(true);
+    setEdtTitle(blog.title);
+    setEditingVideos(blog.video);
+    setEditingImg(blog.imageThumbnail.secure_url);
+    setEditingCategory(blog.category);
+    setEditorContentEdit(
+      EditorState.createWithContent(
+        convertFromRaw(JSON.parse(blog.description))
+      )
+    );
+  };
+
+  const submitform = () => {
+    let formData = new FormData();
+    formData.append("title", edtTitle);
+    formData.append("category", editingCategory);
+    formData.append("image", editImg);
+    formData.append("video", editingVideos);
+    formData.append(
+      "description",
+      JSON.stringify(convertToRaw(editorContentEdit.getCurrentContent()))
+    );
+    console.log(formData);
+
+    axios
+      .put(`https://ecom-oto.vercel.app/api/blog/${edtID}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((Response) => {
+        console.log(Response);
+        toast.success("Sửa thành công");
+      })
+      .catch((error) => {
+        if (error.response.status === 500) {
+          console.log(error);
+          toast.warning("Tiêu đề đã tồn tại hoặc chưa chọn danh mục tin tức");
+        } else {
+          console.error(error);
+        }
+      });
+  };
+
+  const showModalEditDes = () => {
+    setOpenEditDes(true);
   };
   const hideModal = () => {
     setOpen(false);
   };
-
+  const hideModalEdit = () => {
+    setOpenEdit(false);
+  };
+  const hideModalEditDes = () => {
+    setOpenEditDes(false);
+  };
   const showModal = (desc) => {
-    console.log(desc);
-    const des = JSON.parse(desc);
     setEditorContent(
       EditorState.createWithContent(convertFromRaw(JSON.parse(desc)))
     );
     setVisible(true);
   };
-
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getBlogNews());
     dispatch(resetState());
+    dispatch(getCategories());
   }, []);
 
   const blogState = useSelector((state) => state.blognew.blogs);
+  const blogcategoryState = useSelector((state) => state.bCategory.bCategories);
 
-  console.log(blogState);
   const data = [];
   for (let i = 0; i < blogState.length; i++) {
     data.push({
@@ -148,56 +221,103 @@ const Listnews = () => {
 
     setTimeout(() => {
       window.location.reload();
-    }, 2000);
+    }, 3000);
   };
 
-  console.log(data);
   return (
     <>
       <div>
-        <ToastContainer pauseOnHover={false} draggable={false} />
         <h3 className="mb-4 text-xl font-bold">Danh Mục Tin Tức</h3>
         <div>
           <Table columns={columns} dataSource={data} />
         </div>
 
         <Modal
-          title="Edit Blog"
-          visible={open}
-          onCancel={hideModal}
-          footer={[
-            <Button key="cancel" onClick={hideModal}>
-              Cancel
-            </Button>,
-            <Button key="save">Save</Button>,
-          ]}
+          title="Sửa danh mục tin tức"
+          open={openEdit}
+          onCancel={hideModalEdit}
+          footer={null}
         >
           {editingBlog && (
-            <Form>
-              <Form.Item label="Title">
+            <Form onFinish={submitform} encType="multipart/form-data">
+              <Form.Item label="Tiêu đề tin tức">
                 <Input
-                  value={editingBlog.title}
-                  onChange={(e) =>
-                    setEditingBlog({ ...editingBlog, title: e.target.value })
-                  }
+                  value={edtTitle}
+                  onChange={(e) => setEdtTitle(e.target.value)}
                 />
               </Form.Item>
-              <Form.Item label="Description">
-                <Input.TextArea
-                  value={editingBlog.description}
-                  onChange={(e) =>
-                    setEditingBlog({
-                      ...editingBlog,
-                      description: e.target.value,
-                    })
-                  }
+              <Form.Item label="Mô tả">
+                <div
+                  className="fs-3 text-primary bg-transparent border-0"
+                  onClick={() => showModalEditDes()}
+                >
+                  <BiEdit />
+                </div>
+              </Form.Item>
+              <Form.Item label="Image">
+                <Input
+                  type="file"
+                  onChange={(e) => setEditingImg(e.target.files[0])}
+                />
+                <img src={editImg} alt="" width={100} height={80} />
+              </Form.Item>
+              <Form.Item label="ID-Youtube">
+                <Input
+                  className=""
+                  value={editingVideos}
+                  onChange={(e) => setEditingVideos(e.target.value)}
                 />
               </Form.Item>
+              <Form.Item label="Danh mục tin tức">
+                <select
+                  defaultValue={editingCategory}
+                  value={editingCategory}
+                  onChange={(e) => setEditingCategory(e.target.value)}
+                >
+                  {blogcategoryState.map((i, j) => {
+                    return (
+                      <option key={j} value={i._id}>
+                        {i.title}
+                      </option>
+                    );
+                  })}
+                </select>
+              </Form.Item>
+              <Button htmlType="submit">Lưu</Button>
             </Form>
           )}
         </Modal>
 
-        {/* <div className="mt-4">
+        <Modal
+          width={"1200px"}
+          open={openEditDes}
+          onCancel={hideModalEditDes}
+          footer={[
+            <Button key="save" onClick={hideModalEditDes}>
+              Lưu
+            </Button>,
+          ]}
+        >
+          {editingBlog && (
+            <div
+              className="Mn_wysiwyg"
+              style={{
+                marginTop: "30px",
+                width: "100%",
+                backgroundColor: "white",
+                height: "400px",
+              }}
+            >
+              <Editor
+                label="Nhập Tin Tức"
+                className="text-sm"
+                editorState={editorContentEdit}
+                onEditorStateChange={handleEditorChange}
+              />
+            </div>
+          )}
+        </Modal>
+        <div className="mt-4">
           <CustomModal
             hideModal={hideModal}
             open={open}
@@ -206,9 +326,9 @@ const Listnews = () => {
             }}
             title="Bạn có chắc chắn muốn xóa loại sản phẩm này không?"
           />
-        </div> */}
+        </div>
         <Modal
-          visible={visible}
+          open={visible}
           onCancel={() => setVisible(false)}
           title="Description"
           footer={null}
@@ -220,8 +340,6 @@ const Listnews = () => {
               ),
             }}
           ></div>
-
-          {/* {editorContent} */}
         </Modal>
       </div>
     </>

@@ -11,6 +11,7 @@ function RootLayout({ children }) {
   const navigate = useNavigate();
   return (
     <div className="flex lg:gap-5">
+      <ToastContainer pauseOnHover={false} draggable={false} />
       <MainLayout />
       <main className="max-w-5xl flex-1 py-20">
         <Outlet />
