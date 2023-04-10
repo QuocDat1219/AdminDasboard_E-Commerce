@@ -72,7 +72,7 @@ const Addcat = () => {
   });
   return (
     <div className="max-w-full lg:w-[100%]">
-      <h3 className="mb-4  title text-xl font-bold">
+      <h3 className="mb-4 text-xl font-bold">
         {getPCatId !== undefined ? "Sửa" : "Thêm"} Danh Mục
       </h3>
       <div>
