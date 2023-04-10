@@ -77,7 +77,6 @@ const Couponlist = () => {
   }
   const deleteCoupon = (e) => {
     dispatch(deleteACoupon(e));
-
     setOpen(false);
     setTimeout(() => {
       dispatch(getAllCoupon());

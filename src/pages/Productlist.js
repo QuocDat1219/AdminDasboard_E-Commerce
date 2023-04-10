@@ -3,11 +3,13 @@ import { Input, Modal, Table } from "antd";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
+import imgerror from "../image/imgerror.png";
 import {
   getProducts,
   updateProduct,
   deleteAProduct,
   resetState,
+  getAProduct,
 } from "../features/product/productSlice";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
@@ -18,25 +20,22 @@ import { getMenus } from "../features/brand/brandSlice";
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import { PlusOutlined } from "@ant-design/icons";
 import { delImg, uploadImg } from "../features/upload/uploadSlice";
-import {
-  Button,
-  Checkbox,
-  Col,
-  Form,
-  InputNumber,
-  Radio,
-  Rate,
-  Row,
-  Select,
-  Slider,
-  Switch,
-  Upload,
-} from "antd";
+import { Upload } from "antd";
 import Dropzone from "react-dropzone";
 import CustomInput from "../components/CustomInput";
 import ReactQuill from "react-quill";
 import * as yup from "yup";
-
+import { toast } from "react-toastify";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
+const antIcon = (
+  <LoadingOutlined
+    style={{
+      fontSize: 24,
+    }}
+    spin
+  />
+);
 let schema = yup.object().shape({
   name: yup.string().required("Name is Required"),
   description: yup.string().required("Description is Required"),
@@ -44,11 +43,6 @@ let schema = yup.object().shape({
   idBrand: yup.string().required("Brand is Required"),
   idCategory: yup.string().required("Category is Required"),
   idContainerCategory: yup.string().required("ContainerCategory is Required"),
-  // color: yup
-  //   .array()
-  //   .min(1, "Pick at least one color")
-  //   .required("Color is Required"),
-  // quantity: yup.number().required("Quantity is Required"),
 });
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -84,51 +78,41 @@ const columns = [
   {
     title: "Mã sản phẩm",
     dataIndex: "id",
-    sorter: (a, b) => a.title.length - b.title.length,
+    // sorter: (a, b) => a.title?.length - b.title?.length,
   },
   {
     title: "Tên",
     dataIndex: "name",
-    sorter: (a, b) => a.brand.length - b.brand.length,
+    // sorter: (a, b) => a.brand.length - b.brand.length,
   },
   {
     title: "Giá",
     dataIndex: "price",
-    sorter: (a, b) => a.category.length - b.category.length,
+    // sorter: (a, b) => a.category.length - b.category.length,
   },
   {
     title: "Mô tả",
     dataIndex: "description",
   },
   {
-    title: "Số lượng",
-    dataIndex: "quantity",
-    sorter: (a, b) => a.price - b.price,
-  },
-  {
-    title: "Đã bán",
-    dataIndex: "sold",
-    sorter: (a, b) => a.price - b.price,
-  },
-  {
     title: "Loại hàng hóa",
     dataIndex: "idCategory",
-    sorter: (a, b) => a.price - b.price,
+    // sorter: (a, b) => a.price - b.price,
   },
   {
     title: "Danh mục",
     dataIndex: "idContainerCategory",
-    sorter: (a, b) => a.price - b.price,
+    // sorter: (a, b) => a.price - b.price,
   },
   {
     title: "Nhãn hàng",
     dataIndex: "brand",
-    sorter: (a, b) => a.price - b.price,
+    // sorter: (a, b) => a.price - b.price,
   },
   {
     title: "Ảnh sản phẩm",
     dataIndex: "url",
-    sorter: (a, b) => a.price - b.price,
+    // sorter: (a, b) => a.price - b.price,
   },
   {
     title: "Hành động",
@@ -151,14 +135,7 @@ const Productlist = () => {
   const brandState = useSelector((state) => state.brands.menus);
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (productStates?.length === 0) {
-      dispatch(getProducts());
-    }
-    dispatch(getCategories());
-    dispatch(getCategoryContainer());
-    dispatch(getMenus());
-  }, [dispatch, productStates?.length, pCategory?.length, brands?.length]);
+
   const data1 = [];
   const [popdtProduct, setProduct] = useState([]);
   const [popdtCategory, setdtCategory] = useState([]);
@@ -183,29 +160,36 @@ const Productlist = () => {
       }, 3000);
     },
   });
-  console.log(productStates.length);
-  // console.log(productStates, pCategory);
-
   const popProduct = (data) => {
     setProduct(data);
   };
   const popCategory = (data) => {
     setdtCategory(data);
   };
-
-  useEffect(() => {});
-
   const handleUpdate = async (data) => {
     await console.log(data);
     dispatch(updateProduct(data));
   };
-  const handleDelete = (id) => {
-    dispatch(deleteAProduct(id));
-    //  dispatch(getProducts());
-    //  dispatch(getCategories());
+  const handleDelete = async (id) => {
+    await dispatch(deleteAProduct(id));
+
+    setTimeout(async () => {
+      await dispatch(getProducts());
+      await dispatch(getCategories());
+      await dispatch(getCategoryContainer());
+      await dispatch(getMenus());
+    }, 100);
+    toast.success("Xóa sản phẩm thành công ");
   };
-  // console.log(brands);
-  // console.log(categorycontainer);
+  useEffect(() => {
+    if (productStates?.length === 0) {
+      dispatch(getProducts());
+    }
+    dispatch(getCategories());
+    dispatch(getCategoryContainer());
+    dispatch(getMenus());
+  }, [dispatch, productStates?.length, pCategory?.length, brands?.length]);
+
   const [showModalDelete, setshowModalDelete] = useState(false);
   const [showModalEdit, setshowModalEdit] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -254,10 +238,8 @@ const Productlist = () => {
           description: productState.description
             ? productState.description
             : "undefined",
-          quantity: productState.quantity ? productState.quantity : "undefined",
           idCategory: pCate.name ? pCate.name : "undefined",
           slug: productState.slug ? productState.slug : "undefined",
-          sold: productState?.sold != null ? productState.sold : "undefined",
           brand: brand[0]?.title != null ? brand[0].title : "undefined",
           idContainerCategory: cateContainer[0]?.name
             ? cateContainer[0].name
@@ -266,7 +248,11 @@ const Productlist = () => {
           url: (
             <img
               className="w-20 object-cover"
-              src={productState?.imagesDefault}
+              src={
+                productState?.imagesDefault?.secure_url
+                  ? productState?.imagesDefault?.secure_url
+                  : imgerror
+              }
             />
           ),
           action: (
@@ -278,7 +264,12 @@ const Productlist = () => {
                 }}
                 className=" fs-3 text-danger cursor-pointer"
               >
-                <BiEdit />
+                <Link
+                  to={`/admin/product/${productState._id}`}
+                  className=" fs-3 text-danger"
+                >
+                  <BiEdit />
+                </Link>
               </span>
               <span
                 className="ms-3 fs-3 text-danger cursor-pointer"
@@ -296,9 +287,6 @@ const Productlist = () => {
       }
     });
   });
-
-  console.log(data1);
-
   return (
     <div>
       {showModalDelete ? (
@@ -481,69 +469,7 @@ const Productlist = () => {
                       <div className="error">
                         {formik.touched.quantity && formik.errors.quantity}
                       </div>
-                      <Upload
-                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                        listType="picture-card"
-                        fileList={fileList}
-                        onPreview={handlePreview}
-                        onChange={handleChange}
-                      >
-                        {fileList.length >= 8 ? null : uploadButton}
-                      </Upload>
-                      <Modal
-                        open={previewOpen}
-                        title={previewTitle}
-                        footer={null}
-                        onCancel={handleCancel}
-                      >
-                        <img
-                          alt="example"
-                          style={{
-                            width: "100%",
-                          }}
-                          src={previewImage}
-                        />
-                      </Modal>
-                      <div className="bg-white border-1 p-5 text-center">
-                        <Dropzone
-                          onDrop={(acceptedFiles) =>
-                            dispatch(uploadImg(acceptedFiles))
-                          }
-                        >
-                          {({ getRootProps, getInputProps }) => (
-                            <section>
-                              <div {...getRootProps()}>
-                                <input {...getInputProps()} />
-                                <p>
-                                  Drag 'n' drop some files here, or click to
-                                  select files
-                                </p>
-                              </div>
-                            </section>
-                          )}
-                        </Dropzone>
-                      </div>
-                      <div className="showimages d-flex flex-wrap gap-3">
-                        {imgState?.map((i, j) => {
-                          return (
-                            <div className=" position-relative" key={j}>
-                              <button
-                                type="button"
-                                onClick={() => dispatch(delImg(i.public_id))}
-                                className="btn-close position-absolute"
-                                style={{ top: "10px", right: "10px" }}
-                              ></button>
-                              <img
-                                src={i.url}
-                                alt=""
-                                width={200}
-                                height={200}
-                              />
-                            </div>
-                          );
-                        })}
-                      </div>
-                      <input type="file" id="fileInput" multiple />
+
                       <button
                         type="submit"
                         className="btn btn-success bg-success border-0 rounded-3 my-5"
@@ -554,7 +480,6 @@ const Productlist = () => {
                         Add Product
                       </button>
                     </form>
-                
                   </div>
                 </div>
               </div>

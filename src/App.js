@@ -27,7 +27,7 @@ import ViewOrder from "./pages/ViewOrder";
 import Addmenu from "./pages/Addmenu";
 import Menulist from "./pages/Menulist";
 import Setting from "./pages/Setting";
-import ConfigChatlist from "./pages/ConfigChatlist"
+import ConfigChatlist from "./pages/ConfigChatlist";
 import AddLink from "./pages/Addlink";
 import Linklist from "./pages/Linklist";
 function App() {
@@ -64,13 +64,14 @@ function App() {
           <Route path="menu/:id" element={<Addbrand />} />
           <Route path="list-product" element={<Productlist />} />
           <Route path="product" element={<Addproduct />} />
+          <Route path="product/:id" element={<Addproduct />} />
 
           <Route path="menu" element={<Addmenu />} />
           <Route path="menu-list" element={<Menulist />} />
           <Route path="setting" element={<Setting />} />
-          <Route path="config-list" element={<ConfigChatlist />}/>
-          <Route path="add-link" element={<AddLink/>}/>
-          <Route path="link-list" element={<Linklist/>}/>
+          <Route path="config-list" element={<ConfigChatlist />} />
+          <Route path="add-link" element={<AddLink />} />
+          <Route path="link-list" element={<Linklist />} />
         </Route>
       </Routes>
     </Router>

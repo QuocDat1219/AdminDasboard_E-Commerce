@@ -6,6 +6,10 @@ const getProducts = async () => {
   console.log(response.data.products);
   return response.data.products;
 };
+const getAProduct = async (id) => {
+  const response = await axios.get(`${base_url_vercel}products/${id}`, config);
+  return response.data.product;
+};
 const createProduct = async (product) => {
   const response = await axios.post(`${base_url}products/`, product, config);
   return response.data;
@@ -26,6 +30,7 @@ const deleteProduct = async (id) => {
 };
 const productService = {
   getProducts,
+  getAProduct,
   createProduct,
   deleteProduct,
   updateProduct,

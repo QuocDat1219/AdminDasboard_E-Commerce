@@ -8,7 +8,7 @@ export const config = {
   // mode: "no-cors",
   headers: {
     // "Access-Control-Allow-Origin": "*",
-    // "Content-Type": "application/json",
+    "Content-Type": "multipart/form-data",
     Authorization: `Bearer ${
       getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
     }`,
