@@ -129,15 +129,7 @@ const Addproduct = () => {
   };
   const submitform = (e) => {
     e.preventDefault();
-    // return console.log(
-    //   name,  
-    //   price,
-    //   description,
-    //   Idcategory,
-    //   brand,
-    //   image,
-    //   images
-    // );
+
 
     setLoadings(true);
     let formData = new FormData();
