@@ -1,7 +1,11 @@
 import axios from "axios";
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
-
+import { fill } from "@cloudinary/url-gen/actions/resize";
+import { CloudinaryImage } from "@cloudinary/url-gen";
+const myImage = new CloudinaryImage("sample", {
+  cloudName: "diqrp01gb",
+}).resize(fill().width(100).height(150));
 const MultiUpload = () => {
   const [Image, setImage] = useState({ array: [] });
   const [loading, setLoading] = useState("");
@@ -12,12 +16,12 @@ const MultiUpload = () => {
       formData.append("files", file);
       formData.append("tags", `codeinfuse , medium, gist`);
       formData.append("upload_preset", `thanhdat`);
-      formData.append("api_key", `283535717319342`);
+      formData.append("api_key", `247368411327943`);
       formData.append("timestamp", Date.now() / 1000 / 0);
       setLoading("true");
       return axios
         .post(
-          "https://api.cloudinary.com/v1_1/demo/dcd7i1ihn/upload",
+          "https://res.cloudinary.com/v1_1/diqrp01gb/image/upload",
           formData,
           {
             headers: { "X-Requested-With": "XMLHttpRequest" },
@@ -59,6 +63,9 @@ const MultiUpload = () => {
           </section>
         )}
       </Dropzone>
+      <div>
+        <div cldImg={myImage} />
+      </div>
     </div>
   );
 };

@@ -69,7 +69,20 @@ const Addproduct = () => {
       toast.error("Something Went Wrong!");
     }
   }, [isSuccess, isError, isLoading]);
+  const [image, setImage] = useState([]);
   const coloropt = [];
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    setFileToBase(file);
+    console.log(file);
+  };
+  const setFileToBase = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
+  };
   colorState.forEach((i) => {});
   const img = [];
   imgState.forEach((i) => {
@@ -80,8 +93,8 @@ const Addproduct = () => {
   });
 
   useEffect(() => {
-    formik.values.images = img;
-    formik.values.imagesDetail = fileList;
+    formik.values.imagesDetail = image;
+    // formik.values.imagesDetail = fileList;
   }, [color, img]);
   const formik = useFormik({
     initialValues: {
@@ -301,7 +314,7 @@ const Addproduct = () => {
             listType="picture-card"
             fileList={fileList}
             onPreview={handlePreview}
-            onChange={handleChange}
+            onChange={handleImage}
           >
             {fileList.length >= 8 ? null : uploadButton}
           </Upload>
@@ -319,6 +332,20 @@ const Addproduct = () => {
               src={previewImage}
             />
           </Modal>
+
+          <div className="form-outline mb-4">
+            <input
+              onChange={handleImage}
+              type="file"
+              id="formupload"
+              name="image"
+              className="form-control"
+            />
+            <label className="form-label" htmlFor="form4Example2">
+              Image
+            </label>
+          </div>
+          <img className="img-fluid w-20 h-20" src={image} alt="" />
           <button
             type="submit"
             className="btn btn-success border-0 rounded-3 my-5"
