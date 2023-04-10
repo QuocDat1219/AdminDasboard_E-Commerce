@@ -59,10 +59,12 @@ const Addnews = () => {
         },
       })
       .then((Response) => {
+        console.log(Response);
         alert("Thêm thành công");
       })
       .catch((error) => {
         if (error.response.status === 500) {
+          console.log(error);
           alert("Tiêu đề đã tồn tại hoặc chưa chọn danh mục tin tức");
         } else {
           console.error(error);

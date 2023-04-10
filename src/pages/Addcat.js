@@ -113,7 +113,7 @@ const Addcat = () => {
             val={formik.values.name}
             id="category"
           />
-           <div className="error">
+          <div className="error">
             {formik.touched.name && formik.errors.name}
           </div>
           <br />
