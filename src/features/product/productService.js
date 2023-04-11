@@ -3,7 +3,6 @@ import { config } from "../../utils/axiosconfig";
 import { base_url, base_url_vercel } from "../../utils/baseUrl";
 const getProducts = async () => {
   const response = await axios.get(`${base_url_vercel}products/getall`);
-  console.log(response.data.products);
   return response.data.products;
 };
 const getAProduct = async (id) => {

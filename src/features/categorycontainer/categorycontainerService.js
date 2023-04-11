@@ -4,7 +4,6 @@ import { base_url, base_url_vercel } from "../../utils/baseUrl";
 
 const getcategorycontainer = async () => {
   const response = await axios.get(`${base_url_vercel}categorycontainer`);
-  console.log(response.data);
   return response.data;
 };
 // const createProduct = async (product) => {
