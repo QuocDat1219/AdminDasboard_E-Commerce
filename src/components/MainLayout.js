@@ -163,6 +163,23 @@ const Sidebar = () => {
             }}
             items={[
               {
+                key: "dmcs",
+                icon: <FiBookmark className="fs-4" />,
+                label: "Danh mục sản phẩm chính",
+                children: [
+                  {
+                    key: "dmc",
+                    icon: <FiPlusSquare className="fs-4" />,
+                    label: "Thêm danh mục sản phẩm chính",
+                  },
+                  {
+                    key: "dmc-list",
+                    icon: <FiMenu className="fs-4" />,
+                    label: "Danh sách sản phẩm chính",
+                  },
+                ],
+              },
+              {
                 key: "Catalogs",
                 icon: <FiList className="fs-4" />,
                 label: "Quản lý danh mục hàng hóa",
@@ -231,6 +248,23 @@ const Sidebar = () => {
                 ],
               },
               {
+                key: "blogcategory",
+                icon: <FiBookmark className="fs-4" />,
+                label: "Danh mục tin tức",
+                children: [
+                  {
+                    key: "blog-category",
+                    icon: <FiPlusSquare className="fs-4" />,
+                    label: "Thêm danh mục tin tức",
+                  },
+                  {
+                    key: "blog-category-list",
+                    icon: <FiMenu className="fs-4" />,
+                    label: "Danh sách danh mục tin",
+                  },
+                ],
+              },
+              {
                 key: "setting",
                 icon: <FiSettings className="fs-4" />,
                 label: "Cài đặt",
@@ -246,7 +280,7 @@ const Sidebar = () => {
                     label: "Chỉnh sửa chân trang ",
                   },
                   {
-                    key: "add-contact",
+                    key: "add-service",
                     icon: <FiSettings className="fs-4" />,
                     label: "Chỉnh sửa dịch vụ",
                   },
@@ -254,23 +288,6 @@ const Sidebar = () => {
                     key: "add-about",
                     icon: <FiSettings className="fs-4" />,
                     label: "Chỉnh sửa About",
-                  },
-                ],
-              },
-              {
-                key: "blogcategory",
-                icon: <FiBookmark className="fs-4" />,
-                label: "Danh mục tin tức",
-                children: [
-                  {
-                    key: "blog-category",
-                    icon: <FiPlusSquare className="fs-4" />,
-                    label: "Thêm danh mục tin tức",
-                  },
-                  {
-                    key: "blog-category-list",
-                    icon: <FiMenu className="fs-4" />,
-                    label: "Danh sách danh mục tin",
                   },
                 ],
               },

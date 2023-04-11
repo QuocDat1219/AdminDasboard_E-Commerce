@@ -5,10 +5,10 @@ import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
-  deleteABlogCat,
-  getCategories,
-  resetState,
-} from "../features/bcategory/bcategorySlice";
+    deleteAcContainer,
+    getcContainers,
+    resetState,
+} from "../features/CategoryContainer/cContainerSlice";
 import CustomModal from "../components/CustomModal";
 
 const columns = [
@@ -28,12 +28,12 @@ const columns = [
   },
 ];
 
-const Blogcatlist = () => {
+const DMCList = () => {
   const [open, setOpen] = useState(false);
-  const [blogCatId, setblogCatId] = useState("");
+  const [cConId, setcConId] = useState("");
   const showModal = (e) => {
     setOpen(true);
-    setblogCatId(e);
+    setcConId(e);
   };
 
   const hideModal = () => {
@@ -42,27 +42,27 @@ const Blogcatlist = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(resetState());
-    dispatch(getCategories());
+    dispatch(getcContainers());
   }, []);
-  const bCatState = useSelector((state) => state.bCategory.bCategories);
-
+  const cConState = useSelector((state) => state.catectn.cContainers);
+  console.log(cConState);
   const data1 = [];
-  for (let i = 0; i < bCatState.length; i++) {
+  for (let i = 0; i < cConState.length; i++) {
     data1.push({
       key: i + 1,
-      name: bCatState[i].title,
+      name: cConState[i].name,
       action: (
         <>
         <div className="flex">
           <Link
-            to={`/admin/blogcategory/${bCatState[i]._id}`}
+            to={`/admin/dmc/${cConState[i]._id}`}
             className=" fs-3 text-danger"
           >
             <BiEdit />
           </Link>
           <button
             className="ms-3 fs-3 text-danger bg-transparent border-0"
-            onClick={() => showModal(bCatState[i]._id)}
+            onClick={() => showModal(cConState[i]._id)}
           >
             <AiFillDelete />
           </button>
@@ -71,8 +71,8 @@ const Blogcatlist = () => {
       ),
     });
   }
-  const deleteBlogCategory = (e) => {
-    dispatch(deleteABlogCat(e));
+  const deletecc = (e) => {
+    dispatch(deleteAcContainer(e));
     setOpen(false);
     setTimeout(() => {
       window.location.reload();
@@ -80,7 +80,7 @@ const Blogcatlist = () => {
   };
   return (
     <div>
-      <h3 className="mb-4 title text-xl font-bold">Danh mục tin tức</h3>
+      <h3 className="mb-4 title text-xl font-bold">Danh mục sản phẩm chính</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
@@ -88,7 +88,7 @@ const Blogcatlist = () => {
         hideModal={hideModal}
         open={open}
         performAction={() => {
-          deleteBlogCategory(blogCatId);
+          deletecc(cConId);
         }}
         title="Bạn có chắc muốn xóa danh mục tin này không?"
       />
@@ -96,4 +96,4 @@ const Blogcatlist = () => {
   );
 };
 
-export default Blogcatlist;
+export default DMCList;
