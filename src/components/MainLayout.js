@@ -164,7 +164,7 @@ const Sidebar = () => {
             items={[
               {
                 key: "dmcs",
-                icon: <FiBookmark className="fs-4" />,
+                icon: <FiTrello className="fs-4" />,
                 label: "Danh mục sản phẩm chính",
                 children: [
                   {
