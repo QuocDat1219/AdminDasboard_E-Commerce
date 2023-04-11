@@ -38,7 +38,6 @@ const AddService = () => {
     formData.append("imgbody2", imgbody2);
     formData.append("titleheader", titleheaders);
     formData.append("titlebody1", titlebody);
-    console.log(formData);
 
     axios
       .put("https://ecom-oto.vercel.app/api/company-service", formData, {
@@ -47,13 +46,12 @@ const AddService = () => {
         },
       })
       .then((Response) => {
-        console.log(Response);
-        alert("Sửa thành công");
+        alert("Cập nhật thành công");
       })
       .catch((error) => {
         if (error.response.status === 500) {
           console.log(error);
-          alert("Lỗi");
+          alert("Cập nhật không thành");
         } else {
           console.error(error);
         }
