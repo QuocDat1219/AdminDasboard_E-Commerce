@@ -35,8 +35,10 @@ import News from "../src/pages/Addnews";
 import NewsList from "../src/pages/Newslist";
 import AddHome from "./pages/Setting/AddHome";
 import AddFooter from "./pages/Setting/AddFooter";
-import AddContact from "./pages/Setting/AddContact";
+import AddService from "./pages/Setting/AddContact";
 import AddAbout from "./pages/Setting/AddAbout";
+import AddDMC from "./pages/AddDMC";
+import DMCList from "./pages/DMCList";
 function App() {
   return (
     <Router>
@@ -74,6 +76,9 @@ function App() {
           <Route path="product" element={<Addproduct />} />
           <Route path="news" element={<News />} />
           <Route path="list-news" element={<NewsList />} />
+          <Route path="dmc" element={<AddDMC />} />
+          <Route path="dmc/:id" element={<AddDMC />} />
+          <Route path="dmc-list" element={<DMCList />} />
           <Route path="menu" element={<Addmenu />} />
           <Route path="menu-list" element={<Menulist />} />
           <Route path="setting" element={<Setting />} />
@@ -82,7 +87,7 @@ function App() {
           <Route path="link-list" element={<Linklist />} />
           <Route path="add-home" element={<AddHome />} />
           <Route path="add-footer" element={<AddFooter />} />
-          <Route path="add-contact" element={<AddContact />} />
+          <Route path="add-service" element={<AddService />} />
           <Route path="add-about" element={<AddAbout />} />
         </Route>
       </Routes>

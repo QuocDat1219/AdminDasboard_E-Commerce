@@ -1,105 +1,120 @@
 import { React, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import axios from "axios";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const AddFooter = () => {
-  //   const [titles, setTitles] = useState("");
-  //   const [category, setCategory] = useState("");
-  //   const [imageThumbnail, setImageThumbnail] = useState("");
-  //   const [videos, setVideos] = useState("");s
-  //   const [setDescription, setStateDescription] = useState();
+  const [slogan, setSlogan] = useState("");
+  const [address, setAddress] = useState("");
+  const [hotline, setHotline] = useState("");
+  const [iframeggmap, setIframeggmap] = useState("");
+  const [footer, setFooter] = useState([]);
 
-  //   console.log(setDescription);
-  // const handleEditorChange = (editorState) => {
-  //   setEditorContent(editorState);
-  // };
+  useEffect(() => {
+    const getdata = async () => {
+      await axios
+        .get("https://ecom-oto.vercel.app/api/info/")
+        .then((response) => {
+          console.log(response.data);
+          setFooter(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
 
-  // useEffect(() => {
-  //   const des = JSON.stringify(editorContent);
-  //   console.log(des);
-  //   const det = JSON.parse(des);
-  //   console.log(det);
-  // }, [editorContent]);
-
-  //   const submitform = (e) => {
-  //     e.preventDefault();
-  //     let formData = new FormData();
-  //     formData.append("title", titles);
-  //     formData.append("category", category);
-  //     formData.append("image", imageThumbnail);
-  //     formData.append("video", videos);
-  //     formData.append("description", setDescription);
-
-  //     axios
-  //       .post("https://ecom-oto.vercel.app/api/blog/", formData, {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       })
-  //       .then((Response) => {
-  //         console.log(Response);
-  //       });
-  //   };
-
-  //   const dispatch = useDispatch();
-  //   useEffect(() => {
-  //     dispatch(getCategories());
-  //   }, []);
+    getdata();
+  }, []);
 
   return (
     <div className="max-w-full lg:w-[100%]">
-      <h3 className="mb-4 text-xl font-bold">
-        {/* {getBrandId !== undefined ? "Edit" : "Add"} Brand */} Quản Lý Chân
-        Trang
-      </h3>
-      <div>
-        <form
-          encType="multipart/form-data"
-          className="d-flex gap-3 flex-column"
-          //   onSubmit={submitform}
-        >
+      {footer.map((footer) => (
+        <>
+          <h3 className="mb-4 text-xl font-bold">
+            {/* {getBrandId !== undefined ? "Edit" : "Add"} Brand */} Quản Lý
+            Chân Trang
+          </h3>
           <div>
-            {" "}
-            <input
-              type="text"
-              id="default-input"
-              className="bg-gray-50 border border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
-              placeholder="Nhập thông tin công ty"
-              // onChange={(e) => setTitles(e.target.value)}
-            />
-            <input
-              type="text"
-              id="default-input"
-              className="bg-gray-50 border border-gray-300 mt-2 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
-              placeholder="Nhập thông tin địa chỉ"
-              // onChange={(e) => setTitles(e.target.value)}
-            />
-            <input
-              type="text"
-              id="default-input"
-              className="bg-gray-50 border border-gray-300 text-gray-900  mt-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
-              placeholder="Nhập số điện thoại"
-              // onChange={(e) => setTitles(e.target.value)}
-            />
-            <input
-              type="text"
-              id="default-input"
-              className="bg-gray-50 border border-gray-300 text-gray-900 mt-2   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
-              placeholder="Nhập vị trí"
-              // onChange={(e) => setTitles(e.target.value)}
-            />
-          </div>
+            <form
+              encType="multipart/form-data"
+              className="d-flex gap-3 flex-column"
+              //   onSubmit={submitform}
+            >
+              <div>
+                {" "}
+                <label
+                  className="block font-medium text-blue-500 mb-2 mt-2"
+                  for="file_input"
+                >
+                  Khẩu hiệu dưới logo
+                </label>
+                <input
+                  type="text"
+                  id="default-input"
+                  className="bg-gray-50 border border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+                  placeholder={footer.slogan}
+                  onChange={(e) => {
+                    setSlogan(e.target.value);
+                  }}
+                />
+                <label
+                  className="block mb-2 font-medium text-blue-500 mt-2"
+                  for="file_input"
+                >
+                  Thay đổi địa chỉ
+                </label>
+                <input
+                  type="text"
+                  id="default-input"
+                  className="bg-gray-50 border border-gray-300 mt-2 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+                  placeholder={footer.address}
+                  onChange={(e) => {
+                    setAddress(e.target.value);
+                  }}
+                />
+                <label
+                  className="block mb-2 font-medium text-blue-500 mt-2"
+                  for="file_input"
+                >
+                  Thay đổi số điện thoại
+                </label>
+                <input
+                  type="text"
+                  id="default-input"
+                  className="bg-gray-50 border border-gray-300 text-gray-900  mt-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+                  placeholder={footer.hotline}
+                  onChange={(e) => {
+                    setHotline(e.target.value);
+                  }}
+                />
+                <label
+                  className="block mb-2 font-medium text-blue-500 mt-2"
+                  for="file_input"
+                >
+                  Thay đổi ifame google map
+                </label>
+                <input
+                  type="text"
+                  id="default-input"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 mt-2   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+                  placeholder={footer.iframeggmap}
+                  onChange={(e) => {
+                    setIframeggmap(e.target.value);
+                  }}
+                />
+              </div>
 
-          <button
-            className="bg-blue-500 text-white lg:h-[40px] lg:w-[250px] mt-2 rounded-3 my-5 w-[210px] h-[40px] "
-            type="submit"
-          >
-            Chỉnh sửa chân trang
-          </button>
-        </form>
-      </div>
+              <button
+                className="bg-blue-500 text-white lg:h-[40px] lg:w-[250px] mt-2 rounded-3 my-5 w-[210px] h-[40px] "
+                type="submit"
+              >
+                Chỉnh sửa chân trang
+              </button>
+            </form>
+          </div>
+        </>
+      ))}
     </div>
   );
 };
