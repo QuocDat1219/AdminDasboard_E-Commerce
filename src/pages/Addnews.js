@@ -3,7 +3,7 @@ import CustomInput from "../components/CustomInput";
 import { useDispatch, useSelector } from "react-redux";
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, Upload } from "antd";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -22,22 +22,91 @@ import {
   resetState,
   updateABrand,
 } from "../features/brand/brandSlice";
-
 import axios from "axios";
 import { config } from "../utils/axiospostformdata";
 import draftToHtml from "draftjs-to-html";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
+import { getABlog } from "../features/blogNews/blogSlice";
 
 const Addnews = () => {
+  const { id } = useParams();
   const [titles, setTitles] = useState("");
   const [category, setCategory] = useState("");
   const [imageThumbnail, setImageThumbnail] = useState("");
   const [videos, setVideos] = useState("");
   const [editorContent, setEditorContent] = useState(EditorState.createEmpty());
-
+  const blogState = useSelector((state) => state.blognew);
+  const { ablogs } = blogState;
   const handleEditorChange = (editorState) => {
     setEditorContent(editorState);
+  };
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (id !== undefined) {
+      dispatch(getABlog(id));
+    } else {
+      setTitles("");
+      setCategory("");
+      setImageThumbnail("");
+      setVideos("");
+      setEditorContent("");
+    }
+  }, [id]);
+
+  useEffect(() => {
+    dispatch(getCategories());
+  }, []);
+  useEffect(() => {
+    if (ablogs !== undefined) {
+      setTitles(ablogs.title);
+      setCategory(ablogs.category);
+      setImageThumbnail(ablogs.imageThumbnail.secure_url);
+      setVideos(ablogs.video);
+      setEditorContent(
+        EditorState.createWithContent(
+          convertFromRaw(JSON.parse(ablogs.description))
+        )
+      );
+    } else {
+      setTitles("");
+      setCategory("");
+      setImageThumbnail("");
+      setVideos("");
+      setEditorContent("");
+    }
+  }, [ablogs]);
+  const editsubmitform = (e) => {
+    e.preventDefault();
+    let formData = new FormData();
+    formData.append("title", titles);
+    formData.append("category", category);
+    formData.append("image", imageThumbnail);
+    formData.append("video", videos);
+    formData.append(
+      "description",
+      JSON.stringify(convertToRaw(editorContent.getCurrentContent()))
+    );
+
+    axios
+      .put(`https://ecom-oto.vercel.app/api/blog/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((Response) => {
+        console.log(Response);
+        toast.success("Sửa thành công");
+      })
+      .catch((error) => {
+        if (error.response.status === 500) {
+          console.log(error);
+          toast.warning("Tiêu đề đã tồn tại hoặc chưa chọn danh mục tin tức");
+        } else {
+          console.error(error);
+        }
+      });
   };
 
   const submitform = (e) => {
@@ -51,7 +120,6 @@ const Addnews = () => {
       "description",
       JSON.stringify(convertToRaw(editorContent.getCurrentContent()))
     );
-    console.log(formData);
 
     axios
       .post("https://ecom-oto.vercel.app/api/blog/", formData, {
@@ -61,36 +129,30 @@ const Addnews = () => {
       })
       .then((Response) => {
         console.log(Response);
-        alert("Thêm thành công");
+        toast.success("Thêm thành công");
       })
       .catch((error) => {
         if (error.response.status === 500) {
           console.log(error);
-          alert("Tiêu đề đã tồn tại hoặc chưa chọn danh mục tin tức");
+          toast.warning("Tiêu đề đã tồn tại hoặc chưa chọn danh mục tin tức");
         } else {
           console.error(error);
         }
       });
   };
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getCategories());
-  }, []);
-
   const blogcategoryState = useSelector((state) => state.bCategory.bCategories);
-
+  const EditBlog = useSelector((state) => state.bCategory.bCategories);
   return (
     <div className="max-w-full lg:w-[100%]">
       <h3 className="mb-4 text-xl font-bold">
-        {/* {getBrandId !== undefined ? "Edit" : "Add"} Brand */} Quản Lý Tin
-        Tức
+        {id !== undefined ? "Chỉnh sửa tin tức" : "Thêm tin tức"}
       </h3>
       <div>
         <form
           encType="multipart/form-data"
           className="d-flex gap-3 flex-column"
-          onSubmit={submitform}
+          onSubmit={id !== undefined ? editsubmitform : submitform}
         >
           <input
             type="text"
@@ -98,6 +160,7 @@ const Addnews = () => {
             className="bg-gray-50 border border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
             placeholder="Nhập tiêu đề tin tức"
             onChange={(e) => setTitles(e.target.value)}
+            value={titles}
             required
           />
           <select
@@ -105,8 +168,8 @@ const Addnews = () => {
             className="form-control py-2 mb-3 "
             onChange={(e) => setCategory(e.target.value)}
             required
+            value={category}
           >
-            <option>Chọn danh mục tin tức</option>
             {blogcategoryState.map((i, j) => {
               return (
                 <option key={j} value={i._id}>
@@ -129,6 +192,16 @@ const Addnews = () => {
               type="file"
               onChange={(e) => setImageThumbnail(e.target.files[0])}
             />
+            {id !== undefined ? (
+              <img
+                src={imageThumbnail}
+                width={200}
+                height={80}
+                style={{ marginTop: "10px" }}
+              />
+            ) : (
+              <></>
+            )}
           </div>
           <div>
             <input
@@ -138,6 +211,7 @@ const Addnews = () => {
               name="youtube-id"
               placeholder="Nhập id video"
               onChange={(e) => setVideos(e.target.value)}
+              value={videos}
             />
           </div>
           <div
@@ -159,7 +233,7 @@ const Addnews = () => {
             className="bg-blue-500 text-white lg:h-[40px] lg:w-[250px] rounded-3 my-5 w-[210px] h-[40px] "
             type="submit"
           >
-            Thêm Tin Tức
+            {id !== undefined ? "Sửa tin tức" : "Thêm tin tức"}
           </button>
         </form>
         {/* <div>

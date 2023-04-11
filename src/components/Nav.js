@@ -10,12 +10,14 @@ function RootLayout({ children }) {
   } = theme.useToken();
   const navigate = useNavigate();
   return (
-    <div className="flex lg:gap-5">
+    <div>
       <ToastContainer pauseOnHover={false} draggable={false} />
-      <MainLayout />
-      <main className="max-w-5xl flex-1 py-20">
-        <Outlet />
-      </main>
+      <div className="flex lg:gap-5">
+        <MainLayout />
+        <main className="max-w-5xl flex-1 py-20">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 }
