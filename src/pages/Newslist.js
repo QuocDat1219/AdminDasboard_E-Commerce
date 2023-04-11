@@ -9,6 +9,7 @@ import { Form, Input, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import CustomModal from "../components/CustomModal";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { Link } from "react-router-dom";
 
 import {
   getBlogNews,
@@ -197,12 +198,13 @@ const Listnews = () => {
       action: (
         <>
           <div className="flex">
-            <button
+            <Link
               className="fs-3 text-primary bg-transparent border-0"
-              onClick={() => showModalEdit(blogState[i])}
+              to={`/admin/news/${blogState[i]._id}`}
+              // onClick={() => showModalEdit(blogState[i])}
             >
               <BiEdit />
-            </button>
+            </Link>
             <button
               className="ms-3 fs-3 text-danger bg-transparent border-0"
               onClick={() => showModelNews(blogState[i]._id)}
@@ -218,7 +220,6 @@ const Listnews = () => {
     dispatch(deleteBlog(e));
     setOpen(false);
     toast.success("Xóa thành công");
-
     setTimeout(() => {
       window.location.reload();
     }, 3000);
@@ -232,7 +233,7 @@ const Listnews = () => {
           <Table columns={columns} dataSource={data} />
         </div>
 
-        <Modal
+        {/* <Modal
           title="Sửa danh mục tin tức"
           open={openEdit}
           onCancel={hideModalEdit}
@@ -286,9 +287,9 @@ const Listnews = () => {
               <Button htmlType="submit">Lưu</Button>
             </Form>
           )}
-        </Modal>
+        </Modal> */}
 
-        <Modal
+        {/* <Modal
           width={"1200px"}
           open={openEditDes}
           onCancel={hideModalEditDes}
@@ -316,7 +317,8 @@ const Listnews = () => {
               />
             </div>
           )}
-        </Modal>
+        </Modal> */}
+
         <div className="mt-4">
           <CustomModal
             hideModal={hideModal}
@@ -327,6 +329,7 @@ const Listnews = () => {
             title="Bạn có chắc chắn muốn xóa loại sản phẩm này không?"
           />
         </div>
+
         <Modal
           open={visible}
           onCancel={() => setVisible(false)}
