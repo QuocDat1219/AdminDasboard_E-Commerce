@@ -18,7 +18,6 @@ const updateBlogCategory = async (blogCat) => {
     },
     config
   );
-
   return response.data;
 };
 const getBlogCategory = async (id) => {

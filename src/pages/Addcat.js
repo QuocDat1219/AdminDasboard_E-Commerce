@@ -70,6 +70,7 @@ const Addcat = () => {
     validationSchema: schema,
     onSubmit: (values) => {
       const data = { id: getPCatId, cateData: values };
+      console.log(data);
       if (getPCatId !== undefined) {
         dispatch(updateAProductCategory(data));
         dispatch(resetState());

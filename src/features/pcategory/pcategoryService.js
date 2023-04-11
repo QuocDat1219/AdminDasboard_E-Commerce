@@ -14,13 +14,11 @@ const createCategory = async (category) => {
 
 const getProductCategory = async (id) => {
   const response = await axios.get(`${base_url}category/${id}`, config);
-
-  return response.data;
+  return response.data.category;
 };
 
 const deleteProductCategory = async (id) => {
   const response = await axios.delete(`${base_url}category/${id}`, config);
-
   return response.data;
 };
 const updateProductCategory = async (category) => {

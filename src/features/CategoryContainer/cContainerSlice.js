@@ -12,6 +12,50 @@ export const getcContainers = createAsyncThunk(
   }
 );
 
+export const createNewcContainer = createAsyncThunk(
+  "cContainer/create-ccontainers",
+  async (cConData, thunkAPI) => {
+    try {
+      return await cContainerService.createcContainer(cConData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const getAcContainer = createAsyncThunk(
+  "blogCategory/get-ccontainer",
+  async (id, thunkAPI) => {
+    try {
+      return await cContainerService.getcContainer(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const updateAcContainer = createAsyncThunk(
+  "blogCategory/update-ccontainer",
+  async (cCon, thunkAPI) => {
+    try {
+      return await cContainerService.updatecContainer(cCon);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteAcContainer = createAsyncThunk(
+  "blogCategory/delete-ccontainer",
+  async (id, thunkAPI) => {
+    try {
+      return await cContainerService.deletecContainer(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const resetState = createAction("Reset_all");
 const initialState = {
   cContainers: [],
@@ -41,6 +85,70 @@ export const cContainerSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
       })
+
+      .addCase(createNewcContainer.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createNewcContainer.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.createcContainer = action.payload;
+      })
+      .addCase(createNewcContainer.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+
+      .addCase(getAcContainer.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAcContainer.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.cConName = action.payload.name;
+      })
+      .addCase(getAcContainer.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(updateAcContainer.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateAcContainer.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.updatedcCon = action.payload;
+      })
+      .addCase(updateAcContainer.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(deleteAcContainer.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteAcContainer.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.deletedcCon= action.payload;
+      })
+      .addCase(deleteAcContainer.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+
+
       .addCase(resetState, () => initialState);
   },
 });
