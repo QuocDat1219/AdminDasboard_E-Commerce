@@ -40,7 +40,7 @@ const Login = () => {
   return (
     <div
       className="flex justify-center items-center"
-      style={{ background: "#ffd333", minHeight: "100vh" }}
+      style={{ background: "#6698FF", minHeight: "100vh" }}
     >
       <div className="sm:w-2/3 lg:w-2/3 xl:w-[30%]">
         <div className="bg-white rounded-3 p-4 my-8 lg:my-12 mx-auto lg:mx-0 ">
@@ -76,14 +76,9 @@ const Login = () => {
             <div className="error mt-2">
               {formik.touched.password && formik.errors.password}
             </div>
-            <div className="mb-3 text-end">
-              <Link to="forgot-password" className="">
-                Forgot Password?
-              </Link>
-            </div>
             <button
               className="border-0 px-3 py-2 text-white fw-bold w-100 text-center text-decoration-none fs-5"
-              style={{ background: "#ffd333" }}
+              style={{ background: "#6698FF" }}
               type="submit"
             >
               Đăng nhập
