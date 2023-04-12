@@ -65,12 +65,12 @@ const AddHome = () => {
         },
       })
       .then((Response) => {
-        alert("Cập nhật thành công");
+        toast.success("Cập nhật thành công");
       })
       .catch((error) => {
         if (error.response.status === 500) {
           console.log(error);
-          alert("Cập nhật không thành công");
+          toast.warning("Cập nhật không thành công");
         } else {
           console.error(error);
         }

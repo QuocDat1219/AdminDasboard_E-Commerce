@@ -46,12 +46,12 @@ const AddService = () => {
         },
       })
       .then((Response) => {
-        alert("Cập nhật thành công");
+        toast.success("Cập nhật thành công");
       })
       .catch((error) => {
         if (error.response.status === 500) {
           console.log(error);
-          alert("Cập nhật không thành");
+          toast.warning("Cập nhật không thành");
         } else {
           console.error(error);
         }

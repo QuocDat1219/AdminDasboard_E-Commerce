@@ -42,14 +42,14 @@ const Addblogcat = () => {
 
   useEffect(() => {
     if (isSuccess && createBlogCategory) {
-      alert("Thêm danh mục tin tức thành công");
+      toast.success("Thêm danh mục tin tức thành công");
     }
     if (isSuccess && updatedBlogCategory) {
-      alert("Cập nhật danh mục tin tức thành công");
+      toast.success("Cập nhật danh mục tin tức thành công");
       navigate("/admin/blog-category-list");
     }
     if (isError) {
-      alert("Đã xảy ra lỗi!");
+      toast.warning("Đã xảy ra lỗi!");
     }
   }, [isSuccess, isError, isLoading]);
 

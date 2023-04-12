@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useFormik } from "formik";
-
+import { toast } from "react-toastify";
 import {
   createBrand,
   getABrand,
@@ -50,14 +50,14 @@ const Addbrand = () => {
 
   useEffect(() => {
     if (isSuccess && createdBrand) {
-      alert("Thêm nhãn hàng thành công!");
+      toast.success("Thêm nhãn hàng thành công!");
     }
     if (isSuccess && updatedBrand) {
-      alert("Sửa nhãn hàng thành công!");
+      toast.success("Sửa nhãn hàng thành công!");
       navigate("/admin/list-brand");
     }
     if (isError) {
-      alert("Đã xảy ra lỗi!");
+      toast.warning("Đã xảy ra lỗi!");
     }
   }, [isSuccess, isError, isLoading]);
 

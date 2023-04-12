@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { getcContainers } from "../features/CategoryContainer/cContainerSlice";
-
+import { toast } from "react-toastify";
 import {
   createCategory,
   getAProductCategory,
@@ -50,14 +50,14 @@ const Addcat = () => {
 
   useEffect(() => {
     if (isSuccess && createdCategory) {
-      alert("Thêm danh mục thành công!");
+      toast.success("Thêm danh mục thành công!");
     }
     if (isSuccess && updatedCategory) {
-      alert("Cập nhật danh mục thành công!");
+      toast.success("Cập nhật danh mục thành công!");
       navigate("/admin/category");
     }
     if (isError) {
-      alert("Đã xảy ra lỗi!");
+      toast.warning("Đã xảy ra lỗi!");
     }
   }, [isSuccess, isError, isLoading]);
 
