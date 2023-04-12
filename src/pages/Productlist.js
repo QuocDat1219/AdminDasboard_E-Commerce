@@ -34,9 +34,17 @@ const columns = [
   {
     title: "Mô tả",
     dataIndex: "description",
+    render: (text) => (
+      <div
+        dangerouslySetInnerHTML={{
+          __html: `${text}`,
+        }} >
+
+      </div>
+    ),
   },
   {
-    title: "Loại hàng hóa",
+    title: "Danh mục phụ",
     dataIndex: "idCategory",
     // sorter: (a, b) => a.price - b.price,
   },
