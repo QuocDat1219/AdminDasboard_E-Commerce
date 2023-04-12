@@ -16,7 +16,6 @@ import { getBrands } from "../features/brand/brandSlice";
 import { PlusOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 
-
 const columns = [
   {
     title: "SNo",
@@ -31,11 +30,6 @@ const columns = [
     title: "Tên",
     dataIndex: "name",
     // sorter: (a, b) => a.brand.length - b.brand.length,
-  },
-  {
-    title: "Giá",
-    dataIndex: "price",
-    // sorter: (a, b) => a.category.length - b.category.length,
   },
   {
     title: "Mô tả",
@@ -71,10 +65,7 @@ const Productlist = () => {
   const pCategory = useSelector((state) => state.pCategory.pCategories);
   const brands = useSelector((state) => state.brand.brands);
 
-  const categorycontainer = useSelector(
-    (state) => state.catectn.cContainers
-  );
-
+  const categorycontainer = useSelector((state) => state.catectn.cContainers);
 
   const dispatch = useDispatch();
 
@@ -112,7 +103,7 @@ const Productlist = () => {
   const [showModalDelete, setshowModalDelete] = useState(false);
   const [showModalEdit, setshowModalEdit] = useState(false);
   const [fileList, setFileList] = useState([]);
- 
+
   productStates?.map((productState, i) => {
     pCategory?.map((pCate) => {
       if (productState?.idCategory == pCate?._id) {
@@ -126,7 +117,6 @@ const Productlist = () => {
           key: i + 1,
           id: productState._id ? productState._id : "undefined",
           name: productState.name ? productState.name : "undefined",
-          price: productState.price ? productState.price : "undefined",
           description: productState.description
             ? productState.description
             : "undefined",
