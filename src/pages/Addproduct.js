@@ -87,7 +87,7 @@ const Addproduct = () => {
       formData.append(`image`, image[i].file);
     }
     axios
-      .post(`${process.env.REACT_APP_API_URL}products/`, formData, {
+      .post(`${process.env.REACT_APP_API_URL}products/create`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -99,6 +99,7 @@ const Addproduct = () => {
       .catch((error) => {
         if (error.response.status === 500) {
           console.log(error);
+          toast.success("lỗi");
         } else {
           console.error(error);
         }
