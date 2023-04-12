@@ -92,7 +92,7 @@ const Addnews = () => {
     );
 
     axios
-      .put(`${process.env.BACKENDAPI}blog/${id}`, formData, {
+      .put(`${process.env.REACT_APP_API_URL}blog/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
