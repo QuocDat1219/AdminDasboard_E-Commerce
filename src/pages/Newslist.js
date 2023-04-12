@@ -207,7 +207,7 @@ const Listnews = () => {
             performAction={() => {
               deleteCategory(pNewID);
             }}
-            title="Bạn có chắc chắn muốn xóa loại sản phẩm này không?"
+            title="Bạn có chắc chắn muốn xóa tin tức này không?"
           />
         </div>
 
