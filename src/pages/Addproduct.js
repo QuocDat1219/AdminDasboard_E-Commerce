@@ -84,7 +84,7 @@ const Addproduct = () => {
     formData.append("idCategory", Idcategory);
     formData.append("idBrand", brand);
     for (let i = 0; i < image.length; i++) {
-      formData.append(`image`, image[i].file);
+      formData.append(`image`, image[i]);
     }
     axios
       .post(`${process.env.REACT_APP_API_URL}products/create`, formData, {
@@ -97,12 +97,9 @@ const Addproduct = () => {
         toast.success("Thêm thành công");
       })
       .catch((error) => {
-        if (error.response.status === 500) {
-          console.log(error);
-          toast.success("lỗi");
-        } else {
-          console.error(error);
-        }
+
+        console.log(error);
+
       });
   };
 
@@ -115,7 +112,7 @@ const Addproduct = () => {
     formData.append("idCategory", Idcategory);
     formData.append("idBrand", brand);
     for (let i = 0; i < image.length; i++) {
-      formData.append(`image`, image[i].file);
+      formData.append(`image`, image[i]);
     }
     axios
       .put(`${process.env.REACT_APP_API_URL}products/${id}`, formData, config)
