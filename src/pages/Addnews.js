@@ -1,8 +1,5 @@
 import { React, useEffect, useState } from "react";
-import CustomInput from "../components/CustomInput";
 import { useDispatch, useSelector } from "react-redux";
-import { UploadOutlined } from "@ant-design/icons";
-import { Button, Upload } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -77,6 +74,7 @@ const Addnews = () => {
       setEditorContent("");
     }
   }, [ablogs]);
+
   const editsubmitform = (e) => {
     e.preventDefault();
     let formData = new FormData();
@@ -90,7 +88,7 @@ const Addnews = () => {
     );
 
     axios
-      .put(`https://ecom-oto.vercel.app/api/blog/${id}`, formData, {
+      .put(`${process.env.BACKENDAPI}blog/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -122,7 +120,7 @@ const Addnews = () => {
     );
 
     axios
-      .post("https://ecom-oto.vercel.app/api/blog/", formData, {
+      .post(`${process.env.REACT_APP_API_URL}blog/`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

@@ -74,6 +74,7 @@ function App() {
           <Route path="menu/:id" element={<Addbrand />} />
           <Route path="list-product" element={<Productlist />} />
           <Route path="product" element={<Addproduct />} />
+          <Route path="product/:id" element={<Addproduct />} />
           <Route path="news/:id" element={<News />} />
           <Route path="news" element={<News />} />
           <Route path="list-news" element={<NewsList />} />

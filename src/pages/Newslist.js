@@ -22,7 +22,6 @@ import draftToHtml from "draftjs-to-html";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import imgerror from "../image/imgerror.png";
-import axios from "axios";
 import {
   getCategories,
   createNewblogCat,
@@ -126,41 +125,9 @@ const Listnews = () => {
     );
   };
 
-  const submitform = () => {
-    let formData = new FormData();
-    formData.append("title", edtTitle);
-    formData.append("category", editingCategory);
-    formData.append("image", editImg);
-    formData.append("video", editingVideos);
-    formData.append(
-      "description",
-      JSON.stringify(convertToRaw(editorContentEdit.getCurrentContent()))
-    );
-    console.log(formData);
+  
 
-    axios
-      .put(`https://ecom-oto.vercel.app/api/blog/${edtID}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((Response) => {
-        console.log(Response);
-        toast.success("Sửa thành công");
-      })
-      .catch((error) => {
-        if (error.response.status === 500) {
-          console.log(error);
-          toast.warning("Tiêu đề đã tồn tại hoặc chưa chọn danh mục tin tức");
-        } else {
-          console.error(error);
-        }
-      });
-  };
-
-  const showModalEditDes = () => {
-    setOpenEditDes(true);
-  };
+ 
   const hideModal = () => {
     setOpen(false);
   };
@@ -232,92 +199,6 @@ const Listnews = () => {
         <div>
           <Table columns={columns} dataSource={data} />
         </div>
-
-        {/* <Modal
-          title="Sửa danh mục tin tức"
-          open={openEdit}
-          onCancel={hideModalEdit}
-          footer={null}
-        >
-          {editingBlog && (
-            <Form onFinish={submitform} encType="multipart/form-data">
-              <Form.Item label="Tiêu đề tin tức">
-                <Input
-                  value={edtTitle}
-                  onChange={(e) => setEdtTitle(e.target.value)}
-                />
-              </Form.Item>
-              <Form.Item label="Mô tả">
-                <div
-                  className="fs-3 text-primary bg-transparent border-0"
-                  onClick={() => showModalEditDes()}
-                >
-                  <BiEdit />
-                </div>
-              </Form.Item>
-              <Form.Item label="Image">
-                <Input
-                  type="file"
-                  onChange={(e) => setEditingImg(e.target.files[0])}
-                />
-                <img src={editImg} alt="" width={100} height={80} />
-              </Form.Item>
-              <Form.Item label="ID-Youtube">
-                <Input
-                  className=""
-                  value={editingVideos}
-                  onChange={(e) => setEditingVideos(e.target.value)}
-                />
-              </Form.Item>
-              <Form.Item label="Danh mục tin tức">
-                <select
-                  defaultValue={editingCategory}
-                  value={editingCategory}
-                  onChange={(e) => setEditingCategory(e.target.value)}
-                >
-                  {blogcategoryState.map((i, j) => {
-                    return (
-                      <option key={j} value={i._id}>
-                        {i.title}
-                      </option>
-                    );
-                  })}
-                </select>
-              </Form.Item>
-              <Button htmlType="submit">Lưu</Button>
-            </Form>
-          )}
-        </Modal> */}
-
-        {/* <Modal
-          width={"1200px"}
-          open={openEditDes}
-          onCancel={hideModalEditDes}
-          footer={[
-            <Button key="save" onClick={hideModalEditDes}>
-              Lưu
-            </Button>,
-          ]}
-        >
-          {editingBlog && (
-            <div
-              className="Mn_wysiwyg"
-              style={{
-                marginTop: "30px",
-                width: "100%",
-                backgroundColor: "white",
-                height: "400px",
-              }}
-            >
-              <Editor
-                label="Nhập Tin Tức"
-                className="text-sm"
-                editorState={editorContentEdit}
-                onEditorStateChange={handleEditorChange}
-              />
-            </div>
-          )}
-        </Modal> */}
 
         <div className="mt-4">
           <CustomModal
