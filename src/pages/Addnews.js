@@ -62,7 +62,11 @@ const Addnews = () => {
     if (ablogs !== undefined) {
       setTitles(ablogs.title);
       setCategory(ablogs.category);
-      setImageThumbnail(ablogs.imageThumbnail.secure_url);
+      if (ablogs.imageThumbnail.secure_url !== undefined) {
+        setImageThumbnail(ablogs.imageThumbnail.secure_url);
+      } else {
+        setImageThumbnail = null;
+      }
       setVideos(ablogs.video);
       setEditorContent(
         EditorState.createWithContent(
@@ -204,7 +208,10 @@ const Addnews = () => {
             )}
           </div>
           <div>
-            <label>Nhập ID của video youtube (VD: https://www.youtube.com/watch?v=<b>4XZz3WXRw0A</b> )</label>
+            <label>
+              Nhập ID của video youtube (VD: https://www.youtube.com/watch?v=
+              <b>4XZz3WXRw0A</b> )
+            </label>
             <input
               type="text"
               id="youtube-id"
