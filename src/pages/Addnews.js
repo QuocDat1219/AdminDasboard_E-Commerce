@@ -204,6 +204,7 @@ const Addnews = () => {
             )}
           </div>
           <div>
+            <label>Nhập ID của video youtube (VD: https://www.youtube.com/watch?v=<b>4XZz3WXRw0A</b> )</label>
             <input
               type="text"
               id="youtube-id"
