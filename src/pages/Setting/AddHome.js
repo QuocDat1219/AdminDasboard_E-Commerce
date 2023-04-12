@@ -85,11 +85,11 @@ const AddHome = () => {
               >
                 Chỉnh sửa header
               </label>
-              <input
+              <textarea
                 type="text"
                 id="default-input"
                 value={titleheader}
-                className="bg-gray-50 border border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+                className="bg-gray-50 border border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%] h-[200px]"
                 onChange={(e) => {
                   setTitleheader(e.target.value);
                 }}
@@ -111,20 +111,20 @@ const AddHome = () => {
               >
                 Chỉnh sửa tiêu đề
               </label>
-              <input
+              <textarea
                 type="text"
                 id="default-input"
                 value={titleprodcut1}
-                className="bg-gray-50 border border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+                className="bg-gray-50 border border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%] h-[200px]"
                 onChange={(e) => {
                   setTitleProduct1(e.target.value);
                 }}
               />
-              <input
+              <textarea
                 type="text"
                 id="default-input"
                 value={titleprodcut2}
-                className="bg-gray-50 border border-gray-300 text-gray-900 mt-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+                className="bg-gray-50 border border-gray-300 text-gray-900 mt-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%] h-[200px]"
                 onChange={(e) => {
                   setTitleProduct2(e.target.value);
                 }}
@@ -137,14 +137,14 @@ const AddHome = () => {
               >
                 Chỉnh sửa dịch vụ
               </label>
-              <input
+              <textarea
                 type="text"
                 id="default-input"
                 value={titleservice}
-                className="bg-gray-50 border border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
-                // onChange={(e) => {
-                //   setTitleService(e.target.value);
-                // }}
+                className="bg-gray-50 border border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%] h-[200px]"
+                onChange={(e) => {
+                  setitleService(e.target.value);
+                }}
               />
               <div>
                 <input
@@ -155,11 +155,11 @@ const AddHome = () => {
                 />
               </div>
               <img src={imgservice} alt="" width={100} height={80} />
-              <input
+              <textarea
                 type="text"
                 id="default-input"
                 value={descriptionservices}
-                className="bg-gray-50 border mt-2 border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+                className="bg-gray-50 border mt-2 border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%] h-[200px]"
                 onChange={(e) => setDescriptionService(e.target.value)}
               />
             </div>

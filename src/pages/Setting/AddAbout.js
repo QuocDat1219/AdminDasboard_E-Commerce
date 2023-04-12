@@ -147,10 +147,10 @@ const AddAbout = () => {
               >
                 Nội dung giới thiệu
               </label>
-              <input
+              <textarea
                 type="text"
                 id="default-input"
-                className="bg-gray-50 borde r border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+                className="bg-gray-50 borde r border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%] h-[200px]"
                 value={descriptionwhoarewe}
                 onChange={(e) => {
                   setDescriptionWhoAreWe(e.target.value);
@@ -215,11 +215,11 @@ const AddAbout = () => {
               >
                 Nội dung câu chuyện khởi nghiệp 1
               </label>
-              <input
+              <textarea
                 type="text"
                 id="default-input"
                 value={descriptionstartupstory1}
-                className="bg-gray-50 border mt-2 border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+                className="bg-gray-50 border mt-2 border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%] h-[200px]"
                 onChange={(e) => {
                   setDescriptionStartupstory1(e.target.value);
                 }}
@@ -230,11 +230,11 @@ const AddAbout = () => {
               >
                 Nội dung câu chuyện khởi nghiệp 2
               </label>
-              <input
+              <textarea
                 type="text"
                 id="default-input"
                 value={descriptionstartupstory2}
-                className="bg-gray-50 border mt-2 border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+                className="bg-gray-50 border mt-2 border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%] h-[200px]"
                 onChange={(e) => {
                   setDescriptionStartupstory2(e.target.value);
                 }}
@@ -245,11 +245,11 @@ const AddAbout = () => {
               >
                 Nội dung câu chuyện khởi nghiệp 3
               </label>
-              <input
+              <textarea
                 type="text"
                 id="default-input"
                 value={descriptionstartupstory3}
-                className="bg-gray-50 border mt-2 border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+                className="bg-gray-50 border mt-2 border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%] h-[200px]"
                 onChange={(e) => {
                   setDescriptionStartupstory3(e.target.value);
                 }}
@@ -329,7 +329,7 @@ const AddAbout = () => {
               >
                 Chuyên nghiệp
               </label>
-              <input
+              <textarea
                 type="text"
                 id="default-input"
                 className="bg-gray-50 border mt-2 border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
@@ -344,7 +344,7 @@ const AddAbout = () => {
               >
                 Tiên phong
               </label>
-              <input
+              <textarea
                 type="text"
                 id="default-input"
                 className="bg-gray-50 border mt-2 border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
@@ -359,7 +359,7 @@ const AddAbout = () => {
               >
                 Tầm nhìn
               </label>
-              <input
+              <textarea
                 type="text"
                 id="default-input"
                 className="bg-gray-50 border mt-2 border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
@@ -374,7 +374,7 @@ const AddAbout = () => {
               >
                 Sứ mạng
               </label>
-              <input
+              <textarea
                 type="text"
                 id="default-input"
                 className="bg-gray-50 border mt-2 border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"

@@ -78,10 +78,10 @@ const AddService = () => {
                 >
                   Thông tin header
                 </label>
-                <input
+                <textarea
                   type="text"
                   id="default-input"
-                  className="bg-gray-50 border border-gray-300 mt-2 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+                  className="bg-gray-50 border border-gray-300 mt-2 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%] h-[200px]"
                   onChange={(e) => {
                     setTitleHeader(e.target.value);
                   }}
@@ -105,10 +105,10 @@ const AddService = () => {
                 >
                   Nhập thông tin thân trang
                 </label>
-                <input
+                <textarea
                   type="text"
                   id="default-input"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 mt-2   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 mt-2   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%] h-[200px]"
                   value={titlebody}
                   onChange={(e) => {
                     setTitleBody(e.target.value);
