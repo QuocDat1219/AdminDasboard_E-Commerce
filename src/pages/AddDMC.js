@@ -94,7 +94,7 @@ const AddDMC = () => {
             {formik.touched.name && formik.errors.name}
           </div>
           <button
-            className="bg-blue-500 text-white lg:h-[40px] lg:w-[250px] rounded-3 my-5 w-[210px] h-[40px] "
+            className="bg-blue-500 text-white lg:h-[40px] lg:w-[250px] rounded-3 my-5 w-[250px] h-[40px] "
             type="submit"
           >
             {getcConId !== undefined ? "Sửa" : "Thêm"} Danh mục sản phẩm chính
