@@ -12,6 +12,8 @@ const AddFooter = () => {
   const [slogan, setSlogan] = useState("");
   const [iframeggmap, setIfFrameggmap] = useState("");
   const [zalo, setZalo] = useState("");
+  const [facebook, setFacebook] = useState("");
+  const [gmail, setGmail] = useState("");
   useEffect(() => {
     const getdata = async () => {
       await axios
@@ -25,6 +27,8 @@ const AddFooter = () => {
           setSlogan(datas.slogan);
           setIfFrameggmap(datas.iframeggmap);
           setZalo(datas.zalo);
+          setFacebook(datas.facebook);
+          setGmail(datas.gmail);
         })
         .catch((error) => {
           console.log(error);
@@ -44,7 +48,8 @@ const AddFooter = () => {
     formData.append("slogan", slogan);
     formData.append("iframeggmap", iframeggmap);
     formData.append("zalo", zalo);
-
+    formData.append("facebook", facebook);
+    formData.append("gmail", gmail);
     axios
       .put("https://ecom-oto.vercel.app/api/info/", formData, {
         headers: {
@@ -182,6 +187,36 @@ const AddFooter = () => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 mt-2   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
                 onChange={(e) => {
                   setZalo(e.target.value);
+                }}
+              />
+                 <label
+                className="block mb-2 font-medium text-blue-500 mt-2"
+                for="file_input"
+              >
+                Liên hệ Facebook
+              </label>
+              <input
+                type="text"
+                id="default-input"
+                value={facebook}
+                className="bg-gray-50 border border-gray-300 text-gray-900 mt-2   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+                onChange={(e) => {
+                  setFacebook(e.target.value);
+                }}
+              />
+                 <label
+                className="block mb-2 font-medium text-blue-500 mt-2"
+                for="file_input"
+              >
+                Liên hệ Gmail
+              </label>
+              <input
+                type="text"
+                id="default-input"
+                value={gmail}
+                className="bg-gray-50 border border-gray-300 text-gray-900 mt-2   focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+                onChange={(e) => {
+                  setGmail(e.target.value);
                 }}
               />
             </div>
