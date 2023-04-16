@@ -39,7 +39,10 @@ import DMCList from "./pages/DMCList";
 import CommentBlog from "./pages/Commentblog.js";
 import ListContact from "./pages/Contactlist";
 import FeedbackProduct from "./pages/FeedbackProduct";
+import AddUser from "./pages/AddUsers";
+import Userlist from "./pages/Userlist";
 import Register from "./pages/Register";
+
 function App() {
   return (
     <Router>
@@ -91,6 +94,9 @@ function App() {
           <Route path="list-contact" element={<ListContact />} />
           <Route path="comment/:id" element={<CommentBlog />} />
           <Route path="feedbackproduct/:id" element={<FeedbackProduct />} />
+          <Route path="user" element={<AddUser />} />
+          <Route path="user/:id" element={<AddUser />} />
+          <Route path="list-user" element={<Userlist />} />
         </Route>
       </Routes>
     </Router>

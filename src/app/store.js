@@ -14,6 +14,7 @@ import couponReducer from "../features/coupon/couponSlice";
 import linkSliceReducer from "../features/link/linkSlice";
 import cateCTNReducer from "../features/CategoryContainer/cContainerSlice";
 import contactSliceReducer from "../features/contacts/contactSlice";
+import userSliceReducer from "../features/user/userSlice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -31,5 +32,6 @@ export const store = configureStore({
     link: linkSliceReducer,
     catectn: cateCTNReducer,
     contacts: contactSliceReducer,
+    users: userSliceReducer,
   },
 });

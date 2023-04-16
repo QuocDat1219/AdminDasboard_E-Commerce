@@ -67,7 +67,6 @@ const Sidebar = () => {
     isTabletMid && setOpen(false);
   }, [pathname]);
 
-
   const dispatch = useDispatch();
 
   const logOut = useCallback(() => {
@@ -77,43 +76,44 @@ const Sidebar = () => {
 
   const Nav_animation = isTabletMid
     ? {
-      open: {
-        x: 0,
-        width: "16rem",
-        transition: {
-          damping: 40,
+        open: {
+          x: 0,
+          width: "16rem",
+          transition: {
+            damping: 40,
+          },
         },
-      },
-      closed: {
-        x: -250,
-        width: 0,
-        transition: {
-          damping: 40,
-          delay: 0.15,
+        closed: {
+          x: -250,
+          width: 0,
+          transition: {
+            damping: 40,
+            delay: 0.15,
+          },
         },
-      },
-    }
+      }
     : {
-      open: {
-        width: "16rem",
-        transition: {
-          damping: 40,
+        open: {
+          width: "16rem",
+          transition: {
+            damping: 40,
+          },
         },
-      },
-      closed: {
-        width: "6rem",
-        transition: {
-          damping: 40,
+        closed: {
+          width: "6rem",
+          transition: {
+            damping: 40,
+          },
         },
-      },
-    };
+      };
 
   return (
     <div>
       <div
         onClick={() => setOpen(false)}
-        className={`md:hidden fixed inset-0 max-h-screen z-[998] bg-black/50 ${open ? "block" : "hidden"
-          } `}
+        className={`md:hidden fixed inset-0 max-h-screen z-[998] bg-black/50 ${
+          open ? "block" : "hidden"
+        } `}
       ></div>
       <motion.div
         ref={sidebarRef}
@@ -126,7 +126,10 @@ const Sidebar = () => {
       >
         <div className="flex items-center gap-2.5 font-medium border-b py-3 border-slate-300  mx-3">
           <img src={Logoimage} width={70} className="ml-2" />
-          <button onClick={logOut} class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
+          <button
+            onClick={logOut}
+            class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+          >
             Đăng xuất
           </button>
           <motion.div
@@ -136,15 +139,15 @@ const Sidebar = () => {
             animate={
               open
                 ? {
-                  x: 10,
-                  y: -550,
-                  rotate: 0,
-                }
+                    x: 10,
+                    y: -550,
+                    rotate: 0,
+                  }
                 : {
-                  x: 10,
-                  y: -550,
-                  rotate: 180,
-                }
+                    x: 10,
+                    y: -550,
+                    rotate: 180,
+                  }
             }
             transition={{ duration: 0 }}
             className="absolute w-fit h-fit md:block z-50 hidden right-2 bottom-3 cursor-pointer"
@@ -280,6 +283,23 @@ const Sidebar = () => {
                 ],
               },
               {
+                key: "Userss",
+                icon: <FaRegNewspaper className="fs-4" />,
+                label: "Quản lý người dùng",
+                children: [
+                  {
+                    key: "user",
+                    icon: <FiPlusSquare className="fs-4" />,
+                    label: "Thêm người dùng",
+                  },
+                  {
+                    key: "list-user",
+                    icon: <FiGrid className="fs-4" />,
+                    label: "Danh sách người dùng",
+                  },
+                ],
+              },
+              {
                 key: "setting",
                 icon: <FiSettings className="fs-4" />,
                 label: "Cài đặt",
@@ -308,9 +328,7 @@ const Sidebar = () => {
               },
             ]}
           />
-
         </div>
-
       </motion.div>
       <div className="m-3 md:hidden  " onClick={() => setOpen(true)}>
         <MdMenu size={25} />
