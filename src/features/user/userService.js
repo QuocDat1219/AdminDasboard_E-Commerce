@@ -7,15 +7,19 @@ const getAllUser = async () => {
   return response.data;
 };
 
+const createUser = async () => {
+  const response = await axios.post(`${base_url}user/`, config);
+  return response.data;
+};
+
 const getAUser = async (id) => {
   const response = await axios.get(`${base_url}user/${id}`, config);
-
-  return response.data;
+  return response.data.getaUser;
 };
 
 const updateUserAdmin = async (user) => {
   const response = await axios.put(
-    `${base_url}user/${user._id}`,
+    `${base_url}user/${user.id}`,
     {
       email: user.userData.email,
       mobile: user.userData.mobile,
@@ -27,21 +31,21 @@ const updateUserAdmin = async (user) => {
   );
   return response.data;
 };
-const adminCreateUser = async () => {
-  const response = await axios.post(`${base_url}user/register`);
-  return response.data;
-};
+// const adminCreateUser = async () => {
+//   const response = await axios.post(`${base_url}user/register`);
+//   return response.data;
+// };
 const deleteUser = async (id) => {
   const response = await axios.delete(`${base_url}user/${id}`, config);
-
   return response.data;
 };
 const UserService = {
+  createUser,
   getAllUser,
   getAUser,
   deleteUser,
   updateUserAdmin,
-  adminCreateUser,
+  // adminCreateUser,
 };
 
 export default UserService;

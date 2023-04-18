@@ -12,11 +12,11 @@ export const getAllUsers = createAsyncThunk(
   }
 );
 
-export const createUser = createAsyncThunk(
+export const createUserMoi = createAsyncThunk(
   "User/create-user",
   async (userData, thunkAPI) => {
     try {
-      return await UserService.adminCreateUser(userData);
+      return await UserService.createUser(userData);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -85,16 +85,16 @@ export const userSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(createUser.pending, (state) => {
+      .addCase(createUserMoi.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createUser.fulfilled, (state, action) => {
+      .addCase(createUserMoi.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         state.createdUser = action.payload;
       })
-      .addCase(createUser.rejected, (state, action) => {
+      .addCase(createUserMoi.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
@@ -107,8 +107,8 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.username = action.payload.email;
-        state.phone = action.payload.phone;
+        state.email = action.payload.email;
+        state.mobile = action.payload.mobile;
         state.firstname = action.payload.firstname;
         state.lastname = action.payload.lastname;
         state.role = action.payload.role;
@@ -126,7 +126,7 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.updatedBrand = action.payload;
+        state.updatedUser = action.payload;
       })
       .addCase(updateUserAdmin.rejected, (state, action) => {
         state.isLoading = false;
