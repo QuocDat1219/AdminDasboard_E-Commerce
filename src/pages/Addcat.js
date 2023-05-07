@@ -70,6 +70,9 @@ const Addcat = () => {
     validationSchema: schema,
     onSubmit: (values) => {
       const data = { id: getPCatId, cateData: values };
+      if (categoryCTN == "") {
+        toast.warning("Chưa chọn danh mục chính");
+      }
       if (getPCatId !== undefined) {
         dispatch(updateAProductCategory(data));
         dispatch(resetState());
@@ -97,6 +100,7 @@ const Addcat = () => {
             name="brand"
             className="form-control py-2 mb-3 "
             onChange={(e) => setCategoryContainer(e.target.value)}
+            required
           >
             <option>Chọn Danh mục chính</option>
             {CategoryContainer.map((i, j) => {

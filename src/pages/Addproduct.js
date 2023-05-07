@@ -22,6 +22,7 @@ const Addproduct = () => {
   const [image, setImage] = useState([]);
   const brandState = useSelector((state) => state.brand.brands);
   const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [Idcategory, setIdcategory] = useState("");
   const [brand, setBrand] = useState("");
@@ -46,6 +47,7 @@ const Addproduct = () => {
     } else {
       dispatch(resetState());
       setName("");
+      setPrice("");
       setDescription("");
       setIdcategory("");
       setBrand("");
@@ -55,11 +57,13 @@ const Addproduct = () => {
   useEffect(() => {
     if (product != undefined) {
       setName(product.name);
+      setPrice(product.price);
       setDescription(product.description);
       setIdcategory(product.idCategory);
       setBrand(product.idBrand);
     } else {
       setName("");
+      setPrice("");
       setDescription("");
       setIdcategory("");
       setBrand("");
@@ -79,6 +83,7 @@ const Addproduct = () => {
     e.preventDefault();
     let formData = new FormData();
     formData.append("name", name);
+    formData.append("price", price);
     formData.append("description", description);
     formData.append("idCategory", Idcategory);
     formData.append("idBrand", brand);
@@ -104,6 +109,7 @@ const Addproduct = () => {
     e.preventDefault();
     let formData = new FormData();
     formData.append("name", name);
+    formData.append("price", price);
     formData.append("description", description);
     formData.append("idCategory", Idcategory);
     formData.append("idBrand", brand);
@@ -143,7 +149,16 @@ const Addproduct = () => {
               value={name}
               required
             />
-
+            <input
+              type="number"
+              name="price"
+              id="default-input"
+              className="bg-gray-50 border border-gray-300 text-gray-900   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-black dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[98%]"
+              placeholder="Nhập giá"
+              onChange={(e) => setPrice(e.target.value)}
+              value={price}
+              required
+            />
             <div className="">
               <ReactQuill
                 theme="snow"
