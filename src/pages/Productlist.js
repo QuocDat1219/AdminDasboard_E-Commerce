@@ -36,6 +36,11 @@ const Productlist = () => {
       // sorter: (a, b) => a.brand.length - b.brand.length,
     },
     {
+      title: "Giá",
+      dataIndex: "price",
+      // sorter: (a, b) => a.brand.length - b.brand.length,
+    },
+    {
       title: "Mô tả",
       dataIndex: "description",
       render: (text, record) => (
@@ -136,11 +141,12 @@ const Productlist = () => {
           key: i + 1,
           id: productState._id ? productState._id : "Rỗng",
           name: productState.name ? productState.name : "Rỗng",
+
           description: productState.description
             ? productState.description
             : "Rỗng",
           idCategory: pCate.name ? pCate.name : "Rỗng",
-          slug: productState.slug ? productState.slug : "Rỗng",
+          price: productState.price ? productState.price : "Rỗng",
           brand: brand[0]?.title != null ? brand[0].title : "Rỗng",
           idContainerCategory: cateContainer[0]?.name
             ? cateContainer[0].name
