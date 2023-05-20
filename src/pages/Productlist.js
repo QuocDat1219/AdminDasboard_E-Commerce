@@ -36,6 +36,16 @@ const Productlist = () => {
       // sorter: (a, b) => a.brand.length - b.brand.length,
     },
     {
+      title: "Số lượng",
+      dataIndex: "quantity",
+      // sorter: (a, b) => a.price - b.price,
+    },
+    {
+      title: "Đã bán",
+      dataIndex: "sold",
+      // sorter: (a, b) => a.price - b.price,
+    },
+    {
       title: "Giá",
       dataIndex: "price",
       // sorter: (a, b) => a.brand.length - b.brand.length,
@@ -44,15 +54,10 @@ const Productlist = () => {
       title: "Mô tả",
       dataIndex: "description",
       render: (text, record) => (
-        <Button onClick={() => showModal(text)}>Xem mô tả</Button>
+        <Button className="font-bold" onClick={() => showModal(text)}>
+          Xem mô tả
+        </Button>
       ),
-      // render: (text) => (
-      //   <div
-      //     dangerouslySetInnerHTML={{
-      //       __html: `${text}`,
-      //     }}
-      //   ></div>
-      // ),
     },
     {
       title: "Danh mục phụ",
@@ -146,7 +151,17 @@ const Productlist = () => {
             ? productState.description
             : "Rỗng",
           idCategory: pCate.name ? pCate.name : "Rỗng",
-          price: productState.price ? productState.price : "Rỗng",
+
+          price: productState.price
+            ? new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }).format(productState.price)
+            : "Đang cập nhật...",
+          sold: productState.sold ? productState.sold : 0,
+          quantity: productState.quantity
+            ? productState.quantity
+            : "Đang cập nhật...",
           brand: brand[0]?.title != null ? brand[0].title : "Rỗng",
           idContainerCategory: cateContainer[0]?.name
             ? cateContainer[0].name
