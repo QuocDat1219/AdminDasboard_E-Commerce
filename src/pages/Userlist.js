@@ -38,6 +38,10 @@ const columns = [
     sorter: (a, b) => a.name.length - b.name.length,
   },
   {
+    title: "Status",
+    dataIndex: "status",
+  },
+  {
     title: "Quyền",
     dataIndex: "role",
     sorter: (a, b) => a.name.length - b.name.length,
@@ -69,6 +73,12 @@ const Userlist = () => {
       email: userState[i].email,
       phone: userState[i].mobile,
       firstname: userState[i].firstname,
+      status:
+      userState[i].isBlocked === false ? (
+          <span className="">Active</span>
+        ) : (
+          <span className="">Block</span>
+        ),
       lastname: userState[i].lastname,
       role: userState[i].role,
       action: (

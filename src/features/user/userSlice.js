@@ -110,6 +110,7 @@ export const userSlice = createSlice({
         state.email = action.payload.email;
         state.mobile = action.payload.mobile;
         state.firstname = action.payload.firstname;
+        state.isBlocked = action.payload.isBlocked;
         state.lastname = action.payload.lastname;
         state.role = action.payload.role;
       })
