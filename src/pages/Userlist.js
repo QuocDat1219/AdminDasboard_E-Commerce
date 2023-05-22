@@ -74,13 +74,20 @@ const Userlist = () => {
       phone: userState[i].mobile,
       firstname: userState[i].firstname,
       status:
-      userState[i].isBlocked === false ? (
-          <span className="">Active</span>
+        userState[i].isBlocked === false ? (
+          <span className="font-bold text-red-600">Block</span>
         ) : (
-          <span className="">Block</span>
+          <span className="font-bold text-green-500">Active</span>
         ),
       lastname: userState[i].lastname,
-      role: userState[i].role,
+      role:
+        userState[i].role === "admin" ? (
+          <span className="font-bold">Quản trị viên</span>
+        ) : userState[i].role === "user" ? (
+          <span className="">Người dùng</span>
+        ) : (
+          <span className="font-bold">Nhân viên</span>
+        ),
       action: (
         <>
           <div className="flex">

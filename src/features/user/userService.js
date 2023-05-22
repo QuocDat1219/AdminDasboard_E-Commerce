@@ -24,6 +24,7 @@ const updateUserAdmin = async (user) => {
       email: user.userData.email,
       mobile: user.userData.mobile,
       firstname: user.userData.firstname,
+      isBlocked: user.userData.isBlocked,
       lastname: user.userData.lastname,
       role: user.userData.role,
     },

@@ -11,15 +11,20 @@ import {
 } from "../features/brand/brandSlice";
 import CustomModal from "../components/CustomModal";
 import { toast } from "react-toastify";
-
+import { getcContainers } from "../features/CategoryContainer/cContainerSlice";
 const columns = [
   {
     title: "SNo",
     dataIndex: "key",
   },
   {
-    title: "Name",
+    title: "Tên nhãn hàng",
     dataIndex: "name",
+    sorter: (a, b) => a.name.length - b.name.length,
+  },
+  {
+    title: "Danh mục chính",
+    dataIndex: "CategoryContainer",
     sorter: (a, b) => a.name.length - b.name.length,
   },
   {
@@ -37,16 +42,25 @@ const Brandlist = () => {
     setOpen(true);
     setbrandId(e);
   };
-
+  const CategoryContainer = useSelector((state) => state.catectn.cContainers);
+  console.log(CategoryContainer._id);
   const hideModal = () => {
     setOpen(false);
   };
-
+  useEffect(() => {
+    dispatch(getcContainers());
+  }, []);
   const data1 = [];
   for (let i = 0; i < brandState.length; i++) {
     data1.push({
       key: i + 1,
       name: brandState[i].title,
+      CategoryContainer:
+        brandState[i].idCategoriesContainer == "6423eb7f0dcb89d924e988c3" ? (
+          <span className="">Camera</span>
+        ) : (
+          <span className="">Sạc OTo</span>
+        ),
       action: (
         <>
           <div className="flex">

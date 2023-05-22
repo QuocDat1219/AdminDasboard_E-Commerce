@@ -37,6 +37,7 @@ export const updateUserAdmin = createAsyncThunk(
   "User/update-user",
   async (user, thunkAPI) => {
     try {
+      console.log(user);
       return await UserService.updateUserAdmin(user);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -110,8 +111,8 @@ export const userSlice = createSlice({
         state.email = action.payload.email;
         state.mobile = action.payload.mobile;
         state.firstname = action.payload.firstname;
-        state.isBlocked = action.payload.isBlocked;
         state.lastname = action.payload.lastname;
+        state.isBlocked = action.payload.isBlocked;
         state.role = action.payload.role;
       })
       .addCase(getAUser.rejected, (state, action) => {
