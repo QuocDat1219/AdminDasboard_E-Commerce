@@ -15,7 +15,6 @@ const getAProduct = async (id) => {
 };
 const deleteProduct = async (id) => {
   const response = await axios.delete(`${base_url}products/${id}`, config);
-  console.log(response.data);
   return response.data;
 };
 const productService = {

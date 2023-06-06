@@ -42,7 +42,7 @@ import FeedbackProduct from "./pages/FeedbackProduct";
 import AddUser from "./pages/AddUsers";
 import Userlist from "./pages/Userlist";
 import Register from "./pages/Register";
-
+import Oders from "./pages/Orders";
 function App() {
   return (
     <Router>
@@ -97,6 +97,7 @@ function App() {
           <Route path="user" element={<AddUser />} />
           <Route path="user/:id" element={<AddUser />} />
           <Route path="list-user" element={<Userlist />} />
+          <Route path="list-order" element={<Orders />} />
         </Route>
       </Routes>
     </Router>

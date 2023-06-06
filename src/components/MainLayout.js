@@ -4,12 +4,7 @@ import SubMenu from "./Menu.js";
 import { motion } from "framer-motion";
 import { Layout, Menu, theme } from "antd";
 import { IoIosArrowBack } from "react-icons/io";
-import { SlSettings } from "react-icons/sl";
-import { AiOutlineAppstore } from "react-icons/ai";
-import { BsPerson } from "react-icons/bs";
-import { HiOutlineDatabase } from "react-icons/hi";
-import { TbReportAnalytics } from "react-icons/tb";
-import { RiBuilding3Line } from "react-icons/ri";
+import { BsCartCheck } from "react-icons/bs";
 import { useMediaQuery } from "react-responsive";
 import { MdMenu } from "react-icons/md";
 import Logoimage from "../image/logo.jpg";
@@ -296,6 +291,18 @@ const Sidebar = () => {
                     key: "list-user",
                     icon: <FiGrid className="fs-4" />,
                     label: "Danh sách người dùng",
+                  },
+                ],
+              },
+              {
+                key: "Order",
+                icon: <BsCartCheck className="fs-4" />,
+                label: "Quản lý đơn đặt hàng",
+                children: [
+                  {
+                    key: "list-order",
+                    icon: <FiGrid className="fs-4" />,
+                    label: "Danh sách đơn đặt hàng",
                   },
                 ],
               },
