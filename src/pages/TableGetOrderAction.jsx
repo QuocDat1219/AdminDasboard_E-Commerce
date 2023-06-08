@@ -18,6 +18,7 @@ const TableAntdAction = ({ orderData }) => {
   const dispatch = useDispatch();
   const [modalProduct, setModalProduct] = useState(false);
   const [modalCancel, setModalCancel] = useState(false);
+  const [modalDelete, setModalDelete] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const [selectedOrder, setSelectedOrder] = useState([]);
@@ -29,7 +30,7 @@ const TableAntdAction = ({ orderData }) => {
   useEffect(() => {
     dispatch(getProducts());
   }, []);
-  const userId = JSON.parse(window.localStorage.getItem("user_infos"));
+  const userId = JSON.parse(window.localStorage.getItem("user"));
   const iduser = userId._id;
 
   useEffect(() => {}, [iduser]);
@@ -59,7 +60,34 @@ const TableAntdAction = ({ orderData }) => {
     setModalCancel(true);
   };
 
+ 
+
+  const showModalDelete = (id) => {
+    setIdOrder(id);
+    setModalDelete(true);
+  };
+
+
   const handleCancelOrder = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}orders/cancleOder`,
+        {
+          id: idOrder,
+          status: "Đã hủy",
+        }
+      );
+      if (response.status === 200) {
+        toast.success("Hủy đơn hàng thành công");
+        setModalCancel(false);
+      } else {
+        toast.error("Lỗi");
+      }
+    } catch (err) {
+      toast.error("Hủy đơn hàng không thành công");
+    }
+  };
+  const handldeDeleteOrder = async() => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}orders/cancleOder`,
@@ -253,7 +281,21 @@ const TableAntdAction = ({ orderData }) => {
         >
           ...
         </button>
+      ),    
+    },
+
+    {
+      title: "Xóa",
+      width: "15%",
+      render: (text, record) => (
+        <button
+          className="text-white bg-[#FF0000] hover:bg-[#FF0000]/90 focus:ring-4 focus:outline-none focus:ring-[#FF0000]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+          onClick={() => showModalDelete(record.id)}
+        >
+          Xóa
+        </button>
       ),
+      
     },
   ];
 
@@ -267,7 +309,7 @@ const TableAntdAction = ({ orderData }) => {
         dataSource={arr}
       />
       <Modal
-        title="Hủy đơn hàng"
+        title="Duyệt đơn hàng"
         onCancel={() => setModalCancel(false)}
         open={modalCancel}
         footer={[
@@ -287,8 +329,39 @@ const TableAntdAction = ({ orderData }) => {
             <AiOutlineMessage />
             <p className="mx-1">Xác nhận</p>
           </button>,
+
+          
+        ]}
+        
+      >
+                <label for="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Duyệt đơn hàng</label>
+                <textarea onChange={(e) => setMessageCancel(e.target.value)} id="message" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nhập lí do hủy đơn hàng"></textarea>
+      </Modal>
+
+<Modal
+        title="Xóa đơn hàng"
+        onCancel={() => setModalDelete(false)}
+        open={modalDelete}
+        footer={[
+          <button
+            onClick={() => setModalDelete(false)}
+            type="button"
+            className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+          >
+            <AiOutlineCloseCircle />
+            <p className="mx-1">Đóng</p>
+          </button>,
+          <button
+            onClick={() => handldeDeleteOrder()}
+            type="button"
+            className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+          >
+            <AiOutlineMessage />
+            <p className="mx-1">Xác nhận</p>
+          </button>,
         ]}
       ></Modal>
+
       <Modal
         title="Tất cả sản phẩm"
         onCancel={() => setModalProduct(false)}
