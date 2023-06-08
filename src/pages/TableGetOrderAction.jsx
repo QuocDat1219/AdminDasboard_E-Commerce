@@ -74,36 +74,32 @@ const TableAntdAction = ({ orderData }) => {
         `${process.env.REACT_APP_API_URL}orders/cancleOder`,
         {
           id: idOrder,
-          status: "Đã hủy",
+          status: messageCancel,
         }
       );
       if (response.status === 200) {
-        toast.success("Hủy đơn hàng thành công");
+        toast.success("Thao tác thành công");
         setModalCancel(false);
       } else {
         toast.error("Lỗi");
       }
     } catch (err) {
-      toast.error("Hủy đơn hàng không thành công");
+      toast.error("Thao tác không thành công");
     }
   };
   const handldeDeleteOrder = async() => {
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}orders/cancleOder`,
-        {
-          id: idOrder,
-          status: "Đã hủy",
-        }
+      const response = await axios.delete(
+        `${process.env.REACT_APP_API_URL}orders/delete-orders/${idOrder}`,
       );
       if (response.status === 200) {
-        toast.success("Hủy đơn hàng thành công");
-        setModalCancel(false);
+        toast.success("Xóa đơn hàng thành công");
+        setModalDelete(false);
       } else {
         toast.error("Lỗi");
       }
     } catch (err) {
-      toast.error("Hủy đơn hàng không thành công");
+      toast.error("Xóa đơn hàng không thành công");
     }
   };
 
@@ -335,7 +331,13 @@ const TableAntdAction = ({ orderData }) => {
         
       >
                 <label for="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Duyệt đơn hàng</label>
-                <textarea onChange={(e) => setMessageCancel(e.target.value)} id="message" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nhập lí do hủy đơn hàng"></textarea>
+                <select onChange={(e) => setMessageCancel(e.target.value)} id="status" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="Đang xử lý">Đang xử lý</option>
+                        <option value="Đã xác nhận">Đã xác nhận</option>
+                        <option value="Đang giao hàng">Đang giao hàng</option>
+                        <option value="Đã giao hàng">Đã giao hàng</option>
+                        <option value="Đã hủy">Đã hủy</option>
+                </select>
       </Modal>
 
 <Modal
