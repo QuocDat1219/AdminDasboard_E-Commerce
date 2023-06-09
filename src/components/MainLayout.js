@@ -164,6 +164,23 @@ const Sidebar = () => {
             }}
             items={[
               {
+                key: "Statistical",
+                icon: <FiList className="fs-4" />,
+                label: "Thống kê",
+                children: [
+                  {
+                    key: "Statistical-total",
+                    icon: <FiPlusSquare className="fs-4" />,
+                    label: "Danh mục tổng quát",
+                  },
+                  {
+                    key: "list-category",
+                    icon: <FiLayers className="fs-4" />,
+                    label: "Danh sách danh mục",
+                  },
+                ],
+              },
+              {
                 key: "dmcs",
                 icon: <FiTrello className="fs-4" />,
                 label: "Danh mục chính",
