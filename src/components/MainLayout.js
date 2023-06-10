@@ -123,7 +123,7 @@ const Sidebar = () => {
           <img src={Logoimage} width={70} className="ml-2" />
           <button
             onClick={logOut}
-            class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+            className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
           >
             Đăng xuất
           </button>
@@ -169,14 +169,19 @@ const Sidebar = () => {
                 label: "Thống kê",
                 children: [
                   {
-                    key: "Statistical-total",
+                    key: "statistical-total",
                     icon: <FiPlusSquare className="fs-4" />,
-                    label: "Danh mục tổng quát",
+                    label: "Tổng quát",
                   },
                   {
-                    key: "list-category",
+                    key: "statistical-order-today",
                     icon: <FiLayers className="fs-4" />,
-                    label: "Danh sách danh mục",
+                    label: "Đơn trong ngày",
+                  },
+                  {
+                    key: "statistical-order-month",
+                    icon: <FiLayers className="fs-4" />,
+                    label: "Đơn trong tháng",
                   },
                 ],
               },

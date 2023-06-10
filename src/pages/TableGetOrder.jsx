@@ -8,10 +8,15 @@ import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getProducts } from "../features/product/productSlice";
+import moment from "moment";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const TableAntd = ({ orderData }) => {
   const dispatch = useDispatch();
   const [modalProduct, setModalProduct] = useState(false);
+  const [modalUser, setModalUser] = useState(false);
+  const [userData, setUserData] = useState(null);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const [selectedOrder, setSelectedOrder] = useState([]);
@@ -20,7 +25,6 @@ const TableAntd = ({ orderData }) => {
   useEffect(() => {
     dispatch(getProducts());
   }, []);
-
   const getProductNameById = (productId) => {
     const pro = products.find(
       (item) => parseInt(item._id) == productId.toString()
@@ -46,6 +50,19 @@ const TableAntd = ({ orderData }) => {
   const showModal = (products) => {
     setSelectedOrder(JSON.parse(products));
     setModalProduct(true);
+  };
+
+  const showModalUserOrder = async (user) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}user/${user}`
+      );
+      const userData = response.data.getaUser;
+      setUserData(userData); // Cập nhật state với thông tin người dùng
+      setModalUser(true); // Mở modal
+    } catch (error) {
+      toast.error("Đã xảy ra lỗi! Quay lại sau");
+    }
   };
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -152,22 +169,30 @@ const TableAntd = ({ orderData }) => {
   orderData.map((item, index) => {
     const data = {
       key: index + 1,
+      orderby: item.orderby,
+      orderdate: moment(item.updatedAt).format("DD/MM/YYYY HH:mm:ss"),
       products: JSON.stringify(item.products),
       payment: item.paymentIntent?.name,
       //   shipping: item.shippingMethor.name,
-      status: item.orderStatus == "Đã xác nhận" ? (
-
-        <span className="text-green-500 font-bold"><FaCheck className="inline"/>  Đã xác nhận</span>
-      ) : item.orderStatus == "Đang giao hàng" ? (
-      <span className="text-yellow-500 font-bold">Đang giao hàng</span>
-      ) : item.orderStatus == "Đã hủy" ? (
-        <span className="text-red-500 font-bold">Đã hủy</span>
-      ) : item.orderStatus == "Đã giao hàng" ? (
-        <span className="text-black font-bold">Đã giao hàng</span>
-      ) : item.orderStatus == "Đang xử lý" ? (
-        <span className="text-gray-700 font-bold">Đang chờ xử lý</span>
-      ) : <span className="text-blue-700 font-bold">Không rõ</span>,
-      total: item.totalPrice?.toLocaleString("vi-VN", {
+      status:
+        item.orderStatus == "Đã xác nhận" ? (
+          <span className="text-green-500 font-bold">
+            <FaCheck className="inline" /> Đã xác nhận
+          </span>
+        ) : item.orderStatus == "Đang giao hàng" ? (
+          <span className="text-yellow-500 font-bold">Đang giao hàng</span>
+        ) : item.orderStatus == "Đã hủy" ? (
+          <span className="text-red-500 font-bold">Đã hủy</span>
+        ) : item.orderStatus == "Đã giao hàng" ? (
+          <span className="text-[#27ae60] font-bold">
+            Đơn hàng đã được giao
+          </span>
+        ) : item.orderStatus == "Đang xử lý" ? (
+          <span className="text-gray-700 font-bold">Đang chờ xử lý</span>
+        ) : (
+          <span className="text-blue-700 font-bold">Không rõ</span>
+        ),
+      tongtiensanpham: item.totalPrice?.toLocaleString("vi-VN", {
         style: "currency",
         currency: "VND",
       }),
@@ -200,20 +225,40 @@ const TableAntd = ({ orderData }) => {
       // ...getColumnSearchProps('products'),
     },
     {
-      title: "Phương thức thanh toán",
+      title: "Người mua",
+      key: "orderby",
+      width: "15%",
+      render: (text, record) => (
+        <button
+          className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+          onClick={() => showModalUserOrder(record.orderby)}
+        >
+          Chi tiết
+        </button>
+      ),
+    },
+    {
+      title: "Thanh toán",
       dataIndex: "payment",
       key: "payment",
-      width: "30%",
+      width: "15%",
       ...getColumnSearchProps("payment"),
     },
     {
       title: "Tổng tiền",
-      dataIndex: "total",
-      key: "total",
-      width: "20%",
-      ...getColumnSearchProps("total"),
-      sorter: (a, b) => a.total - b.total,
+      dataIndex: "tongtiensanpham",
+      key: "tongtiensanpham",
+      width: "15%",
+      ...getColumnSearchProps("tongtiensanpham"),
+      sorter: (a, b) => a.totalPrice - b.totalPrice,
       sortDirections: ["descend", "ascend"],
+    },
+    {
+      title: "Ngày đặt hàng",
+      dataIndex: "orderdate",
+      key: "orderdate",
+      width: "16%",
+      ...getColumnSearchProps("orderdate"),
     },
     {
       title: "Trạng thái",
@@ -294,6 +339,48 @@ const TableAntd = ({ orderData }) => {
                   </td>
                 </tr>
               ))}
+            </tbody>
+          </table>
+        </div>
+      </Modal>
+      {/* Show modal user order  */}
+      <Modal
+        title="Thông tin người mua"
+        onCancel={() => setModalUser(false)}
+        open={modalUser}
+        width="50%  "
+        footer={[
+          <button
+            onClick={() => setModalUser(false)}
+            type="button"
+            className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+          >
+            <AiOutlineCloseCircle />
+            Đóng
+          </button>,
+        ]}
+      >
+        <div className="w-full overflow-x-scroll">
+          <table className="table-fixed text-center mx-auto text-sm ">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
+              <tr>
+                <th className="px-6 py-3">STT</th>
+                <th className="px-6 py-3">Tên</th>
+                <th className="px-6 py-3">Email</th>
+                <th className="px-6 py-3">Số điện thoại</th>
+              </tr>
+            </thead>
+            <tbody>
+              {userData && (
+                <tr>
+                  <td className="px-6 py-3">1</td>
+                  <td className="px-6 py-3">
+                    {userData.firstname} {userData.lastname}
+                  </td>
+                  <td className="px-6 py-3">{userData.email}</td>
+                  <td className="px-6 py-3">{userData.mobile}</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

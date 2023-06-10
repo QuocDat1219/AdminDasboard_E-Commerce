@@ -11,22 +11,18 @@ import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { getProducts } from "../features/product/productSlice";
+import { getProducts } from "../../features/product/productSlice";
 import axios from "axios";
 import moment from "moment";
 
 const TableAntdAction = ({ orderData }) => {
   const dispatch = useDispatch();
   const [modalProduct, setModalProduct] = useState(false);
-  const [modalCancel, setModalCancel] = useState(false);
-  const [modalDelete, setModalDelete] = useState(false);
   const [modalUser, setModalUser] = useState(false);
   const [userData, setUserData] = useState(null);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const [selectedOrder, setSelectedOrder] = useState([]);
-  const [messageCancel, setMessageCancel] = useState("");
-  const [idOrder, setIdOrder] = useState();
   const searchInput = useRef(null);
   const products = useSelector((state) => state.product.products);
 
@@ -58,10 +54,6 @@ const TableAntdAction = ({ orderData }) => {
     setSelectedOrder(JSON.parse(products));
     setModalProduct(true);
   };
-  const showModalCancel = (id) => {
-    setIdOrder(id);
-    setModalCancel(true);
-  };
 
   const showModalUserOrder = async (user) => {
     try {
@@ -73,46 +65,6 @@ const TableAntdAction = ({ orderData }) => {
       setModalUser(true); // Mở modal
     } catch (error) {
       toast.error("Đã xảy ra lỗi! Quay lại sau");
-    }
-  };
-
-  const showModalDelete = (id) => {
-    setIdOrder(id);
-    setModalDelete(true);
-  };
-
-  const handleCancelOrder = async () => {
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}orders/cancleOder`,
-        {
-          id: idOrder,
-          status: "Đã giao hàng",
-        }
-      );
-      if (response.status === 200) {
-        toast.success("Thao tác thành công");
-        setModalCancel(false);
-      } else {
-        toast.error("Lỗi");
-      }
-    } catch (err) {
-      toast.error("Thao tác không thành công");
-    }
-  };
-  const handldeDeleteOrder = async () => {
-    try {
-      const response = await axios.delete(
-        `${process.env.REACT_APP_API_URL}orders/delete-orders/${idOrder}`
-      );
-      if (response.status === 200) {
-        toast.success("Xóa đơn hàng thành công");
-        setModalDelete(false);
-      } else {
-        toast.error("Lỗi");
-      }
-    } catch (err) {
-      toast.error("Xóa đơn hàng không thành công");
     }
   };
 
@@ -302,31 +254,6 @@ const TableAntdAction = ({ orderData }) => {
       width: "15%",
       ...getColumnSearchProps("status"),
     },
-    {
-      title: "Hành động",
-      width: "15%",
-      render: (text, record) => (
-        <button
-          className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
-          onClick={() => showModalCancel(record.id)}
-        >
-          Xác nhận
-        </button>
-      ),
-    },
-
-    {
-      title: "Xóa",
-      width: "15%",
-      render: (text, record) => (
-        <button
-          className="text-white bg-[#FF0000] hover:bg-[#FF0000]/90 focus:ring-4 focus:outline-none focus:ring-[#FF0000]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
-          onClick={() => showModalDelete(record.id)}
-        >
-          Xóa
-        </button>
-      ),
-    },
   ];
 
   return (
@@ -338,54 +265,6 @@ const TableAntdAction = ({ orderData }) => {
         columns={columns}
         dataSource={arr}
       />
-      <Modal
-        title="Duyệt đơn hàng"
-        onCancel={() => setModalCancel(false)}
-        open={modalCancel}
-        footer={[
-          <button
-            onClick={() => setModalCancel(false)}
-            type="button"
-            className="text-white bg-[#e74c3c] hover:bg-[#e74c3c]/90 focus:ring-4 focus:outline-none focus:ring-[#e74c3c]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
-          >
-            <AiOutlineCloseCircle />
-            <p className="mx-1">Đóng</p>
-          </button>,
-          <button
-            onClick={() => handleCancelOrder()}
-            type="button"
-            className="text-white bg-[#2ecc71] hover:bg-[#2ecc71]/90 focus:ring-4 focus:outline-none focus:ring-[#2ecc71]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
-          >
-            <AiOutlineMessage />
-            <p className="mx-1">Xác nhận</p>
-          </button>,
-        ]}
-      ></Modal>
-
-      <Modal
-        title="Xóa đơn hàng"
-        onCancel={() => setModalDelete(false)}
-        open={modalDelete}
-        footer={[
-          <button
-            onClick={() => setModalDelete(false)}
-            type="button"
-            className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
-          >
-            <AiOutlineCloseCircle />
-            <p className="mx-1">Đóng</p>
-          </button>,
-          <button
-            onClick={() => handldeDeleteOrder()}
-            type="button"
-            className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
-          >
-            <AiOutlineMessage />
-            <p className="mx-1">Xác nhận</p>
-          </button>,
-        ]}
-      ></Modal>
-
       <Modal
         title="Tất cả sản phẩm"
         onCancel={() => setModalProduct(false)}

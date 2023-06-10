@@ -10,6 +10,9 @@ import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import TableAntd from "./TableGetOrder";
 import TableAntdAction from "./TableGetOrderAction";
+import TableConfirmOrder from "./TableConfirmOrder";
+import TableShipingOrder from "./TableShipingOrder";
+import TableAllOrder from "./TableAllOrder";
 
 const Oders = () => {
   const [alloder, setAllOder] = useState([]);
@@ -66,9 +69,9 @@ const Oders = () => {
               }}
             >
               <TabPanel value="tatca">
-                <TableAntd orderData={alloder} />
+                <TableAllOrder orderData={alloder} />
               </TabPanel>
-            </TabsBody>
+            </TabsBody> 
 
             <TabsBody
               animate={{
@@ -78,7 +81,7 @@ const Oders = () => {
               }}
             >
               <TabPanel value="xuly">
-                <TableAntdAction orderData={dangxuly} />
+                <TableConfirmOrder orderData={dangxuly} />
               </TabPanel>
             </TabsBody>
 
@@ -90,7 +93,7 @@ const Oders = () => {
               }}
             >
               <TabPanel value="xacnhan">
-                <TableAntd orderData={daxacnhan} />
+                <TableShipingOrder orderData={daxacnhan} />
               </TabPanel>
             </TabsBody>
 
@@ -102,7 +105,7 @@ const Oders = () => {
               }}
             >
               <TabPanel value="danggiao">
-                <TableAntd orderData={danggiaohang} />
+                <TableAntdAction orderData={danggiaohang} />
               </TabPanel>
             </TabsBody>
 

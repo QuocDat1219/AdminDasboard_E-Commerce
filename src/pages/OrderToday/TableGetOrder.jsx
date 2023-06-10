@@ -1,52 +1,45 @@
-import {
-  AiOutlineSearch,
-  AiOutlineCloseCircle,
-  AiOutlineMessage,
-} from "react-icons/ai";
+import { AiOutlineSearch, AiOutlineCloseCircle } from "react-icons/ai";
+import { FaCheck } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
-import { Input, Space, Table, Modal, message } from "antd";
+import { Input, Space, Table, Modal } from "antd";
 import Highlighter from "react-highlight-words";
 import { useState } from "react";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { toast } from "react-toastify";
-import { getProducts } from "../features/product/productSlice";
-import axios from "axios";
+import { getProducts } from "../../features/product/productSlice";
 import moment from "moment";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-const TableAntdAction = ({ orderData }) => {
+const TableAntd = ({ orderData }) => {
   const dispatch = useDispatch();
   const [modalProduct, setModalProduct] = useState(false);
-  const [modalCancel, setModalCancel] = useState(false);
-  const [modalDelete, setModalDelete] = useState(false);
   const [modalUser, setModalUser] = useState(false);
   const [userData, setUserData] = useState(null);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const [selectedOrder, setSelectedOrder] = useState([]);
-  const [messageCancel, setMessageCancel] = useState("");
-  const [idOrder, setIdOrder] = useState();
   const searchInput = useRef(null);
   const products = useSelector((state) => state.product.products);
-
   useEffect(() => {
     dispatch(getProducts());
-  }, [orderData]);
-  const userId = JSON.parse(window.localStorage.getItem("user"));
-  const iduser = userId._id;
-
-  useEffect(() => {}, [iduser]);
+  }, []);
   const getProductNameById = (productId) => {
-    const pro = products.find((item) => item._id == productId);
+    const pro = products.find(
+      (item) => parseInt(item._id) == productId.toString()
+    );
     return pro ? pro.name : "Sản phẩm không tồn tại";
   };
+
   const getProductImagesById = (productId) => {
-    const pro = products.find((item) => item._id == productId);
+    const pro = products.find(
+      (item) => parseInt(item._id) == productId.toString()
+    );
     return pro?.imagesDefault.secure_url;
   };
   const getProductPriceById = (productId) => {
-    const pro = products.find((item) => item._id == productId);
+    const pro = products.find((item) => parseInt(item._id) == productId);
     return pro ? pro.price : 0;
   };
 
@@ -57,10 +50,6 @@ const TableAntdAction = ({ orderData }) => {
   const showModal = (products) => {
     setSelectedOrder(JSON.parse(products));
     setModalProduct(true);
-  };
-  const showModalCancel = (id) => {
-    setIdOrder(id);
-    setModalCancel(true);
   };
 
   const showModalUserOrder = async (user) => {
@@ -73,46 +62,6 @@ const TableAntdAction = ({ orderData }) => {
       setModalUser(true); // Mở modal
     } catch (error) {
       toast.error("Đã xảy ra lỗi! Quay lại sau");
-    }
-  };
-
-  const showModalDelete = (id) => {
-    setIdOrder(id);
-    setModalDelete(true);
-  };
-
-  const handleCancelOrder = async () => {
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}orders/cancleOder`,
-        {
-          id: idOrder,
-          status: "Đã giao hàng",
-        }
-      );
-      if (response.status === 200) {
-        toast.success("Thao tác thành công");
-        setModalCancel(false);
-      } else {
-        toast.error("Lỗi");
-      }
-    } catch (err) {
-      toast.error("Thao tác không thành công");
-    }
-  };
-  const handldeDeleteOrder = async () => {
-    try {
-      const response = await axios.delete(
-        `${process.env.REACT_APP_API_URL}orders/delete-orders/${idOrder}`
-      );
-      if (response.status === 200) {
-        toast.success("Xóa đơn hàng thành công");
-        setModalDelete(false);
-      } else {
-        toast.error("Lỗi");
-      }
-    } catch (err) {
-      toast.error("Xóa đơn hàng không thành công");
     }
   };
 
@@ -219,15 +168,31 @@ const TableAntdAction = ({ orderData }) => {
 
   orderData.map((item, index) => {
     const data = {
-      id: item._id,
       key: index + 1,
       orderby: item.orderby,
       orderdate: moment(item.updatedAt).format("DD/MM/YYYY HH:mm:ss"),
       products: JSON.stringify(item.products),
-      payment: item.paymentIntent.name,
+      payment: item.paymentIntent?.name,
       //   shipping: item.shippingMethor.name,
-      status: item.orderStatus,
-      total: item.totalPrice.toLocaleString("vi-VN", {
+      status:
+        item.orderStatus == "Đã xác nhận" ? (
+          <span className="text-green-500 font-bold">
+            <FaCheck className="inline" /> Đã xác nhận
+          </span>
+        ) : item.orderStatus == "Đang giao hàng" ? (
+          <span className="text-yellow-500 font-bold">Đang giao hàng</span>
+        ) : item.orderStatus == "Đã hủy" ? (
+          <span className="text-red-500 font-bold">Đã hủy</span>
+        ) : item.orderStatus == "Đã giao hàng" ? (
+          <span className="text-[#27ae60] font-bold">
+            Đơn hàng đã được giao
+          </span>
+        ) : item.orderStatus == "Đang xử lý" ? (
+          <span className="text-gray-700 font-bold">Đang chờ xử lý</span>
+        ) : (
+          <span className="text-blue-700 font-bold">Không rõ</span>
+        ),
+      tongtiensanpham: item.totalPrice?.toLocaleString("vi-VN", {
         style: "currency",
         currency: "VND",
       }),
@@ -240,7 +205,7 @@ const TableAntdAction = ({ orderData }) => {
       title: "STT",
       dataIndex: "key",
       key: "key",
-      width: "5%",
+      width: "10%",
       ...getColumnSearchProps("key"),
       sorter: (a, b) => a.key - b.key,
       sortDirections: ["descend", "ascend"],
@@ -248,7 +213,7 @@ const TableAntdAction = ({ orderData }) => {
     {
       title: "Sản phẩm",
       key: "products",
-      width: "16%",
+      width: "15%",
       render: (text, record) => (
         <button
           className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
@@ -276,16 +241,16 @@ const TableAntdAction = ({ orderData }) => {
       title: "Thanh toán",
       dataIndex: "payment",
       key: "payment",
-      width: "20%",
+      width: "15%",
       ...getColumnSearchProps("payment"),
     },
     {
       title: "Tổng tiền",
-      dataIndex: "total",
-      key: "total",
-      width: "10%",
-      ...getColumnSearchProps("total"),
-      sorter: (a, b) => a.total - b.total,
+      dataIndex: "tongtiensanpham",
+      key: "tongtiensanpham",
+      width: "15%",
+      ...getColumnSearchProps("tongtiensanpham"),
+      sorter: (a, b) => a.totalPrice - b.totalPrice,
       sortDirections: ["descend", "ascend"],
     },
     {
@@ -299,33 +264,8 @@ const TableAntdAction = ({ orderData }) => {
       title: "Trạng thái",
       dataIndex: "status",
       key: "status",
-      width: "15%",
+      width: "20%",
       ...getColumnSearchProps("status"),
-    },
-    {
-      title: "Hành động",
-      width: "15%",
-      render: (text, record) => (
-        <button
-          className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
-          onClick={() => showModalCancel(record.id)}
-        >
-          Xác nhận
-        </button>
-      ),
-    },
-
-    {
-      title: "Xóa",
-      width: "15%",
-      render: (text, record) => (
-        <button
-          className="text-white bg-[#FF0000] hover:bg-[#FF0000]/90 focus:ring-4 focus:outline-none focus:ring-[#FF0000]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
-          onClick={() => showModalDelete(record.id)}
-        >
-          Xóa
-        </button>
-      ),
     },
   ];
 
@@ -338,53 +278,6 @@ const TableAntdAction = ({ orderData }) => {
         columns={columns}
         dataSource={arr}
       />
-      <Modal
-        title="Duyệt đơn hàng"
-        onCancel={() => setModalCancel(false)}
-        open={modalCancel}
-        footer={[
-          <button
-            onClick={() => setModalCancel(false)}
-            type="button"
-            className="text-white bg-[#e74c3c] hover:bg-[#e74c3c]/90 focus:ring-4 focus:outline-none focus:ring-[#e74c3c]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
-          >
-            <AiOutlineCloseCircle />
-            <p className="mx-1">Đóng</p>
-          </button>,
-          <button
-            onClick={() => handleCancelOrder()}
-            type="button"
-            className="text-white bg-[#2ecc71] hover:bg-[#2ecc71]/90 focus:ring-4 focus:outline-none focus:ring-[#2ecc71]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
-          >
-            <AiOutlineMessage />
-            <p className="mx-1">Xác nhận</p>
-          </button>,
-        ]}
-      ></Modal>
-
-      <Modal
-        title="Xóa đơn hàng"
-        onCancel={() => setModalDelete(false)}
-        open={modalDelete}
-        footer={[
-          <button
-            onClick={() => setModalDelete(false)}
-            type="button"
-            className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
-          >
-            <AiOutlineCloseCircle />
-            <p className="mx-1">Đóng</p>
-          </button>,
-          <button
-            onClick={() => handldeDeleteOrder()}
-            type="button"
-            className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
-          >
-            <AiOutlineMessage />
-            <p className="mx-1">Xác nhận</p>
-          </button>,
-        ]}
-      ></Modal>
 
       <Modal
         title="Tất cả sản phẩm"
@@ -397,7 +290,6 @@ const TableAntdAction = ({ orderData }) => {
             type="button"
             className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           >
-            <AiOutlineCloseCircle />
             Đóng
           </button>,
         ]}
@@ -497,4 +389,4 @@ const TableAntdAction = ({ orderData }) => {
   );
 };
 
-export default TableAntdAction;
+export default TableAntd;

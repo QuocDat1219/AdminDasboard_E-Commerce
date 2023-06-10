@@ -1,7 +1,7 @@
 import {
   AiOutlineSearch,
   AiOutlineCloseCircle,
-  AiOutlineMessage,
+  AiOutlineCheckCircle,
 } from "react-icons/ai";
 import { GrPowerReset } from "react-icons/gr";
 import { Input, Space, Table, Modal, message } from "antd";
@@ -15,7 +15,7 @@ import { getProducts } from "../features/product/productSlice";
 import axios from "axios";
 import moment from "moment";
 
-const TableAntdAction = ({ orderData }) => {
+const TableShipingOrder = ({ orderData }) => {
   const dispatch = useDispatch();
   const [modalProduct, setModalProduct] = useState(false);
   const [modalCancel, setModalCancel] = useState(false);
@@ -63,6 +63,11 @@ const TableAntdAction = ({ orderData }) => {
     setModalCancel(true);
   };
 
+  const showModalDelete = (id) => {
+    setIdOrder(id);
+    setModalDelete(true);
+  };
+
   const showModalUserOrder = async (user) => {
     try {
       const response = await axios.get(
@@ -76,18 +81,13 @@ const TableAntdAction = ({ orderData }) => {
     }
   };
 
-  const showModalDelete = (id) => {
-    setIdOrder(id);
-    setModalDelete(true);
-  };
-
   const handleCancelOrder = async () => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}orders/cancleOder`,
         {
           id: idOrder,
-          status: "Đã giao hàng",
+          status: "Đang giao hàng",
         }
       );
       if (response.status === 200) {
@@ -276,7 +276,7 @@ const TableAntdAction = ({ orderData }) => {
       title: "Thanh toán",
       dataIndex: "payment",
       key: "payment",
-      width: "20%",
+      width: "30%",
       ...getColumnSearchProps("payment"),
     },
     {
@@ -307,10 +307,10 @@ const TableAntdAction = ({ orderData }) => {
       width: "15%",
       render: (text, record) => (
         <button
-          className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+          className="text-white bg-[#2ecc71] hover:bg-[#2ecc71]/90 focus:ring-4 focus:outline-none focus:ring-[#2ecc71]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           onClick={() => showModalCancel(record.id)}
         >
-          Xác nhận
+          Giao Hàng
         </button>
       ),
     },
@@ -356,7 +356,7 @@ const TableAntdAction = ({ orderData }) => {
             type="button"
             className="text-white bg-[#2ecc71] hover:bg-[#2ecc71]/90 focus:ring-4 focus:outline-none focus:ring-[#2ecc71]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           >
-            <AiOutlineMessage />
+            <AiOutlineCheckCircle />
             <p className="mx-1">Xác nhận</p>
           </button>,
         ]}
@@ -380,7 +380,7 @@ const TableAntdAction = ({ orderData }) => {
             type="button"
             className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           >
-            <AiOutlineMessage />
+            <AiOutlineCheckCircle />
             <p className="mx-1">Xác nhận</p>
           </button>,
         ]}
@@ -497,4 +497,4 @@ const TableAntdAction = ({ orderData }) => {
   );
 };
 
-export default TableAntdAction;
+export default TableShipingOrder;

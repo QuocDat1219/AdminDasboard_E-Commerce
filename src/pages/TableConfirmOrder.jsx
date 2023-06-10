@@ -1,7 +1,7 @@
 import {
   AiOutlineSearch,
   AiOutlineCloseCircle,
-  AiOutlineMessage,
+  AiOutlineCheckCircle,
 } from "react-icons/ai";
 import { GrPowerReset } from "react-icons/gr";
 import { Input, Space, Table, Modal, message } from "antd";
@@ -15,7 +15,7 @@ import { getProducts } from "../features/product/productSlice";
 import axios from "axios";
 import moment from "moment";
 
-const TableAntdAction = ({ orderData }) => {
+const TableConfirmOrder = ({ orderData }) => {
   const dispatch = useDispatch();
   const [modalProduct, setModalProduct] = useState(false);
   const [modalCancel, setModalCancel] = useState(false);
@@ -72,7 +72,7 @@ const TableAntdAction = ({ orderData }) => {
       setUserData(userData); // Cập nhật state với thông tin người dùng
       setModalUser(true); // Mở modal
     } catch (error) {
-      toast.error("Đã xảy ra lỗi! Quay lại sau");
+      toast.error("Lỗi khi gọi API:", error);
     }
   };
 
@@ -87,7 +87,7 @@ const TableAntdAction = ({ orderData }) => {
         `${process.env.REACT_APP_API_URL}orders/cancleOder`,
         {
           id: idOrder,
-          status: "Đã giao hàng",
+          status: "Đã xác nhận",
         }
       );
       if (response.status === 200) {
@@ -227,7 +227,7 @@ const TableAntdAction = ({ orderData }) => {
       payment: item.paymentIntent.name,
       //   shipping: item.shippingMethor.name,
       status: item.orderStatus,
-      total: item.totalPrice.toLocaleString("vi-VN", {
+      totalPrice: item.totalPrice.toLocaleString("vi-VN", {
         style: "currency",
         currency: "VND",
       }),
@@ -248,7 +248,7 @@ const TableAntdAction = ({ orderData }) => {
     {
       title: "Sản phẩm",
       key: "products",
-      width: "16%",
+      width: "15%",
       render: (text, record) => (
         <button
           className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
@@ -276,16 +276,16 @@ const TableAntdAction = ({ orderData }) => {
       title: "Thanh toán",
       dataIndex: "payment",
       key: "payment",
-      width: "20%",
+      width: "15%",
       ...getColumnSearchProps("payment"),
     },
     {
       title: "Tổng tiền",
-      dataIndex: "total",
-      key: "total",
+      dataIndex: "totalPrice",
+      key: "totalPrice",
       width: "10%",
-      ...getColumnSearchProps("total"),
-      sorter: (a, b) => a.total - b.total,
+      ...getColumnSearchProps("totalPrice"),
+      sorter: (a, b) => a.totalPrice - b.totalPrice,
       sortDirections: ["descend", "ascend"],
     },
     {
@@ -304,7 +304,7 @@ const TableAntdAction = ({ orderData }) => {
     },
     {
       title: "Hành động",
-      width: "15%",
+      width: "20%",
       render: (text, record) => (
         <button
           className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
@@ -346,7 +346,7 @@ const TableAntdAction = ({ orderData }) => {
           <button
             onClick={() => setModalCancel(false)}
             type="button"
-            className="text-white bg-[#e74c3c] hover:bg-[#e74c3c]/90 focus:ring-4 focus:outline-none focus:ring-[#e74c3c]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+            className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           >
             <AiOutlineCloseCircle />
             <p className="mx-1">Đóng</p>
@@ -354,9 +354,9 @@ const TableAntdAction = ({ orderData }) => {
           <button
             onClick={() => handleCancelOrder()}
             type="button"
-            className="text-white bg-[#2ecc71] hover:bg-[#2ecc71]/90 focus:ring-4 focus:outline-none focus:ring-[#2ecc71]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+            className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           >
-            <AiOutlineMessage />
+            <AiOutlineCheckCircle />
             <p className="mx-1">Xác nhận</p>
           </button>,
         ]}
@@ -370,7 +370,7 @@ const TableAntdAction = ({ orderData }) => {
           <button
             onClick={() => setModalDelete(false)}
             type="button"
-            className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+            className="text-white bg-[#e74c3c] hover:bg-[#e74c3c]/90 focus:ring-4 focus:outline-none focus:ring-[#e74c3c]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           >
             <AiOutlineCloseCircle />
             <p className="mx-1">Đóng</p>
@@ -378,9 +378,9 @@ const TableAntdAction = ({ orderData }) => {
           <button
             onClick={() => handldeDeleteOrder()}
             type="button"
-            className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+            className="text-white bg-[#2ecc71] hover:bg-[#2ecc71]/90 focus:ring-4 focus:outline-none focus:ring-[#2ecc71]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           >
-            <AiOutlineMessage />
+            <AiOutlineCheckCircle />
             <p className="mx-1">Xác nhận</p>
           </button>,
         ]}
@@ -497,4 +497,4 @@ const TableAntdAction = ({ orderData }) => {
   );
 };
 
-export default TableAntdAction;
+export default TableConfirmOrder;

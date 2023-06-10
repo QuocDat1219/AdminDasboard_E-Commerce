@@ -43,6 +43,9 @@ import AddUser from "./pages/AddUsers";
 import Userlist from "./pages/Userlist";
 import Register from "./pages/Register";
 import Oders from "./pages/Orders";
+import StatisticalTotal from "./pages/StatisticalTotal";
+import OrderToday from "./pages/OrderToday";
+import OrderMonth from "./pages/OrderMonth";
 function App() {
   return (
     <Router>
@@ -63,7 +66,6 @@ function App() {
           <Route path="blog-category-list" element={<Blogcatlist />} />
           <Route path="blog-category" element={<Addblogcat />} />
           <Route path="blogcategory/:id" element={<Addblogcat />} />
-          <Route path="orders" element={<Orders />} />
           <Route path="order/:id" element={<ViewOrder />} />
           <Route path="customers" element={<Customers />} />
           <Route path="list-color" element={<Colorlist />} />
@@ -97,7 +99,10 @@ function App() {
           <Route path="user" element={<AddUser />} />
           <Route path="user/:id" element={<AddUser />} />
           <Route path="list-user" element={<Userlist />} />
-          <Route path="list-order" element={<Orders />} />
+          <Route path="list-order" element={<Oders />} />
+          <Route path="statistical-total" element={<StatisticalTotal />} />
+          <Route path="statistical-order-today" element={<OrderToday />} />
+          <Route path="statistical-order-month" element={<OrderMonth />} />
         </Route>
       </Routes>
     </Router>

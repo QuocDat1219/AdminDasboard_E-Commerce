@@ -214,7 +214,7 @@ const AddHome = () => {
               />
               <div>
                 <input
-                  class="block w-[98%] mt-2 text-lg text-black border border-gray-300  cursor-pointer bg-gray-50"
+                  className="block w-[98%] mt-2 text-lg text-black border border-gray-300  cursor-pointer bg-gray-50"
                   id="large_size"
                   type="file"
                   onChange={(e) => setImgService(e.target.files[0])}
