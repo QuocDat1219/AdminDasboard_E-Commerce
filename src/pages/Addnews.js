@@ -169,6 +169,7 @@ const Addnews = () => {
               Chọn ảnh bìa
             </label>
             <input
+              required
               class="block w-[98%] text-lg text-black border border-gray-300  cursor-pointer bg-gray-50"
               id="large_size"
               type="file"

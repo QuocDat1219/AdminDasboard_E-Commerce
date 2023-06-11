@@ -46,6 +46,7 @@ import Oders from "./pages/Orders";
 import StatisticalTotal from "./pages/StatisticalTotal";
 import OrderToday from "./pages/OrderToday";
 import OrderMonth from "./pages/OrderMonth";
+import OderQuy from "./pages/OrderQuy";
 function App() {
   return (
     <Router>
@@ -103,6 +104,7 @@ function App() {
           <Route path="statistical-total" element={<StatisticalTotal />} />
           <Route path="statistical-order-today" element={<OrderToday />} />
           <Route path="statistical-order-month" element={<OrderMonth />} />
+          <Route path="statistical-order-quy" element={<OderQuy />} />
         </Route>
       </Routes>
     </Router>
