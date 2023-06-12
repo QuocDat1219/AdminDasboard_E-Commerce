@@ -47,7 +47,21 @@ import StatisticalTotal from "./pages/StatisticalTotal";
 import OrderToday from "./pages/OrderToday";
 import OrderMonth from "./pages/OrderMonth";
 import OderQuy from "./pages/OrderQuy";
+import { useEffect, useState } from "react";
 function App() {
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    // Lấy giá trị role từ local storage và cập nhật vào state
+    const storedRole = localStorage.getItem("user");
+    const userinfo = JSON.parse(storedRole);
+    if (userinfo) {
+      setRole(userinfo.role);
+    } else {
+      setRole("");
+    }
+  }, []);
+  console.log(role);
   return (
     <Router>
       <Routes>
@@ -97,9 +111,10 @@ function App() {
           <Route path="list-contact" element={<ListContact />} />
           <Route path="comment/:id" element={<CommentBlog />} />
           <Route path="feedbackproduct/:id" element={<FeedbackProduct />} />
-          <Route path="user" element={<AddUser />} />
-          <Route path="user/:id" element={<AddUser />} />
-          <Route path="list-user" element={<Userlist />} />
+          {role === "admin" && <Route path="user" element={<AddUser />} />}
+          {role === "admin" && (
+            <Route path="list-user" element={<Userlist />} />
+          )}
           <Route path="list-order" element={<Oders />} />
           <Route path="statistical-total" element={<StatisticalTotal />} />
           <Route path="statistical-order-today" element={<OrderToday />} />

@@ -25,10 +25,7 @@ import {
 } from "react-icons/fi";
 import { FaRegNewspaper, FaUserFriends } from "react-icons/fa";
 import { GrContact, GrServices } from "react-icons/gr";
-import {
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../features/auth/authSlice.js";
 import { useDispatch } from "react-redux";
 
@@ -57,8 +54,8 @@ const Sidebar = () => {
   const dispatch = useDispatch();
 
   const logOut = useCallback(() => {
-    dispatch(logout());
     navigate("/login");
+    dispatch(logout());
   }, [dispatch]);
 
   const Nav_animation = isTabletMid

@@ -84,10 +84,6 @@ const Login = () => {
               Đăng nhập
             </button>
           </form>
-          <span>Bạn chưa có tài khoản? </span>
-          <Link to="/register">
-            <span className="text-medium font-bold">Đăng ký</span>
-          </Link>
         </div>
       </div>
     </div>
