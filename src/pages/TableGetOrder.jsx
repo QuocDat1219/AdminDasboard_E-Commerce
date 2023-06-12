@@ -107,7 +107,7 @@ const TableAntd = ({ orderData }) => {
           <button
             onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
             type="button"
-            className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+            className="text-white bg-[#74b9ff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           >
             <AiOutlineSearch />
             Tìm kiếm
@@ -216,7 +216,7 @@ const TableAntd = ({ orderData }) => {
       width: "20%",
       render: (text, record) => (
         <button
-          className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+          className="text-white bg-[#74b9ff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           onClick={() => showModal(record.products)}
         >
           Chi tiết ({JSON.parse(record.products).length})
@@ -230,7 +230,7 @@ const TableAntd = ({ orderData }) => {
       width: "15%",
       render: (text, record) => (
         <button
-          className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+          className="text-white bg-[#74b9ff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           onClick={() => showModalUserOrder(record.orderby)}
         >
           Chi tiết
@@ -288,7 +288,7 @@ const TableAntd = ({ orderData }) => {
           <button
             onClick={() => setModalProduct(false)}
             type="button"
-            className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+            className="text-white bg-[#e74c3c] hover:bg-[#c0392b]/90 focus:ring-4 focus:outline-none focus:ring-[#c0392b]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           >
             Đóng
           </button>,
@@ -353,7 +353,7 @@ const TableAntd = ({ orderData }) => {
           <button
             onClick={() => setModalUser(false)}
             type="button"
-            className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+            className="text-white bg-[#e74c3c] hover:bg-[#c0392b]/90 focus:ring-4 focus:outline-none focus:ring-[#c0392b]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           >
             <AiOutlineCloseCircle />
             Đóng

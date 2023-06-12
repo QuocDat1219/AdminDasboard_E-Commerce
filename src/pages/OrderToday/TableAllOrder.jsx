@@ -32,7 +32,6 @@ const TableAllOrder = ({ orderData }) => {
   }, [orderData]);
   const userId = JSON.parse(window.localStorage.getItem("user"));
   const iduser = userId._id;
-  console.log(orderData);
   useEffect(() => {}, [iduser]);
   const getProductNameById = (productId) => {
     const pro = products.find((item) => item._id == productId);

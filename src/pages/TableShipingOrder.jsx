@@ -251,7 +251,7 @@ const TableShipingOrder = ({ orderData }) => {
       width: "16%",
       render: (text, record) => (
         <button
-          className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+          className="text-white bg-[#74b9ff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           onClick={() => showModal(record.products)}
         >
           Chi tiết ({JSON.parse(record.products).length})
@@ -265,7 +265,7 @@ const TableShipingOrder = ({ orderData }) => {
       width: "15%",
       render: (text, record) => (
         <button
-          className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+          className="text-white bg-[#74b9ff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           onClick={() => showModalUserOrder(record.orderby)}
         >
           Chi tiết
@@ -307,7 +307,7 @@ const TableShipingOrder = ({ orderData }) => {
       width: "15%",
       render: (text, record) => (
         <button
-          className="text-white bg-[#2ecc71] hover:bg-[#2ecc71]/90 focus:ring-4 focus:outline-none focus:ring-[#2ecc71]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+          className="text-white bg-[#2ecc71] hover:bg-[#27ae60]/90 focus:ring-4 focus:outline-none focus:ring-[#27ae60]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           onClick={() => showModalCancel(record.id)}
         >
           Giao Hàng
@@ -320,7 +320,7 @@ const TableShipingOrder = ({ orderData }) => {
       width: "15%",
       render: (text, record) => (
         <button
-          className="text-white bg-[#FF0000] hover:bg-[#FF0000]/90 focus:ring-4 focus:outline-none focus:ring-[#FF0000]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+          className="text-white bg-[#e74c3c] hover:bg-[#c0392b]/90 focus:ring-4 focus:outline-none focus:ring-[#c0392b]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           onClick={() => showModalDelete(record.id)}
         >
           Xóa
@@ -346,7 +346,7 @@ const TableShipingOrder = ({ orderData }) => {
           <button
             onClick={() => setModalCancel(false)}
             type="button"
-            className="text-white bg-[#e74c3c] hover:bg-[#e74c3c]/90 focus:ring-4 focus:outline-none focus:ring-[#e74c3c]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+            className="text-white bg-[#e74c3c] hover:bg-[#c0392b]/90 focus:ring-4 focus:outline-none focus:ring-[#c0392b]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           >
             <AiOutlineCloseCircle />
             <p className="mx-1">Đóng</p>
@@ -354,7 +354,7 @@ const TableShipingOrder = ({ orderData }) => {
           <button
             onClick={() => handleCancelOrder()}
             type="button"
-            className="text-white bg-[#2ecc71] hover:bg-[#2ecc71]/90 focus:ring-4 focus:outline-none focus:ring-[#2ecc71]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+            className="text-white bg-[#2ecc71] hover:bg-[#27ae60]/90 focus:ring-4 focus:outline-none focus:ring-[#27ae60]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           >
             <AiOutlineCheckCircle />
             <p className="mx-1">Xác nhận</p>
@@ -370,7 +370,7 @@ const TableShipingOrder = ({ orderData }) => {
           <button
             onClick={() => setModalDelete(false)}
             type="button"
-            className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+            className="text-white bg-[#e74c3c] hover:bg-[#c0392b]/90 focus:ring-4 focus:outline-none focus:ring-[#c0392b]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           >
             <AiOutlineCloseCircle />
             <p className="mx-1">Đóng</p>
@@ -378,7 +378,7 @@ const TableShipingOrder = ({ orderData }) => {
           <button
             onClick={() => handldeDeleteOrder()}
             type="button"
-            className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+            className="text-white bg-[#2ecc71] hover:bg-[#27ae60]/90 focus:ring-4 focus:outline-none focus:ring-[#27ae60]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           >
             <AiOutlineCheckCircle />
             <p className="mx-1">Xác nhận</p>
@@ -395,7 +395,7 @@ const TableShipingOrder = ({ orderData }) => {
           <button
             onClick={() => setModalProduct(false)}
             type="button"
-            className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+            className="text-white bg-[#74b9ff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           >
             <AiOutlineCloseCircle />
             Đóng
@@ -461,7 +461,7 @@ const TableShipingOrder = ({ orderData }) => {
           <button
             onClick={() => setModalUser(false)}
             type="button"
-            className="text-white bg-[#007bff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
+            className="text-white bg-[#74b9ff] hover:bg-[#007bff]/90 focus:ring-4 focus:outline-none focus:ring-[#007bff]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center mr-2 mb-2"
           >
             <AiOutlineCloseCircle />
             Đóng

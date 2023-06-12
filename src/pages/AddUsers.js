@@ -40,7 +40,6 @@ const AddUser = () => {
     isBlocked,
     updatedUser,
   } = newUser;
-  console.log(isBlocked);
   useEffect(() => {
     if (getUserID !== undefined) {
       dispatch(getAUser(getUserID));
@@ -78,7 +77,6 @@ const AddUser = () => {
 
     onSubmit: (values) => {
       const data = { id: getUserID, userData: values };
-      console.log(data);
       if (getUserID !== undefined) {
         dispatch(updateUserAdmin(data));
         dispatch(resetState());
@@ -182,7 +180,7 @@ const AddUser = () => {
             className="bg-blue-500 text-white lg:h-[40px] lg:w-[250px] rounded-3 my-5 w-[210px] h-[40px] "
             type="submit"
           >
-            {getUserID !== undefined ? "Sửa" : "Thêm"} Người dùng
+            {getUserID !== undefined ? "Cập nhật" : "Thêm"} người dùng
           </button>
         </form>
       </div>

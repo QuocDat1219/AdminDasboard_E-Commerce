@@ -95,7 +95,6 @@ const Addproduct = () => {
     for (let i = 0; i < image.length; i++) {
       formData.append(`image`, image[i]);
     }
-    console.log(formData);
     axios
       .post(`${process.env.REACT_APP_API_URL}products/`, formData, {
         headers: {
@@ -106,7 +105,7 @@ const Addproduct = () => {
         toast.success("Thêm thành công");
       })
       .catch((error) => {
-        console.log(error);
+        toast.error("Lỗi");
       });
   };
 

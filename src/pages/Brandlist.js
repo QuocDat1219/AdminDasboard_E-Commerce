@@ -43,7 +43,6 @@ const Brandlist = () => {
     setbrandId(e);
   };
   const CategoryContainer = useSelector((state) => state.catectn.cContainers);
-  console.log(CategoryContainer._id);
   const hideModal = () => {
     setOpen(false);
   };

@@ -37,7 +37,6 @@ export const updateUserAdmin = createAsyncThunk(
   "User/update-user",
   async (user, thunkAPI) => {
     try {
-      console.log(user);
       return await UserService.updateUserAdmin(user);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
