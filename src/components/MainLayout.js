@@ -13,29 +13,21 @@ import {
   FiInfo,
   FiHome,
   FiPocket,
-  FiContact,
   FiList,
   FiBookmark,
-  FiLink,
   FiMenu,
   FiLayers,
-  FiSend,
   FiGrid,
   FiTrello,
   FiPlusSquare,
   FiPackage,
-  FiPaperclip,
   FiSettings,
 } from "react-icons/fi";
 import { FaRegNewspaper, FaUserFriends } from "react-icons/fa";
 import { GrContact, GrServices } from "react-icons/gr";
 import {
-  NavLink,
   useLocation,
-  useRouteRouter,
-  Switch,
   useNavigate,
-  Routes,
 } from "react-router-dom";
 import { logout } from "../features/auth/authSlice.js";
 import { useDispatch } from "react-redux";
@@ -182,6 +174,11 @@ const Sidebar = () => {
                     key: "statistical-order-month",
                     icon: <FiLayers className="fs-4" />,
                     label: "Đơn trong tháng",
+                  },
+                  {
+                    key: "statistical-order-quy",
+                    icon: <FiLayers className="fs-4" />,
+                    label: "Đơn trong quý",
                   },
                 ],
               },
