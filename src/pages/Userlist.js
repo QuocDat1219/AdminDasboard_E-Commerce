@@ -125,7 +125,7 @@ const Userlist = () => {
 
   return (
     <div className="md:flex md:flex-col md:items-start">
-      <h3 className="mb-4 text-xl font-bold">Nhãn hàng</h3>
+      <h3 className="mb-4 text-xl font-bold">Người dùng</h3>
       <div className="overflow-x-auto w-full">
         <Table
           columns={columns}
