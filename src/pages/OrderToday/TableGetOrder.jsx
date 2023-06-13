@@ -231,7 +231,6 @@ const TableAntd = ({ orderData }) => {
           Chi tiết ({JSON.parse(record.products).length})
         </button>
       ),
-      // ...getColumnSearchProps('products'),
     },
     {
       title: "Người mua",
