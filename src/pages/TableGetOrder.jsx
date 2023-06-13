@@ -1,7 +1,7 @@
 import { AiOutlineSearch, AiOutlineCloseCircle } from "react-icons/ai";
 import { FaCheck, FaShippingFast } from "react-icons/fa";
 import { FiDelete } from "react-icons/fi";
-import { FcSynchronize, FcShipped } from "react-icons/fc";
+import { FcSynchronize, FcShipped, FcInTransit } from "react-icons/fc";
 import { GrPowerReset } from "react-icons/gr";
 import { Input, Space, Table, Modal } from "antd";
 import Highlighter from "react-highlight-words";
@@ -182,8 +182,8 @@ const TableAntd = ({ orderData }) => {
             <FaCheck className="inline w-5 h-5" /> &nbsp;Đã xác nhận
           </span>
         ) : item.orderStatus === "Đang giao hàng" ? (
-          <span className="text-yellow-500 font-bold">
-            <FaShippingFast className="inline w-5 h-5" /> &nbsp; Đang giao hàng
+          <span className="text-[#e1b12c] font-bold">
+            <FcInTransit className="inline w-5 h-5" /> &nbsp; Đang giao hàng
           </span>
         ) : item.orderStatus === "Đã hủy" ? (
           <span className="text-red-500 font-bold">

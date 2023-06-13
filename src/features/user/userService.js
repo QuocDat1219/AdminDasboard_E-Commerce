@@ -32,10 +32,7 @@ const updateUserAdmin = async (user) => {
   );
   return response.data;
 };
-// const adminCreateUser = async () => {
-//   const response = await axios.post(`${base_url}user/register`);
-//   return response.data;
-// };
+
 const deleteUser = async (id) => {
   const response = await axios.delete(`${base_url}user/${id}`, config);
   return response.data;
