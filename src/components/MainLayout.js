@@ -53,16 +53,16 @@ const Sidebar = () => {
 
   const dispatch = useDispatch();
 
-  const logOut = useCallback(() => {
-    navigate("/login");
+  const logOut = useCallback(async () => {
     dispatch(logout());
+    await navigate("/login");
   }, [dispatch]);
 
   const Nav_animation = isTabletMid
     ? {
         open: {
           x: 0,
-          width: "16rem",
+          width: "20rem",
           transition: {
             damping: 40,
           },
@@ -78,7 +78,7 @@ const Sidebar = () => {
       }
     : {
         open: {
-          width: "16rem",
+          width: "20rem",
           transition: {
             damping: 40,
           },
@@ -104,7 +104,7 @@ const Sidebar = () => {
         variants={Nav_animation}
         initial={{ x: isTabletMid ? -250 : 0 }}
         animate={open ? "open" : "closed"}
-        className=" bg-white text-gray shadow-xl z-[999] max-w-[16rem]  w-[16rem] 
+        className=" bg-white text-gray shadow-xl z-[999] max-w-[20rem]  w-[20rem] 
         overflow-y-scroll md:relative fixed
          h-screen "
       >

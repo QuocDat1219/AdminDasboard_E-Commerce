@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/auth/authSlice";
+import { toast } from "react-toastify";
 
 let schema = yup.object().shape({
   email: yup
@@ -23,7 +24,9 @@ const Login = () => {
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      dispatch(login(values));
+      dispatch(login(values)).then(() => {
+        navigate("../statistical-total");
+      });
     },
   });
   const authState = useSelector((state) => state);
@@ -32,9 +35,9 @@ const Login = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate("../list-product");
+      toast.success("Thành công!");
     } else {
-      navigate("");
+      toast.error("Không thành công!");
     }
   }, [user, isError, isSuccess, isLoading]);
   return (

@@ -24,7 +24,6 @@ const getOrder = async (id) => {
   return response.data;
 };
 
-
 const logout = () => {
   localStorage.removeItem("user");
 };

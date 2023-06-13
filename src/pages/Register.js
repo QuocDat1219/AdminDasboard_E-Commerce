@@ -196,7 +196,6 @@ const Register = () => {
           </Link>
         </div>
       </div>
-      <ToastContainer pauseOnHover={false} draggable={false} />
     </div>
   );
 };

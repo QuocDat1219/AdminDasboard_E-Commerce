@@ -7,8 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useCallback } from "react";
 
 function RootLayout({ children }) {
-
-
   const { user: currentUser } = useSelector((state) => state.auth);
 
   if (!currentUser) {
@@ -21,7 +19,6 @@ function RootLayout({ children }) {
 
   return (
     <div>
-      <ToastContainer pauseOnHover={false} draggable={false} />
       <div className="flex lg:gap-5">
         <MainLayout />
         <main className="max-w-7xl flex-1 py-20">

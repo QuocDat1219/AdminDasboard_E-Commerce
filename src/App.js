@@ -48,6 +48,7 @@ import OrderToday from "./pages/OrderToday";
 import OrderMonth from "./pages/OrderMonth";
 import OderQuy from "./pages/OrderQuy";
 import { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 function App() {
   const [role, setRole] = useState("");
 
@@ -64,6 +65,7 @@ function App() {
   console.log(role);
   return (
     <Router>
+      <ToastContainer pauseOnHover={false} draggable={false} />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="register" element={<Register />} />
@@ -111,7 +113,7 @@ function App() {
           <Route path="list-contact" element={<ListContact />} />
           <Route path="comment/:id" element={<CommentBlog />} />
           <Route path="feedbackproduct/:id" element={<FeedbackProduct />} />
-          {role === "admin" && <Route path="user" element={<AddUser />} />}
+          {role === "admin" && <Route path="user/:id" element={<AddUser />} />}
           {role === "admin" && (
             <Route path="list-user" element={<Userlist />} />
           )}
