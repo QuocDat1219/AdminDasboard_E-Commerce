@@ -17,39 +17,34 @@ import {
   const OderQuy = () => {
     const [alloder, setAllOder] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
+    const getAllOrders = async () => {
+      const today = new Date();
+      const startOfQuarter = new Date(today.getFullYear(), Math.floor(today.getMonth() / 3) * 3, 1);
+      const endOfQuarter = new Date(startOfQuarter.getFullYear(), startOfQuarter.getMonth() + 3, 0);
+    
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}orders/getallorder`);
+    
+        const ordersThisQuarter = response.data.filter((order) => {
+          const createdAt = new Date(order.createdAt);
+          return createdAt >= startOfQuarter && createdAt <= endOfQuarter;
+        });
+    
+        const deliveredOrders = ordersThisQuarter.filter((order) => order.orderStatus === "Đã giao hàng");
+    
+        const totalRevenue = deliveredOrders.reduce((accumulator, order) => accumulator + order.totalPrice, 0);
+    
+        setAllOder(ordersThisQuarter);
+        setTotalPrice(totalRevenue);
+      } catch (error) {
+        console.error("Error retrieving orders:", error);
+      }
+    };
+    
     useEffect(() => {
-        const getalloder = async () => {
-          const today = new Date(); // Lấy ngày hôm nay
-          const startOfQuarter = new Date(today.getFullYear(), Math.floor(today.getMonth() / 3) * 3, 1); // Ngày đầu tiên của quý
-          const endOfQuarter = new Date(today.getFullYear(), Math.floor(today.getMonth() / 3) * 3 + 3, 0); // Ngày cuối cùng của quý
-      
-          await axios
-            .get(`${process.env.REACT_APP_API_URL}orders/getallorder`)
-            .then((response) => {
-              // Lọc những đơn hàng có orderStatus là "Đã giao hàng" và createdAt trong khoảng từ startOfQuarter đến endOfQuarter
-              const ordersThisQuarter = response.data.filter((order) => {
-                const createdAt = new Date(order.createdAt);
-                return (
-                  order.orderStatus === "Đã giao hàng" &&
-                  createdAt >= startOfQuarter &&
-                  createdAt <= endOfQuarter
-                );
-              });
-      
-              // Tính tổng doanh thu của các đơn hàng trong quý
-              const totalRevenue = ordersThisQuarter.reduce(
-                (sum, order) => sum + order.totalPrice,
-                0
-              );
-      
-              setAllOder(ordersThisQuarter);
-              setTotalPrice(totalRevenue);
-            });
-        };
-      
-        getalloder();
-      }, []);
-      
+      getAllOrders();
+    }, []);
+    
     const dangxuly =
       alloder.filter((order) => order.orderStatus === "Đang xử lý") || [];
     const daxacnhan =

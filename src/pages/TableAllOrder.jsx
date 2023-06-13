@@ -3,7 +3,9 @@ import {
   AiOutlineCloseCircle,
   AiOutlineMessage,
 } from "react-icons/ai";
-import { FaCheck } from "react-icons/fa";
+import { FaCheck, FaShippingFast } from "react-icons/fa";
+import { FiDelete } from "react-icons/fi";
+import { FcSynchronize, FcShipped } from "react-icons/fc";
 import { GrPowerReset } from "react-icons/gr";
 import { Input, Space, Table, Modal, message } from "antd";
 import Highlighter from "react-highlight-words";
@@ -202,19 +204,26 @@ const TableAllOrder = ({ orderData }) => {
       payment: item.paymentIntent.name,
       status:
         item.orderStatus === "Đã xác nhận" ? (
-          <span className="text-green-500 font-bold">
-            <FaCheck className="inline" /> Đã xác nhận
+          <span className="text-[#079992] font-bold">
+            <FaCheck className="inline w-5 h-5" /> &nbsp;Đã xác nhận
           </span>
         ) : item.orderStatus === "Đang giao hàng" ? (
-          <span className="text-yellow-500 font-bold">Đang giao hàng</span>
+          <span className="text-yellow-500 font-bold">
+            <FaShippingFast className="inline w-5 h-5" /> &nbsp; Đang giao hàng
+          </span>
         ) : item.orderStatus === "Đã hủy" ? (
-          <span className="text-red-500 font-bold">Đã hủy</span>
+          <span className="text-red-500 font-bold">
+            <FiDelete className="rotate-180 inline w-5 h-5" /> &nbsp; Đã hủy
+          </span>
         ) : item.orderStatus === "Đã giao hàng" ? (
           <span className="text-[#27ae60] font-bold">
-            Đơn hàng đã được giao
+            <FcShipped className="inline w-5 h-5" /> &nbsp; Đơn hàng đã được
+            giao
           </span>
         ) : item.orderStatus === "Đang xử lý" ? (
-          <span className="text-gray-700 font-bold">Đang chờ xử lý</span>
+          <span className="text-gray-700 font-bold">
+            <FcSynchronize className="inline w-5 h-5" /> &nbsp; Đang chờ xử lý
+          </span>
         ) : (
           <span className="text-blue-700 font-bold">Không rõ</span>
         ),

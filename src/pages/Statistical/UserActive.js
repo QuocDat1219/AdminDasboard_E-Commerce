@@ -8,7 +8,7 @@ import {
     Grid,
     Typography,
   } from "@mui/material";
-  import { FaUserCheck } from "react-icons/fa";
+  import { FaUserAltSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
 const UserActive = () => {
   const [user, setUserCount] = useState(0);
@@ -52,7 +52,7 @@ const UserActive = () => {
                     width: 56,
                   }}
                 >
-                    <FaUserCheck className="w-10 h-10"/>
+                    <FaUserAltSlash className="w-10 h-10"/>
                 </Avatar>
               </Grid>
             </Grid>
@@ -87,7 +87,7 @@ const UserActive = () => {
                     width: 56,
                   }}
                 >
-                    <FaUserCheck className="w-10 h-10"/>
+                    <FaUserAltSlash className="w-10 h-10"/>
                 </Avatar>
               </Grid>
             </Grid>

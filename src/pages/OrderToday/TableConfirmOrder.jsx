@@ -3,6 +3,9 @@ import {
   AiOutlineCloseCircle,
   AiOutlineCheckCircle,
 } from "react-icons/ai";
+import { FaCheck, FaShippingFast } from "react-icons/fa";
+import { FiDelete } from "react-icons/fi";
+import { FcSynchronize, FcShipped } from "react-icons/fc";
 import { GrPowerReset } from "react-icons/gr";
 import { Input, Space, Table, Modal, message } from "antd";
 import Highlighter from "react-highlight-words";
@@ -66,7 +69,6 @@ const TableConfirmOrder = ({ orderData }) => {
       toast.error("Lỗi khi gọi API:", error);
     }
   };
-
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -178,7 +180,31 @@ const TableConfirmOrder = ({ orderData }) => {
       products: JSON.stringify(item.products),
       payment: item.paymentIntent.name,
       //   shipping: item.shippingMethor.name,
-      status: item.orderStatus,
+      status:
+        item.orderStatus === "Đã xác nhận" ? (
+          <span className="text-[#079992] font-bold">
+            <FaCheck className="inline w-5 h-5" /> &nbsp;Đã xác nhận
+          </span>
+        ) : item.orderStatus === "Đang giao hàng" ? (
+          <span className="text-yellow-500 font-bold">
+            <FaShippingFast className="inline w-5 h-5" /> &nbsp; Đang giao hàng
+          </span>
+        ) : item.orderStatus === "Đã hủy" ? (
+          <span className="text-red-500 font-bold">
+            <FiDelete className="rotate-180 inline w-5 h-5" /> &nbsp; Đã hủy
+          </span>
+        ) : item.orderStatus === "Đã giao hàng" ? (
+          <span className="text-[#27ae60] font-bold">
+            <FcShipped className="inline w-5 h-5" /> &nbsp; Đơn hàng đã được
+            giao
+          </span>
+        ) : item.orderStatus === "Đang xử lý" ? (
+          <span className="text-gray-700 font-bold">
+            <FcSynchronize className="inline w-5 h-5" /> &nbsp; Đang chờ xử lý
+          </span>
+        ) : (
+          <span className="text-blue-700 font-bold">Không rõ</span>
+        ),
       totalPrice: item.totalPrice.toLocaleString("vi-VN", {
         style: "currency",
         currency: "VND",

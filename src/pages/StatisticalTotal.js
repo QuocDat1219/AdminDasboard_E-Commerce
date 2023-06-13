@@ -21,35 +21,36 @@ const StatisticalTotal = () => {
             <ConfirmedOrder />
           </div>
           <div className="deviceC">
-            <ShipingOrder /> 
+            <ShipingOrder />
           </div>
           <div className="deviceD">
-             <CancleOrder />
+            <CancleOrder />
           </div>
         </div>
         <div className="tableU">
-          <DeliveredOrder/>
+          <DeliveredOrder />
         </div>
         <div className="mt-2">
-        <h1 className="text-xl font-medium">Thống kê tổng quát người dùng </h1>
+          <h1 className="text-xl font-medium">
+            Thống kê tổng quát người dùng{" "}
+          </h1>
         </div>
         <div className="TotalUS">
-        <div className="deviceC">
-            <TotalUserEm /> 
+          <div className="deviceC">
+            <TotalUserEm />
           </div>
           <div className="deviceD">
-            <TotalUser /> 
+            <TotalUser />
           </div>
           <div className="deviceD">
-            <UserActive /> 
+            <UserActive />
           </div>
           <div className="deviceD">
-            <UserBlock /> 
+            <UserBlock />
           </div>
         </div>
       </div>
     </div>
-
-  )
-}
+  );
+};
 export default StatisticalTotal;
