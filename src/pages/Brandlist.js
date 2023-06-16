@@ -23,11 +23,6 @@ const columns = [
     sorter: (a, b) => a.name.length - b.name.length,
   },
   {
-    title: "Danh mục chính",
-    dataIndex: "CategoryContainer",
-    sorter: (a, b) => a.name.length - b.name.length,
-  },
-  {
     title: "Action",
     dataIndex: "action",
   },
@@ -54,12 +49,6 @@ const Brandlist = () => {
     data1.push({
       key: i + 1,
       name: brandState[i].title,
-      CategoryContainer:
-        brandState[i].idCategoriesContainer == "6423eb7f0dcb89d924e988c3" ? (
-          <span className="">Camera</span>
-        ) : (
-          <span className="">Sạc OTo</span>
-        ),
       action: (
         <>
           <div className="flex">

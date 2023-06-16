@@ -105,6 +105,7 @@ const Addproduct = () => {
         toast.success("Thêm thành công");
       })
       .catch((error) => {
+        console.error("Lỗi" + error);
         toast.error("Lỗi");
       });
   };

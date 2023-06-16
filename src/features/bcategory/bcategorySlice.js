@@ -37,6 +37,7 @@ export const updateABlogCat = createAsyncThunk(
   "blogCategory/update-category",
   async (blogCat, thunkAPI) => {
     try {
+      console.log(blogCat);
       return await bCategoryService.updateBlogCategory(blogCat);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -90,7 +91,7 @@ export const pCategorySlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.createBlogCategory = action.payload;
+        state.createdBlogCategory = action.payload;
       })
       .addCase(createNewblogCat.rejected, (state, action) => {
         state.isLoading = false;

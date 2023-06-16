@@ -14,7 +14,7 @@ import {
 } from "../features/bcategory/bcategorySlice";
 
 let schema = yup.object().shape({
-  title: yup.string().required("Category Name is Required"),
+  title: yup.string().required("Nhập danh mục tin tức"),
 });
 
 const Addblogcat = () => {
@@ -26,7 +26,7 @@ const Addblogcat = () => {
     isSuccess,
     isError,
     isLoading,
-    createBlogCategory,
+    createdBlogCategory,
     blogCatName,
     updatedBlogCategory,
   } = newBlogCategory;
@@ -40,7 +40,7 @@ const Addblogcat = () => {
   }, [getBlogCatId]);
 
   useEffect(() => {
-    if (isSuccess && createBlogCategory) {
+    if (isSuccess && createdBlogCategory) {
       toast.success("Thêm danh mục tin tức thành công");
       dispatch(resetState());
     }

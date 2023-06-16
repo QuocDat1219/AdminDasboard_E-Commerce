@@ -11,6 +11,8 @@ import { Editor } from "react-draft-wysiwyg";
 import { getABlog } from "../features/blogNews/blogSlice";
 
 const Addnews = () => {
+  const blogcategoryState = useSelector((state) => state.bCategory.bCategories);
+  const EditBlog = useSelector((state) => state.bCategory.bCategories);
   const { id } = useParams();
   const [titles, setTitles] = useState("");
   const [category, setCategory] = useState("");
@@ -75,7 +77,7 @@ const Addnews = () => {
       "description",
       JSON.stringify(convertToRaw(editorContent.getCurrentContent()))
     );
-
+    console.log(imageThumbnail);
     axios
       .put(`${process.env.REACT_APP_API_URL}blog/${id}`, formData, {
         headers: {
@@ -123,8 +125,6 @@ const Addnews = () => {
       });
   };
 
-  const blogcategoryState = useSelector((state) => state.bCategory.bCategories);
-  const EditBlog = useSelector((state) => state.bCategory.bCategories);
   return (
     <div className="max-w-full lg:w-[100%]">
       <h3 className="mb-4 text-xl font-bold">
@@ -152,6 +152,7 @@ const Addnews = () => {
             required
             value={category}
           >
+            <option value="">Chọn danh mục</option>
             {blogcategoryState.map((i, j) => {
               return (
                 <option key={j} value={i._id}>
